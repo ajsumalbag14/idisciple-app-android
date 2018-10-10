@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">iDISCIPLE App</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Buttons -->
+    <string name="button_login">Log-in</string>
+    <string name="button_change_password_and_go">Change Password &amp; Go</string>
+    <string name="button_email_reset_link">E-mail Reset Link</string>
+    <string name="button_link_forgot_password">Forgot Password?</string>
+    <string name="button_link_back_to_login">Back to Log-In</string>
+
+    <!-- Errors -->
+    <string name="error_passwords_do_not_match">Passwords do not match.</string>
+
+    <!-- Hint -->
+    <string name="hint_email">E-mail Address</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_re_enter_password">Re-enter New Password</string>
+
+
+    <string name="login_title">Welcome!</string>
+    <string name="login_instruction">Please enter your registered email and password.</string>
+
+    <string name="forgot_password_title">Forgot your Password?</string>
+    <string name="forgot_password_instruction">Enter your registered e-mail,\n we\'ll send you a link so you can set a new password.</string>
+    <string name="forgot_password_confirmation">Reset link sent! Check your email.</string>
+
+    <string name="reset_password_title">First! Let\'s make your password</string>
+    <string name="reset_password_title_emphasis">personal</string>
+    <string name="reset_password_title_emphasis_end">.</string>
+
+</resources>

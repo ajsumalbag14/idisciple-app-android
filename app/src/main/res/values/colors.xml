@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#62B050</color>
+    <color name="colorPrimaryDark">#333333</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorText">#333333</color>
+
+    <color name="colorIDiscipleOrange">#F5891F</color>
+    <color name="colorIDiscipleRed">#E02035</color>
+    <color name="colorIDiscipleBlue">#0090C5</color>
+</resources>
