@@ -34,4 +34,8 @@
     <string name="reset_password_title_emphasis">personal</string>
     <string name="reset_password_title_emphasis_end">.</string>
 
+    <!-- fonts -->
+    <string name="font_montserrat_bold">Montserrat-Bold.ttf</string>
+    <string name="font_montserrat_semibold">Montserrat-SemiBold.ttf</string>
+
 </resources>

@@ -34,10 +34,10 @@
         android:scaleType="centerInside"
         android:src="@drawable/ic_logo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.18"
+        app:layout_constraintHeight_percent="0.16"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guidelineLogo"
-        app:layout_constraintWidth_percent="0.28" />
+        app:layout_constraintWidth_percent="0.26" />
 
     <!-- Content -->
     <android.support.constraint.Guideline
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.32" />
+        app:layout_constraintGuide_percent="0.28" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -56,7 +56,7 @@
         app:layout_constraintEnd_toEndOf="@+id/guidelineContentRight"
         app:layout_constraintTop_toBottomOf="@+id/guidelineContent">
 
-        <TextView
+        <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserraSemiBoldTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_title"
@@ -64,10 +64,10 @@
             android:textColor="@color/colorText"
             android:textSize="30sp" />
 
-        <TextView
+        <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserraSemiBoldTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_small"
             android:gravity="center"
             android:text="@string/login_instruction"
             android:textColor="@color/colorText"
@@ -77,7 +77,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@dimen/margin_small"
+            android:paddingTop="@dimen/margin_small"
+            android:paddingBottom="@dimen/margin_small"
+            android:paddingStart="@dimen/margin_normal"
+            android:paddingEnd="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:elevation="8dp"
+            android:background="@drawable/shape_edittext"
             android:gravity="center_vertical">
 
             <ImageView
@@ -85,14 +91,66 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_email"/>
 
-            <EditText
+            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldEditText
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal"
                 android:hint="@string/hint_email"
-                android:background="null"/>
+                android:inputType="textEmailAddress"
+                android:background="@drawable/shape_transparent"/>
 
         </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/margin_small"
+            android:paddingBottom="@dimen/margin_small"
+            android:paddingStart="@dimen/margin_normal"
+            android:paddingEnd="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:elevation="8dp"
+            android:background="@drawable/shape_edittext"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_password"/>
+
+
+            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:background="@drawable/shape_transparent"/>
+
+        </LinearLayout>
+
+        <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:text="@string/button_login"/>
+
+        <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserraSemiBoldTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:padding="@dimen/margin_small"
+            android:gravity="center"
+            android:textColor="@color/colorIDiscipleBlue"
+            android:text="@string/button_link_forgot_password"/>
     </LinearLayout>
 
 
@@ -102,11 +160,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.99" />
+        app:layout_constraintGuide_percent="0.98" />
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:scaleType="fitXY"
         android:src="@drawable/ic_colorbar"
         app:layout_constraintBottom_toBottomOf="parent"
