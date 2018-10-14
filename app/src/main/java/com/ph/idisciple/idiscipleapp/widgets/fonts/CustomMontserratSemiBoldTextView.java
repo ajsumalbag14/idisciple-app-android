@@ -12,17 +12,17 @@ import com.ph.idisciple.idiscipleapp.R;
  * Created by Jeven Soquita on 19/12/2017.
  */
 
-public class CustomMontserraSemiBoldTextView extends AppCompatTextView {
-    public CustomMontserraSemiBoldTextView(Context context) {
+public class CustomMontserratSemiBoldTextView extends AppCompatTextView {
+    public CustomMontserratSemiBoldTextView(Context context) {
         super(context);
     }
 
-    public CustomMontserraSemiBoldTextView(Context context, AttributeSet attrs) {
+    public CustomMontserratSemiBoldTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         applyFont(context);
     }
 
-    public CustomMontserraSemiBoldTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomMontserratSemiBoldTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         applyFont(context);
     }

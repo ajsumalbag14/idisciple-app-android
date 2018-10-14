@@ -5,6 +5,8 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="colorText">#333333</color>
+    <color name="colorTextGray">#828282</color>
+
 
     <color name="colorIDiscipleOrange">#F5891F</color>
     <color name="colorIDiscipleRed">#E02035</color>
