@@ -30,9 +30,7 @@
     <string name="forgot_password_instruction">Enter your registered e-mail,\n we\'ll send you a link so you can set a new password.</string>
     <string name="forgot_password_confirmation">Reset link sent! Check your email.</string>
 
-    <string name="reset_password_title">First! Let\'s make your password</string>
-    <string name="reset_password_title_emphasis">personal</string>
-    <string name="reset_password_title_emphasis_end">.</string>
+    <string name="first_password_title">First! Let\'s make your password personal.</string>
 
     <!-- fonts -->
     <string name="font_montserrat_bold">Montserrat-Bold.ttf</string>
