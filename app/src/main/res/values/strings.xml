@@ -11,8 +11,23 @@
     <string name="button_login">Log-in</string>
     <string name="button_change_password_and_go">Change Password &amp; Go</string>
     <string name="button_email_reset_link">E-mail Reset Link</string>
+    <string name="button_no">No</string>
+    <string name="button_yes">Yes</string>
     <string name="button_link_forgot_password"><u>Forgot Password?</u></string>
     <string name="button_link_back_to_login"><u>Back to Log-In</u></string>
+
+
+    <!-- Dialogs -->
+    <string name="dialog_message_loading">Loading...</string>
+
+
+    <!-- Generic dialog error -->
+    <string name="dialog_error_title_no_internet">No Internet</string>
+    <string name="dialog_error_message_no_internet">This application requires an internet connection.</string>
+    <string name="dialog_error_title_timeout">No connection to service</string>
+    <string name="dialog_error_message_timeout">Kindly check your connection and restart the app.</string>
+    <string name="dialog_error_title_generic">Oops!</string>
+    <string name="dialog_error_message_generic">Something went wrong.\n Please try again.</string>
 
     <!-- Errors -->
     <string name="error_invalid_email_or_password">Invalid E-mail or Password.</string>

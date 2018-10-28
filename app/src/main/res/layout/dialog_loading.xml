@@ -19,14 +19,14 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/loading" />
 
-    <com.yondu.parkingbuddy.widgets.fonts.CustomComfortaaRegularTextView
+    <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
         android:id="@+id/tvDialogMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_normal"
         android:gravity="center"
         android:text="@string/dialog_message_loading"
-        android:textColor="@color/colorLightGray01"
+        android:textColor="@color/colorTextGray"
         android:textSize="15sp" />
 
 </LinearLayout>

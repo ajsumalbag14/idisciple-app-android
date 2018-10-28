@@ -75,6 +75,9 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:${glide_lib_version}"
     implementation "com.github.bumptech.glide:okhttp3-integration:${glide_lib_version}"
 
+    implementation 'com.airbnb.android:lottie:2.7.0'
+
+
     // Retrofit
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     implementation "com.squareup.retrofit2:retrofit:${retrofit2_lib_version}"

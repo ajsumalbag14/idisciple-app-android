@@ -14,20 +14,20 @@
         android:gravity="center"
         android:padding="@dimen/margin_small"
         android:text="@string/dialog_error_title_no_internet"
-        android:textColor="@color/colorDarkGray02"
+        android:textColor="@color/colorText"
         android:textSize="18sp" />
 
-    <com.yondu.parkingbuddy.widgets.fonts.CustomComfortaaRegularTextView
+    <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
         android:id="@+id/tvDialogMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_normal"
         android:gravity="center"
         android:text="@string/dialog_error_message_no_internet"
-        android:textColor="@color/colorLightGray01"
+        android:textColor="@color/colorTextGray"
         android:textSize="15sp" />
 
-    <com.yondu.parkingbuddy.widgets.fonts.CustomComfortaaBoldButton
+    <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldButton
         android:id="@+id/bConfirm"
         style="@style/MainButton"
         android:layout_width="wrap_content"
