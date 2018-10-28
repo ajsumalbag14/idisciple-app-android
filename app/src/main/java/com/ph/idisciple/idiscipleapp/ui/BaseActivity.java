@@ -12,10 +12,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 
+import com.ph.idisciple.idiscipleapp.utils.ShowMessageUtil;
+
 import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+    private ShowMessageUtil mShowMessageUtil;
 
     public final String DEVICE_TYPE = "android";
     public final String DEVICE_NAME = Build.MANUFACTURER + " " + Build.MODEL; // e.g. Xiaomi Mi5
@@ -31,14 +34,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayout());
         ButterKnife.bind(this);
 
+        mShowMessageUtil = new ShowMessageUtil(this);
         mDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         mDisplayWidth = displayMetrics.widthPixels;
+
     }
 
-
+    public ShowMessageUtil getShowMessageUtil() {
+        return mShowMessageUtil;
+    }
 
     public void redirectToAnotherScreen(Class className) {
         Intent showIntent = new Intent(BaseActivity.this, className);
