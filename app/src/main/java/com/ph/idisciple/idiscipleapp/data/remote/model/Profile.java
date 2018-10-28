@@ -23,9 +23,11 @@ public class Profile {
     private String country;
     @SerializedName("is_pwd")
     private int isPwdTag;
+
     @SerializedName("created_at")
     private String createdAt;
-
+    @SerializedName("updated_at")
+    private String updatedAt;
 
     public String getFirstName() {
         return firstName;
@@ -90,14 +92,23 @@ public class Profile {
         this.createdAt = createdAt;
     }
 
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
 
     public Boolean isPwd () {
         return isPwdTag == 1;
     }
+    public int getIsPwdTag () {
+        return isPwdTag;
+    }
     public void setIsPwd(boolean isPwd) {
         this.isPwdTag = isPwd ? 1 : 0;
     }
-
 
 
     public String getMobileNumber() {

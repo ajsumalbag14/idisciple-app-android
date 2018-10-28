@@ -8,12 +8,10 @@ public class UserAccess {
     private String userId;
     @SerializedName("username")
     private String userName;
-    @SerializedName("password")
-    private String password;
-    @SerializedName("api_token")
-    private String apiToken;
-    @SerializedName("fcm_token")
-    private String fcmToken;
+    @SerializedName("token")
+    private String token;
+    @SerializedName("first_time_user")
+    private int firstTimeUserTag;
 
 
     public String getUserId() {
@@ -32,27 +30,22 @@ public class UserAccess {
     }
 
 
-    public String getPassword() {
-        return password;
+    public String getToken() {
+        return token;
     }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
-    public String getApiToken() {
-        return apiToken;
-    }
-    public void setApiToken(String apiToken) {
-        this.apiToken = apiToken;
+    public void setToken(String apiToken) {
+        this.token = apiToken;
     }
 
 
-    public String getFcmToken() {
-        return fcmToken;
+    public int getFirstTimeUserTag() {
+        return firstTimeUserTag;
     }
-    public void setFcmToken(String fcmToken) {
-        this.fcmToken = fcmToken;
+    public boolean isFirstTimeUser() {
+        return firstTimeUserTag == 1;
+    }
+    public void setFirstTimeUserTag(boolean isFirstTimeUser) {
+        this.firstTimeUserTag = isFirstTimeUser ? 1 : 0;
     }
 
 }

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 27
@@ -23,7 +24,7 @@ android {
 
     productFlavors {
         dev {
-            buildConfigField 'String', "ApiKey", retrofit_key_qa
+            buildConfigField 'String', "ApiKey", retrofit_key_dev
         }
 
         prod {

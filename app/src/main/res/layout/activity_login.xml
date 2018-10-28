@@ -63,8 +63,8 @@
             android:gravity="center"
             android:text="@string/login_title"
             android:textColor="@color/colorText"
-            android:textStyle="bold"
-            android:textSize="28sp" />
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
             android:layout_width="match_parent"
@@ -108,22 +108,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="visible"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent">
+
             <ImageView
                 android:layout_width="10dp"
                 android:layout_height="10dp"
-                android:src="@drawable/ic_exclamation"
-                android:layout_marginEnd="@dimen/margin_very_small"/>
+                android:layout_marginEnd="@dimen/margin_very_small"
+                android:src="@drawable/ic_exclamation" />
 
             <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="10sp"
+                android:text="@string/error_invalid_email_or_password"
                 android:textAllCaps="true"
                 android:textColor="@color/colorIDiscipleRed"
-                android:text="@string/error_invalid_email_or_password"/>
+                android:textSize="10sp" />
 
         </LinearLayout>
 
@@ -197,6 +198,7 @@
                 android:layout_weight="0.5"
                 android:background="@drawable/shape_transparent"
                 android:hint="@string/hint_password"
+                android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:textSize="16sp" />
 
@@ -224,7 +226,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_normal"
             android:background="@drawable/shape_button"
-            android:enabled="false"
             android:elevation="@dimen/margin_very_small"
             android:text="@string/button_login"
             android:textColor="@android:color/white"
@@ -244,7 +245,6 @@
             android:id="@+id/tvForgotPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             android:layout_marginBottom="@dimen/margin_normal"
             android:layout_marginTop="@dimen/margin_normal"
             android:gravity="center"
@@ -252,6 +252,7 @@
             android:text="@string/button_link_forgot_password"
             android:textColor="@color/colorIDiscipleBlue"
             android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/guidelineForgotPasswordLink" />
     </android.support.constraint.ConstraintLayout>
 
