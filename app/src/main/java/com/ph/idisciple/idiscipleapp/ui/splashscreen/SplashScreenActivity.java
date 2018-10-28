@@ -6,13 +6,13 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Base64;
 
-import com.ph.idisciple.idiscipleapp.MainScreenActivity;
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.KeySettings;
 import com.ph.idisciple.idiscipleapp.data.local.repository.IKeySettingsRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.impl.KeySettingsRepository;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 import com.ph.idisciple.idiscipleapp.ui.login.LoginScreenActivity;
+import com.ph.idisciple.idiscipleapp.ui.mainscreen.MainScreenActivity;
 import com.ph.idisciple.idiscipleapp.utils.PreferenceUtils;
 
 import java.math.BigInteger;

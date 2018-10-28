@@ -6,7 +6,7 @@ import com.ph.idisciple.idiscipleapp.ui.BaseView;
 public class LoginScreenContract {
     interface View extends BaseView<Presenter> {
         void onLoginFailed();
-        void onLoginSuccess(boolean isFirstTimeUser);
+        void onLoginSuccess(boolean isFirstTimeUser, String token);
     }
 
     interface Presenter extends BasePresenter {

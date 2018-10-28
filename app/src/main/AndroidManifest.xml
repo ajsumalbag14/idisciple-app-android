@@ -26,12 +26,17 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".MainScreenActivity"
+            android:name=".ui.mainscreen.MainScreenActivity"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.login.LoginScreenActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.firsttimeuser.FirstTimeUserScreenActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

@@ -19,7 +19,9 @@ import android.widget.TextView;
 
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
+import com.ph.idisciple.idiscipleapp.ui.firsttimeuser.FirstTimeUserScreenActivity;
 import com.ph.idisciple.idiscipleapp.ui.forgotpassword.ForgotPasswordScreenActivity;
+import com.ph.idisciple.idiscipleapp.ui.mainscreen.MainScreenActivity;
 
 import butterknife.BindDrawable;
 import butterknife.BindView;
@@ -151,26 +153,33 @@ public class LoginScreenActivity extends BaseActivity implements LoginScreenCont
 
     @Override
     public void onLoginFailed() {
+        updateButtonIfEnabled(true);
         llError.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void onLoginSuccess(boolean isFirstTimeUser) {
+    public void onLoginSuccess(boolean isFirstTimeUser, String token) {
         updateButtonIfEnabled(true);
+        if(isFirstTimeUser) {
+            Bundle bundle = new Bundle();
+            bundle.putString("token", token);
+            redirectToAnotherScreen(FirstTimeUserScreenActivity.class, bundle);
+        } else
+            redirectToAnotherScreen(MainScreenActivity.class);
     }
 
     @Override
     public void showNoInternetConnection() {
-
+        updateButtonIfEnabled(true);
     }
 
     @Override
     public void showTimeoutError() {
-
+        updateButtonIfEnabled(true);
     }
 
     @Override
     public void showGenericError() {
-
+        updateButtonIfEnabled(true);
     }
 }
