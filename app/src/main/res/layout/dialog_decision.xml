@@ -35,7 +35,7 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.yondu.parkingbuddy.widgets.fonts.CustomComfortaaBoldButton
+        <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldButton
             android:id="@+id/bDecline"
             style="@style/MainButton"
             android:layout_width="wrap_content"
@@ -45,7 +45,7 @@
             android:gravity="center"
             android:text="@string/button_no" />
 
-        <com.yondu.parkingbuddy.widgets.fonts.CustomComfortaaBoldButton
+        <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldButton
             android:id="@+id/bConfirm"
             style="@style/MainButton"
             android:layout_width="wrap_content"

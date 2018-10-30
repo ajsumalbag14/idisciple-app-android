@@ -1,5 +1,6 @@
 package com.ph.idisciple.idiscipleapp.ui.firsttimeuser;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -35,7 +36,7 @@ public class FirstTimeUserScreenActivity extends BaseActivity implements FirstTi
         String confirmPassword = etConfirmPassword.getText().toString();
 
         if(isValid(password, confirmPassword)) {
-            bChangePassword.setEnabled(false);
+            updateButtonIfEnabled(false);
         }
     }
 
@@ -54,6 +55,8 @@ public class FirstTimeUserScreenActivity extends BaseActivity implements FirstTi
         mToken = getIntent().getExtras().getString("token");
         mPresenter = new FirstTimeUserScreenPresenter(FirstTimeUserScreenActivity.this, this);
 
+        updateButtonIfEnabled(checkIfAllRequiredFieldsAreNotEmpty());
+
         etPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -67,8 +70,8 @@ public class FirstTimeUserScreenActivity extends BaseActivity implements FirstTi
 
             @Override
             public void afterTextChanged(Editable editable) {
-                llError.setVisibility(View.GONE);
-                bChangePassword.setEnabled(true);
+                llError.setVisibility(View.INVISIBLE);
+                updateButtonIfEnabled(checkIfAllRequiredFieldsAreNotEmpty());
             }
         });
 
@@ -85,10 +88,14 @@ public class FirstTimeUserScreenActivity extends BaseActivity implements FirstTi
 
             @Override
             public void afterTextChanged(Editable editable) {
-                llError.setVisibility(View.GONE);
-                bChangePassword.setEnabled(true);
+                llError.setVisibility(View.INVISIBLE);
+                updateButtonIfEnabled(checkIfAllRequiredFieldsAreNotEmpty());
             }
         });
+    }
+
+    private boolean checkIfAllRequiredFieldsAreNotEmpty() {
+        return !TextUtils.isEmpty(etPassword.getText().toString()) && !TextUtils.isEmpty(etConfirmPassword.getText().toString());
     }
 
     private boolean isValid(String password, String confirmPassword){
@@ -111,28 +118,40 @@ public class FirstTimeUserScreenActivity extends BaseActivity implements FirstTi
         return isValid;
     }
 
+    private void updateButtonIfEnabled(boolean isEnabled){
+        hideLoadingDialog();
+        bChangePassword.setEnabled(isEnabled);
+        bChangePassword.setTextColor(Color.WHITE);
+        bChangePassword.setBackgroundResource(isEnabled ? R.drawable.shape_button_green : R.drawable.shape_button_gray);
+    }
+
     @Override
     public void onUpdatePasswordFailed() {
-        bChangePassword.setEnabled(true);
+        updateButtonIfEnabled(true);
+        // TODO: onUpdatePasswordFailed
     }
 
     @Override
     public void onUpdatePasswordSuccess(boolean isFirstTimeUser, String token) {
-        bChangePassword.setEnabled(true);
+        updateButtonIfEnabled(true);
+        // TODO: onUpdatePasswordSuccess
     }
 
     @Override
     public void showNoInternetConnection() {
-        bChangePassword.setEnabled(true);
+        updateButtonIfEnabled(true);
+        getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_no_internet), getString(R.string.dialog_error_message_no_internet));
     }
 
     @Override
     public void showTimeoutError() {
-        bChangePassword.setEnabled(true);
+        updateButtonIfEnabled(true);
+        getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_timeout), getString(R.string.dialog_error_message_no_internet));
     }
 
     @Override
     public void showGenericError() {
-        bChangePassword.setEnabled(true);
+        updateButtonIfEnabled(true);
+        getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_generic), getString(R.string.dialog_error_message_generic));
     }
 }

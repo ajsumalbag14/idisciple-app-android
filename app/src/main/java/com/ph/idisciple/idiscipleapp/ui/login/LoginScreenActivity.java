@@ -1,5 +1,6 @@
 package com.ph.idisciple.idiscipleapp.ui.login;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,6 +25,7 @@ import com.ph.idisciple.idiscipleapp.ui.forgotpassword.ForgotPasswordScreenActiv
 import com.ph.idisciple.idiscipleapp.ui.mainscreen.MainScreenActivity;
 
 import butterknife.BindDrawable;
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -31,12 +33,14 @@ public class LoginScreenActivity extends BaseActivity implements LoginScreenCont
 
     @BindDrawable(R.drawable.ic_password_eye_visible) Drawable drawablePasswordEyeVisible;
     @BindDrawable(R.drawable.ic_password_eye) Drawable drawablePasswordEyeHidden;
+    @BindString(R.string.button_link_forgot_password) String linkForgotPassword;
 
     @BindView(R.id.etEmailAddress) EditText etEmailAddress;
     @BindView(R.id.etPassword) EditText etPassword;
     @BindView(R.id.llError) LinearLayout llError;
     @BindView(R.id.bLogin) Button bLogin;
     @BindView(R.id.tvForgotPassword) TextView tvForgotPassword;
+    @BindView(R.id.tvError) TextView tvError;
     @BindView(R.id.ivPasswordEye) ImageView ivPasswordEye;
 
     @OnClick(R.id.ivPasswordEye)
@@ -57,6 +61,7 @@ public class LoginScreenActivity extends BaseActivity implements LoginScreenCont
 
         if(isValid(emailAddress, password)) {
             updateButtonIfEnabled(false);
+            showLoadingDialog();
             mPresenter.validateLogin(emailAddress, password);
         }
     }
@@ -80,10 +85,11 @@ public class LoginScreenActivity extends BaseActivity implements LoginScreenCont
 
         mPresenter = new LoginScreenPresenter(LoginScreenActivity.this, this);
 
-        SpannableString content = new SpannableString("Content");
+        SpannableString content = new SpannableString(linkForgotPassword);
         content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
         tvForgotPassword.setText(content);
 
+        updateButtonIfEnabled(checkIfAllRequiredFieldsAreNotEmpty());
 
         etEmailAddress.addTextChangedListener(new TextWatcher() {
             @Override
@@ -98,7 +104,8 @@ public class LoginScreenActivity extends BaseActivity implements LoginScreenCont
 
             @Override
             public void afterTextChanged(Editable editable) {
-                llError.setVisibility(View.GONE);
+                updateButtonIfEnabled(checkIfAllRequiredFieldsAreNotEmpty());
+                llError.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -116,7 +123,8 @@ public class LoginScreenActivity extends BaseActivity implements LoginScreenCont
 
             @Override
             public void afterTextChanged(Editable editable) {
-                llError.setVisibility(View.GONE);
+                updateButtonIfEnabled(checkIfAllRequiredFieldsAreNotEmpty());
+                llError.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -146,14 +154,16 @@ public class LoginScreenActivity extends BaseActivity implements LoginScreenCont
     }
 
     private void updateButtonIfEnabled(boolean isEnabled){
-        //.hideLoadingDialog();
+        hideLoadingDialog();
         bLogin.setEnabled(isEnabled);
-        //bLogin.setTextColor(isEnabled ? Color.WHITE : mActivity.getResources().getColor(R.color.colorButtonDisabled));
+        bLogin.setTextColor(Color.WHITE);
+        bLogin.setBackgroundResource(isEnabled ? R.drawable.shape_button_green : R.drawable.shape_button_gray);
     }
 
     @Override
-    public void onLoginFailed() {
+    public void onLoginFailed(String errorMessage) {
         updateButtonIfEnabled(true);
+        tvError.setText(errorMessage);
         llError.setVisibility(View.VISIBLE);
     }
 
@@ -171,15 +181,18 @@ public class LoginScreenActivity extends BaseActivity implements LoginScreenCont
     @Override
     public void showNoInternetConnection() {
         updateButtonIfEnabled(true);
+        getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_no_internet), getString(R.string.dialog_error_message_no_internet));
     }
 
     @Override
     public void showTimeoutError() {
         updateButtonIfEnabled(true);
+        getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_timeout), getString(R.string.dialog_error_message_no_internet));
     }
 
     @Override
     public void showGenericError() {
         updateButtonIfEnabled(true);
+        getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_generic), getString(R.string.dialog_error_message_generic));
     }
 }

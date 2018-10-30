@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:visibility="visible"
+            android:visibility="invisible"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
@@ -118,7 +118,8 @@
                 android:layout_marginEnd="@dimen/margin_very_small"
                 android:src="@drawable/ic_exclamation" />
 
-            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldTextView
+            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                android:id="@+id/tvError"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/error_invalid_email_or_password"
@@ -217,7 +218,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_normal"
-            android:background="@drawable/shape_button"
+            android:background="@drawable/shape_button_green"
             android:elevation="@dimen/margin_very_small"
             android:text="@string/button_login"
             android:textColor="@android:color/white"

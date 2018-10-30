@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
 import com.ph.idisciple.idiscipleapp.utils.ShowMessageUtil;
 
@@ -46,6 +48,32 @@ public abstract class BaseActivity extends AppCompatActivity {
     public ShowMessageUtil getShowMessageUtil() {
         return mShowMessageUtil;
     }
+
+    /* Show / Hide Loading Dialog */
+    public AlertDialog loadingDialog;
+    public void hideLoadingDialog(){
+        if(loadingDialog != null) loadingDialog.dismiss();
+    }
+
+    public void showLoadingDialog(){
+        loadingDialog = getShowMessageUtil().showLoadingDialog();
+
+        // Initialize a new window manager layout parameters
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+
+        // Copy the alert dialog window attributes to new layout parameter instance
+        layoutParams.copyFrom(loadingDialog.getWindow().getAttributes());
+
+        // Set alert dialog width equal to screen width 70%
+        int displayWidth = mDisplayWidth;
+        int dialogWindowWidth = (int) (displayWidth * 0.5f);
+        // Set the width and height for the layout parameters
+        // This will bet the width and height of alert dialog
+        layoutParams.width = dialogWindowWidth;
+        // Apply the newly created layout parameters to the alert dialog window
+        loadingDialog.getWindow().setAttributes(layoutParams);
+    }
+
 
     public void redirectToAnotherScreen(Class className) {
         Intent showIntent = new Intent(BaseActivity.this, className);

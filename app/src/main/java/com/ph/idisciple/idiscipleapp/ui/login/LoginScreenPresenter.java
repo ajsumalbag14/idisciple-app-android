@@ -1,5 +1,6 @@
 package com.ph.idisciple.idiscipleapp.ui.login;
 
+import com.google.gson.Gson;
 import com.ph.idisciple.idiscipleapp.data.local.model.KeySettings;
 import com.ph.idisciple.idiscipleapp.data.local.model.ProfileObject;
 import com.ph.idisciple.idiscipleapp.data.local.repository.IKeySettingsRepository;
@@ -8,11 +9,14 @@ import com.ph.idisciple.idiscipleapp.data.local.repository.impl.KeySettingsRepos
 import com.ph.idisciple.idiscipleapp.data.local.repository.impl.ProfileRepository;
 import com.ph.idisciple.idiscipleapp.data.remote.RestClient;
 import com.ph.idisciple.idiscipleapp.data.remote.model.Profile;
-import com.ph.idisciple.idiscipleapp.data.remote.model.base.Wrapper;
+import com.ph.idisciple.idiscipleapp.data.remote.model.base.BaseApi;
+import com.ph.idisciple.idiscipleapp.data.remote.model.base.ListWrapper;
 import com.ph.idisciple.idiscipleapp.data.remote.model.request.LoginRequest;
 import com.ph.idisciple.idiscipleapp.data.remote.model.response.LoginResponse;
-import com.ph.idisciple.idiscipleapp.data.remote.model.response.UserAccess;
+import com.ph.idisciple.idiscipleapp.data.remote.model.response.UserAccount;
 import com.ph.idisciple.idiscipleapp.data.remote.service.UserService;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,21 +46,15 @@ public class LoginScreenPresenter implements LoginScreenContract.Presenter {
         loginRequest.setEmail(emailAddress);
         loginRequest.setPassword(password);
 
-        mUserService.loginUser(loginRequest.mParams).enqueue(new Callback<Wrapper<LoginResponse>>() {
+        mUserService.loginUser(loginRequest.mParams).enqueue(new Callback<ListWrapper<LoginResponse>>() {
             @Override
-            public void onResponse(Call<Wrapper<LoginResponse>> call, Response<Wrapper<LoginResponse>> response) {
+            public void onResponse(Call<ListWrapper<LoginResponse>> call, Response<ListWrapper<LoginResponse>> response) {
                 switch (response.code()) {
                     case 200:
                     case 201:
-                        final UserAccess mUserAccess = response.body().getData().getUserAccess();
-                        Profile mProfile = response.body().getData().getProfile();
+                        final UserAccount mUserAccess = response.body().getData().get(0).getUserAccess();
+                        Profile mProfile = response.body().getData().get(0).getProfile();
 
-                        mKeySettingsRepository.saveKeyItem(KeySettings.ItemType.IS_LOGGED_IN, "true", new IKeySettingsRepository.onSaveCallback() {
-                            @Override
-                            public void onSuccess() {
-
-                            }
-                        });
                         mKeySettingsRepository.saveKeyItem(KeySettings.ItemType.TOKEN, mUserAccess.getToken(), new IKeySettingsRepository.onSaveCallback() {
                             @Override
                             public void onSuccess() {
@@ -148,9 +146,20 @@ public class LoginScreenPresenter implements LoginScreenContract.Presenter {
                             }
                         });
                         break;
+
                     case 422:
-                        mView.onLoginFailed();
+                        Gson gson = new Gson();
+                        try {
+
+                            BaseApi apiErrorResponse = gson.fromJson(response.errorBody().string(), BaseApi.class);
+                            mView.onLoginFailed(apiErrorResponse.getMessage());
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            mView.showGenericError();
+                        }
                         break;
+
                     default:
                         mView.showGenericError();
                         break;
@@ -158,7 +167,7 @@ public class LoginScreenPresenter implements LoginScreenContract.Presenter {
             }
 
             @Override
-            public void onFailure(Call<Wrapper<LoginResponse>> call, Throwable t) {
+            public void onFailure(Call<ListWrapper<LoginResponse>> call, Throwable t) {
                 if (t.getCause() != null && t.getCause().getMessage().contains("ENETUNREACH (Network is unreachable)"))
                     mView.showNoInternetConnection();
                 else if ((t.getCause() != null && t.getCause().getMessage().contains("ETIMEDOUT (Connection timed out)")) || t.getMessage().contains("failed to connect"))

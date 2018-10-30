@@ -37,6 +37,7 @@
     <!-- Hint -->
     <string name="hint_email">E-mail Address</string>
     <string name="hint_password">Password</string>
+    <string name="hint_new_password">New Password</string>
     <string name="hint_re_enter_password">Re-enter New Password</string>
 
 
