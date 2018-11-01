@@ -18,6 +18,6 @@
     <dimen name="margin_big_3">72dp</dimen>
 
     <dimen name="avatar_size">100dp</dimen>
-    <dimen name="selected_avatar_border_size">3dp</dimen>
+    <dimen name="main_button_menu_size">30dp</dimen>
     
 </resources>

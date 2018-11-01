@@ -17,6 +17,16 @@
     <string name="button_link_back_to_login"><u>Back to Log-In</u></string>
 
 
+
+
+    <string name="button_main_my_profile">My Profile</string>
+    <string name="button_main_schedule">Schedule</string>
+    <string name="button_main_speakers">Speakers</string>
+    <string name="button_main_workshops">Workshops</string>
+    <string name="button_main_community">Community</string>
+    <string name="button_main_resources">Resources</string>
+    <string name="button_main_directory">Directory</string>
+
     <!-- Dialogs -->
     <string name="dialog_message_loading">Loading...</string>
 
@@ -49,6 +59,7 @@
     <string name="forgot_password_confirmation">Reset link sent! Check your email.</string>
 
     <string name="first_password_title">First! Let\'s make your password personal.</string>
+    <string name="title_hero">Hero</string>
 
     <!-- fonts -->
     <string name="font_montserrat_bold">Montserrat-Bold.ttf</string>

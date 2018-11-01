@@ -25,4 +25,18 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="MainMenuButtonLinearLayout">
+        <item name="android:layout_weight">0.5</item>
+        <item name="android:layout_margin">@dimen/margin_small</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/margin_small</item>
+    </style>
+
+    <style name="MainMenuButtonText">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+
 </resources>
