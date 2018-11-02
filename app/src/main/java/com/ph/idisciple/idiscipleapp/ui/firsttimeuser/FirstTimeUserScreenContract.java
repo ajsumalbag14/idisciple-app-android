@@ -5,11 +5,10 @@ import com.ph.idisciple.idiscipleapp.ui.BaseView;
 
 public class FirstTimeUserScreenContract {
     interface View extends BaseView<Presenter> {
-        void onUpdatePasswordFailed();
-        void onUpdatePasswordSuccess(boolean isFirstTimeUser, String token);
+        void onUpdatePasswordSuccess(String token);
     }
 
     interface Presenter extends BasePresenter {
-        void updatePassword(String emailAddress, String password);
+        void updatePassword(String newPassword);
     }
 }

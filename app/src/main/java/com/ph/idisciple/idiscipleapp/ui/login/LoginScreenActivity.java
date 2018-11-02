@@ -168,14 +168,18 @@ public class LoginScreenActivity extends BaseActivity implements LoginScreenCont
     }
 
     @Override
-    public void onLoginSuccess(boolean isFirstTimeUser, String token) {
+    public void onLoginSuccess(boolean isFirstTimeUser, String token, String userId) {
         updateButtonIfEnabled(true);
         if(isFirstTimeUser) {
             Bundle bundle = new Bundle();
             bundle.putString("token", token);
+            bundle.putString("userId", userId);
             redirectToAnotherScreen(FirstTimeUserScreenActivity.class, bundle);
-        } else
-            redirectToAnotherScreen(MainScreenActivity.class);
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("token", token);
+            redirectToAnotherScreenAsFirstScreen(MainScreenActivity.class, bundle);
+        }
     }
 
     @Override

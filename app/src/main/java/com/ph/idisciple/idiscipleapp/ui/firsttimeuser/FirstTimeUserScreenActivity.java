@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
+import com.ph.idisciple.idiscipleapp.ui.mainscreen.MainScreenActivity;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -37,11 +38,13 @@ public class FirstTimeUserScreenActivity extends BaseActivity implements FirstTi
 
         if(isValid(password, confirmPassword)) {
             updateButtonIfEnabled(false);
+            mPresenter.updatePassword(confirmPassword);
         }
     }
 
     private FirstTimeUserScreenContract.Presenter mPresenter;
-    private String mToken;
+    public String mToken;
+    public String mUserId;
 
     @Override
     protected int getLayout() {
@@ -54,6 +57,12 @@ public class FirstTimeUserScreenActivity extends BaseActivity implements FirstTi
 
         mToken = getIntent().getExtras().getString("token");
         mPresenter = new FirstTimeUserScreenPresenter(FirstTimeUserScreenActivity.this, this);
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            mToken = bundle.getString("token");
+            mUserId = bundle.getString("userId");
+        }
 
         updateButtonIfEnabled(checkIfAllRequiredFieldsAreNotEmpty());
 
@@ -110,7 +119,7 @@ public class FirstTimeUserScreenActivity extends BaseActivity implements FirstTi
             isValid = false;
             tvError.setText(errorRequiredPassword);
             llError.setVisibility(View.VISIBLE);
-        } else if(password.equals(confirmPassword)) {
+        } else if(!password.equals(confirmPassword)) {
             isValid = false;
             tvError.setText(errorPasswordsDoNotMatch);
             llError.setVisibility(View.VISIBLE);
@@ -126,15 +135,12 @@ public class FirstTimeUserScreenActivity extends BaseActivity implements FirstTi
     }
 
     @Override
-    public void onUpdatePasswordFailed() {
+    public void onUpdatePasswordSuccess(String token) {
         updateButtonIfEnabled(true);
-        // TODO: onUpdatePasswordFailed
-    }
-
-    @Override
-    public void onUpdatePasswordSuccess(boolean isFirstTimeUser, String token) {
-        updateButtonIfEnabled(true);
-        // TODO: onUpdatePasswordSuccess
+        mToken = token;
+        Bundle bundle = new Bundle();
+        bundle.putString("token", mToken);
+        redirectToAnotherScreenAsFirstScreen(MainScreenActivity.class, bundle);
     }
 
     @Override
