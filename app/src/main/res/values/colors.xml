@@ -6,10 +6,11 @@
 
     <color name="colorText">#333333</color>
     <color name="colorTextGray">#828282</color>
-
+    <color name="colorTextNavDrawerMenu">#E5E5E5</color>
 
     <color name="colorIDiscipleOrange">#F5891F</color>
     <color name="colorIDiscipleRed">#E02035</color>
     <color name="colorIDiscipleBlue">#0090C5</color>
     <color name="colorIDiscipleGray">#828282</color>
+
 </resources>
