@@ -55,15 +55,13 @@ public class FirstTimeUserScreenActivity extends BaseActivity implements FirstTi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mToken = getIntent().getExtras().getString("token");
-        mPresenter = new FirstTimeUserScreenPresenter(FirstTimeUserScreenActivity.this, this);
-
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             mToken = bundle.getString("token");
             mUserId = bundle.getString("userId");
         }
 
+        mPresenter = new FirstTimeUserScreenPresenter(FirstTimeUserScreenActivity.this, this);
         updateButtonIfEnabled(checkIfAllRequiredFieldsAreNotEmpty());
 
         etPassword.addTextChangedListener(new TextWatcher() {

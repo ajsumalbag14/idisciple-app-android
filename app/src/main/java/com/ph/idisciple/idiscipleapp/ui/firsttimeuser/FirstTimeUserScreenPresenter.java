@@ -14,7 +14,6 @@ import retrofit2.Response;
 
 public class FirstTimeUserScreenPresenter implements FirstTimeUserScreenContract.Presenter {
 
-
     private UserService mUserService;
     private FirstTimeUserScreenContract.View mView;
     private FirstTimeUserScreenActivity mActivity;
@@ -30,7 +29,7 @@ public class FirstTimeUserScreenPresenter implements FirstTimeUserScreenContract
 
     @Override
     public void updatePassword(String newPassword) {
-        mUserService.firstPasswordUpdate(mActivity.mToken, newPassword).enqueue(new Callback<Wrapper<UserAccount>>() {
+        mUserService.firstPasswordUpdate(mActivity.mUserId, newPassword).enqueue(new Callback<Wrapper<UserAccount>>() {
             @Override
             public void onResponse(Call<Wrapper<UserAccount>> call, Response<Wrapper<UserAccount>> response) {
                 switch (response.code()) {

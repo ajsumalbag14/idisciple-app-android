@@ -6,14 +6,14 @@ import com.ph.idisciple.idiscipleapp.data.remote.model.Profile;
 public class LoginResponse {
 
     @SerializedName("user_account")
-    private UserAccount classUserAccount;
+    private LoginUserAccount classUserAccount;
     @SerializedName("profile")
     private Profile classProfile;
 
-    public UserAccount getUserAccess() {
+    public LoginUserAccount getUserAccess() {
         return classUserAccount;
     }
-    public void setUserAccess(UserAccount classUserAccess) {
+    public void setUserAccess(LoginUserAccount classUserAccess) {
         this.classUserAccount = classUserAccess;
     }
 

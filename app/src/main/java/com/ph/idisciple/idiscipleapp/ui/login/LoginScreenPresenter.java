@@ -13,7 +13,7 @@ import com.ph.idisciple.idiscipleapp.data.remote.model.base.BaseApi;
 import com.ph.idisciple.idiscipleapp.data.remote.model.base.ListWrapper;
 import com.ph.idisciple.idiscipleapp.data.remote.model.request.LoginRequest;
 import com.ph.idisciple.idiscipleapp.data.remote.model.response.LoginResponse;
-import com.ph.idisciple.idiscipleapp.data.remote.model.response.UserAccount;
+import com.ph.idisciple.idiscipleapp.data.remote.model.response.LoginUserAccount;
 import com.ph.idisciple.idiscipleapp.data.remote.service.UserService;
 
 import java.io.IOException;
@@ -52,7 +52,7 @@ public class LoginScreenPresenter implements LoginScreenContract.Presenter {
                 switch (response.code()) {
                     case 200:
                     case 201:
-                        final UserAccount mUserAccess = response.body().getData().get(0).getUserAccess();
+                        final LoginUserAccount mUserAccess = response.body().getData().get(0).getUserAccess();
                         Profile mProfile = response.body().getData().get(0).getProfile();
 
                         mKeySettingsRepository.saveKeyItem(KeySettings.ItemType.TOKEN, mUserAccess.getToken(), new IKeySettingsRepository.onSaveCallback() {
