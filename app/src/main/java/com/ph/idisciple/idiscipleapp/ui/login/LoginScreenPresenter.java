@@ -55,6 +55,14 @@ public class LoginScreenPresenter implements LoginScreenContract.Presenter {
                         final LoginUserAccount mUserAccess = response.body().getData().get(0).getUserAccess();
                         Profile mProfile = response.body().getData().get(0).getProfile();
 
+                        if(!mUserAccess.isFirstTimeUser())
+                            mKeySettingsRepository.saveKeyItem(KeySettings.ItemType.IS_LOGGED_IN, "true", new IKeySettingsRepository.onSaveCallback() {
+                                @Override
+                                public void onSuccess() {
+
+                                }
+                            });
+
                         mKeySettingsRepository.saveKeyItem(KeySettings.ItemType.TOKEN, mUserAccess.getToken(), new IKeySettingsRepository.onSaveCallback() {
                             @Override
                             public void onSuccess() {
@@ -139,6 +147,7 @@ public class LoginScreenPresenter implements LoginScreenContract.Presenter {
 
                             }
                         });
+
                         mProfileRepository.saveKeyItem(ProfileObject.ProfileType.UPDATED_AT_DATE, mProfile.getUpdatedAt(), new IProfileRepository.onSaveCallback() {
                             @Override
                             public void onSuccess() {
