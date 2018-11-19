@@ -27,6 +27,22 @@
     <string name="button_main_resources">Resources</string>
     <string name="button_main_directory">Directory</string>
 
+    <string name="nav_menu_dashboard">Dashboard</string>
+    <string name="nav_menu_profile">Profile</string>
+    <string name="nav_menu_event">Event</string>
+    <string name="nav_menu_schedule">Schedule</string>
+    <string name="nav_menu_speakers">Speakers</string>
+    <string name="nav_menu_workshops">Workshops</string>
+    <string name="nav_menu_community">Community</string>
+    <string name="nav_menu_resources">Resources</string>
+    <string name="nav_menu_venue_directory">Venue Directory</string>
+    <string name="nav_menu_sponsors">Sponsors</string>
+    <string name="nav_menu_information">Information</string>
+    <string name="nav_menu_terms_and_conditions">Terms and Conditions</string>
+    <string name="nav_menu_social">Social</string>
+    <string name="nav_menu_about">About</string>
+    <string name="nav_menu_logout">Log-out</string>
+
     <!-- Dialogs -->
     <string name="dialog_message_loading">Loading...</string>
 
@@ -43,6 +59,7 @@
     <string name="error_invalid_email_or_password">Invalid E-mail or Password.</string>
     <string name="error_passwords_do_not_match">Passwords do not match.</string>
     <string name="error_required_field_password">Enter a valid password.</string>
+    <string name="error_minimum_length_password">Minimum password length is 8 characters.</string>
 
     <!-- Hint -->
     <string name="hint_email">E-mail Address</string>

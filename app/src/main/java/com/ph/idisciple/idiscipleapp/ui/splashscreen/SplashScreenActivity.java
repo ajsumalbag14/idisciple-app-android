@@ -160,11 +160,11 @@ public class SplashScreenActivity extends BaseActivity {
     }
 
     private void showLoginOptionsScreen() {
-        redirectToAnotherScreen(LoginScreenActivity.class);
+        redirectToAnotherScreenAsFirstScreen(LoginScreenActivity.class);
     }
 
     private void showMainScreen() {
-        redirectToAnotherScreen(MainScreenActivity.class);
+        redirectToAnotherScreenAsFirstScreen(MainScreenActivity.class);
     }
 
 }

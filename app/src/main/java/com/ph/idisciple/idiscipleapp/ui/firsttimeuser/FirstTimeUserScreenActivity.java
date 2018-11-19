@@ -24,6 +24,7 @@ public class FirstTimeUserScreenActivity extends BaseActivity implements FirstTi
 
     @BindString(R.string.error_passwords_do_not_match) String errorPasswordsDoNotMatch;
     @BindString(R.string.error_required_field_password) String errorRequiredPassword;
+    @BindString(R.string.error_minimum_length_password) String errorMinimumPasswordLength;
 
     @BindView(R.id.etPassword) EditText etPassword;
     @BindView(R.id.etConfirmPassword) EditText etConfirmPassword;
@@ -37,6 +38,7 @@ public class FirstTimeUserScreenActivity extends BaseActivity implements FirstTi
         String confirmPassword = etConfirmPassword.getText().toString();
 
         if(isValid(password, confirmPassword)) {
+            showLoadingDialog();
             updateButtonIfEnabled(false);
             mPresenter.updatePassword(confirmPassword);
         }
@@ -112,6 +114,10 @@ public class FirstTimeUserScreenActivity extends BaseActivity implements FirstTi
         if(TextUtils.isEmpty(password)) {
             isValid = false;
             tvError.setText(errorRequiredPassword);
+            llError.setVisibility(View.VISIBLE);
+        } else if(password.length() < 8) {
+            isValid = false;
+            tvError.setText(errorMinimumPasswordLength);
             llError.setVisibility(View.VISIBLE);
         } else if(TextUtils.isEmpty(confirmPassword)) {
             isValid = false;
