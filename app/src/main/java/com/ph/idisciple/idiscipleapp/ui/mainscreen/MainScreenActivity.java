@@ -35,6 +35,23 @@ public class MainScreenActivity extends AppCompatActivity {
     TextView tvNavMenuInformation;
     TextView tvNavMenuTermsAndConditions;
 
+    ImageView ivNavMenuDashboard;
+    TextView ivNavMenuProfile;
+    TextView ivNavMenuEvent;
+    TextView ivNavMenuSocial;
+    TextView ivNavMenuAbout;
+    TextView ivNavMenuLogout;
+
+    ImageView ivNavMenuSchedule;
+    TextView ivNavMenuSpeakers;
+    TextView ivNavMenuWorkshops;
+    TextView ivNavMenuCommunity;
+    TextView ivNavMenuResources;
+    TextView ivNavMenuVenueDirectory;
+    TextView ivNavMenuSponsors;
+    TextView ivNavMenuInformation;
+    TextView ivNavMenuTermsAndConditions;
+
     ConstraintLayout clNavMenuDashboard;
     ConstraintLayout clNavMenuProfile;
     ConstraintLayout clNavMenuEvent;
@@ -58,6 +75,7 @@ public class MainScreenActivity extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.clNavMenuDashboard:
                     clNavMenuDashboard.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleOrange));
+
                     break;
                 case R.id.clNavMenuProfile:
                     clNavMenuProfile.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
@@ -117,6 +135,7 @@ public class MainScreenActivity extends AppCompatActivity {
             drawer.closeDrawer(GravityCompat.START);
         }
     };
+
     ImageView ivNavEventMenuGroupCollapsible;
     private boolean isNavEventMenuGroupShown = true;
 
@@ -135,6 +154,7 @@ public class MainScreenActivity extends AppCompatActivity {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         initializeOnClickForDrawerMenus(navigationView);
+        clNavMenuDashboard.performClick();
 
         drawer.bringToFront();
         drawer.requestLayout();
