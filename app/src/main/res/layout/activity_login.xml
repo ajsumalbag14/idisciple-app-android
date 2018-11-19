@@ -93,7 +93,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/guidelineColorBar"
         app:layout_constraintEnd_toEndOf="@+id/guidelineContentRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineContentLeft"
-        app:layout_constraintTop_toBottomOf="@+id/guidelineContent" >
+        app:layout_constraintTop_toBottomOf="@+id/guidelineContent">
 
         <!-- Email -->
         <android.support.constraint.Guideline
@@ -133,20 +133,20 @@
             android:id="@+id/llEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="1dp"
+            android:layout_marginStart="1dp"
             android:layout_marginTop="@dimen/margin_normal"
             android:background="@drawable/shape_edittext"
             android:elevation="@dimen/margin_very_small"
-            android:layout_marginEnd="1dp"
-            android:layout_marginStart="1dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/margin_small_2"
             android:paddingEnd="@dimen/margin_normal"
             android:paddingStart="@dimen/margin_normal"
             android:paddingTop="@dimen/margin_small_2"
-            app:layout_constraintVertical_chainStyle="spread"
             app:layout_constraintBottom_toTopOf="@+id/llPassword"
-            app:layout_constraintTop_toBottomOf="@+id/llError">
+            app:layout_constraintTop_toBottomOf="@+id/llError"
+            app:layout_constraintVertical_chainStyle="spread">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -182,8 +182,8 @@
             android:paddingEnd="@dimen/margin_normal"
             android:paddingStart="@dimen/margin_normal"
             android:paddingTop="@dimen/margin_small_2"
-            app:layout_constraintTop_toBottomOf="@+id/llEmail"
-            app:layout_constraintBottom_toTopOf="@+id/bLogin">
+            app:layout_constraintBottom_toTopOf="@+id/bLogin"
+            app:layout_constraintTop_toBottomOf="@+id/llEmail">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -220,6 +220,7 @@
             android:layout_marginTop="@dimen/margin_normal"
             android:background="@drawable/shape_button_green"
             android:elevation="@dimen/margin_very_small"
+            android:filterTouchesWhenObscured="true"
             android:text="@string/button_login"
             android:textColor="@android:color/white"
             android:textSize="16sp"
@@ -233,14 +234,15 @@
             android:id="@+id/tvForgotPassword"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:filterTouchesWhenObscured="true"
             android:gravity="center"
             android:padding="@dimen/margin_small"
             android:text="@string/button_link_forgot_password"
             android:textColor="@color/colorIDiscipleBlue"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/bLogin"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bLogin" />
     </android.support.constraint.ConstraintLayout>
 
 
