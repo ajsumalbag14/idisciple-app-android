@@ -16,6 +16,7 @@
     <style name="MainButton" parent="Base.Widget.AppCompat.Button.Borderless">
         <item name="android:background">@drawable/shape_button_main</item>
         <item name="android:textColor">@android:color/white</item>
+        <item name="android:filterTouchesWhenObscured">true</item>
         <item name="android:padding">15dp</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textAllCaps">true</item>
@@ -38,5 +39,18 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="NavDrawerItemTitle">
+        <item name="android:textColor">@color/colorTextNavDrawerMenu</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NavDrawerTextOnly">
+        <item name="android:paddingTop">@dimen/margin_very_small_2</item>
+        <item name="android:paddingBottom">@dimen/margin_very_small_2</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/colorTextNavDrawerMenu</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 
 </resources>

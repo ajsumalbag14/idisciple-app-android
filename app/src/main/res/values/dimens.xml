@@ -19,5 +19,8 @@
 
     <dimen name="avatar_size">100dp</dimen>
     <dimen name="main_button_menu_size">30dp</dimen>
-    
+    <dimen name="nav_menu_size">100dp</dimen>
+    <dimen name="nav_menu_image_text_spacing_percent">0.25</dimen>
+
+
 </resources>

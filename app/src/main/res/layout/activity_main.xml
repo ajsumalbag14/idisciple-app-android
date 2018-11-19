@@ -20,18 +20,11 @@
         android:background="@color/colorText"
         android:fitsSystemWindows="true">
 
-        <LinearLayout
+        <include
+            layout="@layout/nav_drawer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent" />
 
-            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="dfdf"
-                android:textColor="@color/colorTextNavDrawerMenu"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </LinearLayout>
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>
