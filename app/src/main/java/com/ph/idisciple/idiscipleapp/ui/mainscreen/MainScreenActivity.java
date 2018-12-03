@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ph.idisciple.idiscipleapp.R;
+import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 
 import butterknife.BindDrawable;
 import butterknife.BindView;
@@ -68,18 +68,18 @@ public class MainScreenActivity extends AppCompatActivity {
     @BindView(R.id.clNavMenuInformation) ConstraintLayout clNavMenuInformation;
     @BindView(R.id.clNavMenuTermsAndConditions) ConstraintLayout clNavMenuTermsAndConditions;
 
-
     @BindView(R.id.llNavMenu2) LinearLayout llNavMenu2;
     @BindView(R.id.llNavMenu2Sub) LinearLayout llNavMenu2Sub;
     @BindView(R.id.ivNavEventMenuGroupCollapsible) ImageView ivNavEventMenuGroupCollapsible;
     private boolean isNavEventMenuGroupShown = false;
 
-    //private BaseFragment fragmentActive = null;
     public enum NavDrawerMenu {
         DASHBOARD, PROFILE, EVENT, SOCIAL, ABOUT, LOGOUT,
         SCHEDULE, SPEAKERS, WORKSHOPS, COMMUNITY, RESOURCES, VENUEDIRECTORY, SPONSORS, INFORMATION, TERMSANDCONDITIONS
     }
     private NavDrawerMenu selectedNavMenuItem = null;
+
+    final DashboardFragment fragmentDashboard = new DashboardFragment();
 
     public View.OnClickListener onNavMenuOnClick = new View.OnClickListener() {
         @Override
@@ -87,7 +87,7 @@ public class MainScreenActivity extends AppCompatActivity {
             if(selectedNavMenuItem != null) resetNavigationDrawerSelection();
             switch (v.getId()) {
                 case R.id.clNavMenuDashboard:
-                   // getFragmentManager().beginTransaction().hide(fragmentActive).show(fragmentTabMap).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.flContent, fragmentDashboard).commit();
                     clNavMenuDashboard.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleOrange));
                     ivNavMenuDashboard.setImageDrawable(getDrawable(R.drawable.ic_nav_dashboard_active));
                     selectedNavMenuItem = NavDrawerMenu.DASHBOARD;

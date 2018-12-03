@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@android:color/white"
+    android:contentInsetEnd="0dp"
+    android:elevation="0dp"
+    app:contentInsetStart="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivToolbarLogo"
+            android:layout_width="@dimen/margin_big"
+            android:layout_height="@dimen/margin_big"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_logo"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:filterTouchesWhenObscured="true"
+            android:padding="@dimen/margin_very_small" />
+
+        <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+            android:id="@+id/tvToolbarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/colorIDiscipleGray"
+            android:textSize="18sp"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/ivToolbarNavMenu"
+            android:layout_width="@dimen/margin_big"
+            android:layout_height="@dimen/margin_big"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_hamburger"
+            android:layout_marginStart="@dimen/margin_small_2"
+            android:filterTouchesWhenObscured="true"
+            android:padding="@dimen/margin_very_small" />
+
+    </RelativeLayout>
+</android.support.v7.widget.Toolbar>
