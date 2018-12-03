@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <!-- 1st layer -->
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/clNavMenu1"
+    <LinearLayout
+        android:id="@+id/llNavMenu1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorText"
-        android:paddingTop="@dimen/margin_normal"
-        app:layout_constraintBottom_toTopOf="@+id/clNavMenu2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread"
-        app:layout_constraintVertical_weight="0.24">
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/margin_small"
+        android:paddingTop="@dimen/margin_normal_2">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/clNavMenuDashboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/margin_small"
             android:paddingBottom="@dimen/margin_small"
+            android:paddingTop="@dimen/margin_small"
             app:layout_constraintBottom_toTopOf="@+id/clNavMenuProfile"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread">
@@ -46,9 +45,9 @@
                 android:layout_height="@dimen/margin_normal_2"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_nav_dashboard"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuDashboardLeft" />
+                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuDashboardLeft"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
                 style="@style/NavDrawerItemTitle"
@@ -65,8 +64,8 @@
             android:id="@+id/clNavMenuProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/margin_small"
             android:paddingBottom="@dimen/margin_small"
+            android:paddingTop="@dimen/margin_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/clNavMenuDashboard">
 
@@ -90,9 +89,9 @@
                 android:layout_height="@dimen/margin_normal_2"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_nav_profile"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuProfileLeft" />
+                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuProfileLeft"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
                 style="@style/NavDrawerItemTitle"
@@ -104,13 +103,13 @@
                 app:layout_constraintTop_toTopOf="@+id/ivNavMenuProfile" />
         </android.support.constraint.ConstraintLayout>
 
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
     <!-- 2nd layer -->
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/clNavMenu2"
+    <LinearLayout
+        android:id="@+id/llNavMenu2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorIDiscipleBlue"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/clNavMenu3"
@@ -123,7 +122,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_very_small"
             android:paddingTop="@dimen/margin_small"
-            android:paddingBottom="@dimen/margin_small"
             app:layout_constraintBottom_toTopOf="@+id/clNavMenuSchedule"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -155,8 +153,8 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_nav_event_active"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuEventLeft" />
+                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuEventLeft"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
                 style="@style/NavDrawerItemTitle"
@@ -174,235 +172,246 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_nav_group_hide"
                 app:layout_constraintBottom_toBottomOf="@+id/ivNavMenuEvent"
-                app:layout_constraintTop_toTopOf="@+id/ivNavMenuEvent"
-                app:layout_constraintEnd_toEndOf="@+id/guidelineNavMenuEventRight" />
+                app:layout_constraintEnd_toEndOf="@+id/guidelineNavMenuEventRight"
+                app:layout_constraintTop_toTopOf="@+id/ivNavMenuEvent" />
         </android.support.constraint.ConstraintLayout>
 
-
-        <!-- Schedule -->
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/clNavMenuSchedule"
+        <LinearLayout
+            android:id="@+id/llNavMenu2Sub"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/clNavMenuSpeakers"
-            app:layout_constraintTop_toBottomOf="@+id/clNavMenuEvent">
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin_small"
+            android:paddingTop="@dimen/margin_small"
+            android:gravity="center"
+            android:visibility="visible">
 
-            <android.support.constraint.Guideline
-                android:id="@+id/guidelineNavMenuScheduleLeft"
-                android:layout_width="wrap_content"
+            <!-- Schedule -->
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clNavMenuSchedule"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".1" />
+                app:layout_constraintBottom_toTopOf="@+id/clNavMenuSpeakers"
+                app:layout_constraintTop_toBottomOf="@+id/clNavMenuEvent">
 
-            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                android:id="@+id/tvNavMenuSchedule"
-                style="@style/NavDrawerTextOnly"
-                android:layout_width="wrap_content"
+                <android.support.constraint.Guideline
+                    android:id="@+id/guidelineNavMenuScheduleLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".1" />
+
+                <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                    android:id="@+id/tvNavMenuSchedule"
+                    style="@style/NavDrawerTextOnly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nav_menu_schedule"
+                    app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuScheduleLeft" />
+            </android.support.constraint.ConstraintLayout>
+
+            <!-- Speakers -->
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clNavMenuSpeakers"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/nav_menu_schedule"
-                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuScheduleLeft" />
-        </android.support.constraint.ConstraintLayout>
+                app:layout_constraintBottom_toTopOf="@+id/clNavMenuWorkshops"
+                app:layout_constraintTop_toBottomOf="@+id/clNavMenuSchedule">
 
-        <!-- Speakers -->
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/clNavMenuSpeakers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/clNavMenuWorkshops"
-            app:layout_constraintTop_toBottomOf="@+id/clNavMenuSchedule">
+                <android.support.constraint.Guideline
+                    android:id="@+id/guidelineNavMenuSpeakersLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".1" />
 
-            <android.support.constraint.Guideline
-                android:id="@+id/guidelineNavMenuSpeakersLeft"
-                android:layout_width="wrap_content"
+                <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                    android:id="@+id/tvNavMenuSpeakers"
+                    style="@style/NavDrawerTextOnly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nav_menu_speakers"
+                    app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuSpeakersLeft" />
+            </android.support.constraint.ConstraintLayout>
+
+            <!-- Workshops -->
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clNavMenuWorkshops"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".1" />
+                app:layout_constraintBottom_toTopOf="@+id/clNavMenuCommunity"
+                app:layout_constraintTop_toBottomOf="@+id/clNavMenuSpeakers">
 
-            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                android:id="@+id/tvNavMenuSpeakers"
-                style="@style/NavDrawerTextOnly"
-                android:layout_width="wrap_content"
+                <android.support.constraint.Guideline
+                    android:id="@+id/guidelineNavMenuWorkshopsLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".1" />
+
+                <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                    android:id="@+id/tvNavMenuWorkshops"
+                    style="@style/NavDrawerTextOnly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nav_menu_workshops"
+                    app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuWorkshopsLeft" />
+            </android.support.constraint.ConstraintLayout>
+
+            <!-- Community -->
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clNavMenuCommunity"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/nav_menu_speakers"
-                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuSpeakersLeft" />
-        </android.support.constraint.ConstraintLayout>
+                app:layout_constraintBottom_toTopOf="@+id/clNavMenuResources"
+                app:layout_constraintTop_toBottomOf="@+id/clNavMenuWorkshops">
 
-        <!-- Workshops -->
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/clNavMenuWorkshops"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/clNavMenuCommunity"
-            app:layout_constraintTop_toBottomOf="@+id/clNavMenuSpeakers">
+                <android.support.constraint.Guideline
+                    android:id="@+id/guidelineNavMenuCommunityLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".1" />
 
-            <android.support.constraint.Guideline
-                android:id="@+id/guidelineNavMenuWorkshopsLeft"
-                android:layout_width="wrap_content"
+                <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                    android:id="@+id/tvNavMenuCommunity"
+                    style="@style/NavDrawerTextOnly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nav_menu_community"
+                    app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuCommunityLeft" />
+            </android.support.constraint.ConstraintLayout>
+
+            <!-- Resources -->
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clNavMenuResources"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".1" />
+                app:layout_constraintBottom_toTopOf="@+id/clNavMenuVenueDirectory"
+                app:layout_constraintTop_toBottomOf="@+id/clNavMenuCommunity">
 
-            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                android:id="@+id/tvNavMenuWorkshops"
-                style="@style/NavDrawerTextOnly"
-                android:layout_width="wrap_content"
+                <android.support.constraint.Guideline
+                    android:id="@+id/guidelineNavMenuResourcesLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".1" />
+
+                <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                    android:id="@+id/tvNavMenuResources"
+                    style="@style/NavDrawerTextOnly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nav_menu_resources"
+                    app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuResourcesLeft" />
+            </android.support.constraint.ConstraintLayout>
+
+            <!-- VenueDirectory -->
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clNavMenuVenueDirectory"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/nav_menu_workshops"
-                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuWorkshopsLeft" />
-        </android.support.constraint.ConstraintLayout>
+                app:layout_constraintBottom_toTopOf="@+id/clNavMenuSponsors"
+                app:layout_constraintTop_toBottomOf="@+id/clNavMenuResources">
 
-        <!-- Community -->
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/clNavMenuCommunity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/clNavMenuResources"
-            app:layout_constraintTop_toBottomOf="@+id/clNavMenuWorkshops">
+                <android.support.constraint.Guideline
+                    android:id="@+id/guidelineNavMenuVenueDirectoryLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".1" />
 
-            <android.support.constraint.Guideline
-                android:id="@+id/guidelineNavMenuCommunityLeft"
-                android:layout_width="wrap_content"
+                <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                    android:id="@+id/tvNavMenuVenueDirectory"
+                    style="@style/NavDrawerTextOnly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nav_menu_venue_directory"
+                    app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuVenueDirectoryLeft" />
+            </android.support.constraint.ConstraintLayout>
+
+            <!-- Sponsors -->
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clNavMenuSponsors"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".1" />
+                app:layout_constraintBottom_toTopOf="@+id/clNavMenuInformation"
+                app:layout_constraintTop_toBottomOf="@+id/clNavMenuVenueDirectory">
 
-            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                android:id="@+id/tvNavMenuCommunity"
-                style="@style/NavDrawerTextOnly"
-                android:layout_width="wrap_content"
+                <android.support.constraint.Guideline
+                    android:id="@+id/guidelineNavMenuSponsorsLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".1" />
+
+                <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                    android:id="@+id/tvNavMenuSponsors"
+                    style="@style/NavDrawerTextOnly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nav_menu_sponsors"
+                    app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuSponsorsLeft" />
+            </android.support.constraint.ConstraintLayout>
+
+            <!-- Information -->
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clNavMenuInformation"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/nav_menu_community"
-                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuCommunityLeft" />
-        </android.support.constraint.ConstraintLayout>
+                app:layout_constraintBottom_toTopOf="@+id/clNavMenuTermsAndConditions"
+                app:layout_constraintTop_toBottomOf="@+id/clNavMenuSponsors">
 
-        <!-- Resources -->
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/clNavMenuResources"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/clNavMenuVenueDirectory"
-            app:layout_constraintTop_toBottomOf="@+id/clNavMenuCommunity">
+                <android.support.constraint.Guideline
+                    android:id="@+id/guidelineNavMenuInformationLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".1" />
 
-            <android.support.constraint.Guideline
-                android:id="@+id/guidelineNavMenuResourcesLeft"
-                android:layout_width="wrap_content"
+                <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                    android:id="@+id/tvNavMenuInformation"
+                    style="@style/NavDrawerTextOnly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nav_menu_information"
+                    app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuInformationLeft" />
+            </android.support.constraint.ConstraintLayout>
+
+            <!-- Terms And Conditions -->
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/clNavMenuTermsAndConditions"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".1" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/clNavMenuInformation">
 
-            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                android:id="@+id/tvNavMenuResources"
-                style="@style/NavDrawerTextOnly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_menu_resources"
-                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuResourcesLeft" />
-        </android.support.constraint.ConstraintLayout>
+                <android.support.constraint.Guideline
+                    android:id="@+id/guidelineNavMenuTermsAndConditionsLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".1" />
 
-        <!-- VenueDirectory -->
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/clNavMenuVenueDirectory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/clNavMenuSponsors"
-            app:layout_constraintTop_toBottomOf="@+id/clNavMenuResources">
+                <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                    android:id="@+id/tvNavMenuTermsAndConditions"
+                    style="@style/NavDrawerTextOnly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nav_menu_terms_and_conditions"
+                    app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuTermsAndConditionsLeft" />
+            </android.support.constraint.ConstraintLayout>
 
-            <android.support.constraint.Guideline
-                android:id="@+id/guidelineNavMenuVenueDirectoryLeft"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".1" />
+        </LinearLayout>
+    </LinearLayout>
 
-            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                android:id="@+id/tvNavMenuVenueDirectory"
-                style="@style/NavDrawerTextOnly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_menu_venue_directory"
-                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuVenueDirectoryLeft" />
-        </android.support.constraint.ConstraintLayout>
-
-        <!-- Sponsors -->
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/clNavMenuSponsors"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/clNavMenuInformation"
-            app:layout_constraintTop_toBottomOf="@+id/clNavMenuVenueDirectory">
-
-            <android.support.constraint.Guideline
-                android:id="@+id/guidelineNavMenuSponsorsLeft"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".1" />
-
-            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                android:id="@+id/tvNavMenuSponsors"
-                style="@style/NavDrawerTextOnly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_menu_sponsors"
-                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuSponsorsLeft" />
-        </android.support.constraint.ConstraintLayout>
-
-        <!-- Information -->
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/clNavMenuInformation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/clNavMenuTermsAndConditions"
-            app:layout_constraintTop_toBottomOf="@+id/clNavMenuSponsors">
-
-            <android.support.constraint.Guideline
-                android:id="@+id/guidelineNavMenuInformationLeft"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".1" />
-
-            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                android:id="@+id/tvNavMenuInformation"
-                style="@style/NavDrawerTextOnly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_menu_information"
-                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuInformationLeft" />
-        </android.support.constraint.ConstraintLayout>
-
-        <!-- Terms And Conditions -->
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/clNavMenuTermsAndConditions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/clNavMenuInformation">
-
-            <android.support.constraint.Guideline
-                android:id="@+id/guidelineNavMenuTermsAndConditionsLeft"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".1" />
-
-            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                android:id="@+id/tvNavMenuTermsAndConditions"
-                style="@style/NavDrawerTextOnly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nav_menu_terms_and_conditions"
-                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuTermsAndConditionsLeft" />
-        </android.support.constraint.ConstraintLayout>
-
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/clNavMenu3"
+    <LinearLayout
+        android:id="@+id/llNavMenu3"
         android:layout_width="match_parent"
-        android:paddingTop="@dimen/margin_normal"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:background="@color/colorText"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/margin_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clNavMenu2"
         app:layout_constraintVertical_weight="0.3">
@@ -411,8 +420,8 @@
             android:id="@+id/clNavMenuSocial"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/margin_small"
             android:paddingBottom="@dimen/margin_small"
+            android:paddingTop="@dimen/margin_small"
             app:layout_constraintBottom_toTopOf="@+id/clNavMenuAbout"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -436,9 +445,9 @@
                 android:layout_height="@dimen/margin_normal_2"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_nav_social"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuSocialLeft" />
+                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuSocialLeft"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
                 style="@style/NavDrawerItemTitle"
@@ -454,8 +463,8 @@
             android:id="@+id/clNavMenuAbout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/margin_small"
             android:paddingBottom="@dimen/margin_small"
+            android:paddingTop="@dimen/margin_small"
             app:layout_constraintBottom_toTopOf="@+id/clNavMenuLogout"
             app:layout_constraintTop_toBottomOf="@+id/clNavMenuSocial">
 
@@ -480,8 +489,8 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_nav_about"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuAboutLeft" />
+                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuAboutLeft"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
                 style="@style/NavDrawerItemTitle"
@@ -498,8 +507,8 @@
             android:id="@+id/clNavMenuLogout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/margin_small"
             android:paddingBottom="@dimen/margin_small"
+            android:paddingTop="@dimen/margin_small"
             app:layout_constraintBottom_toBottomOf="@+id/clNavMenuBlank"
             app:layout_constraintTop_toBottomOf="@+id/clNavMenuAbout">
 
@@ -524,8 +533,8 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_nav_logout"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuLogoutLeft" />
+                app:layout_constraintStart_toEndOf="@+id/guidelineNavMenuLogoutLeft"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
                 style="@style/NavDrawerItemTitle"
@@ -537,22 +546,6 @@
                 app:layout_constraintTop_toTopOf="@+id/ivNavMenuLogout" />
         </android.support.constraint.ConstraintLayout>
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/clNavMenuBlank"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/clNavMenuLogout">
+    </LinearLayout>
 
-            <ImageView
-                android:layout_width="@dimen/margin_normal"
-                android:layout_height="@dimen/margin_normal"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_nav_logout"
-                android:visibility="invisible" />
-        </android.support.constraint.ConstraintLayout>
-
-    </android.support.constraint.ConstraintLayout>
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

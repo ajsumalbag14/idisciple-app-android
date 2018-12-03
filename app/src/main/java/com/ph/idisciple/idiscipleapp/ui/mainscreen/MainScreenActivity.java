@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ph.idisciple.idiscipleapp.R;
@@ -68,8 +69,8 @@ public class MainScreenActivity extends AppCompatActivity {
     @BindView(R.id.clNavMenuTermsAndConditions) ConstraintLayout clNavMenuTermsAndConditions;
 
 
-    @BindView(R.id.clNavMenu2) ConstraintLayout clNavMenu2;
-    @BindView(R.id.clNavMenu3) ConstraintLayout clNavMenu3;
+    @BindView(R.id.llNavMenu2) LinearLayout llNavMenu2;
+    @BindView(R.id.llNavMenu2Sub) LinearLayout llNavMenu2Sub;
     @BindView(R.id.ivNavEventMenuGroupCollapsible) ImageView ivNavEventMenuGroupCollapsible;
     private boolean isNavEventMenuGroupShown = false;
 
@@ -118,38 +119,47 @@ public class MainScreenActivity extends AppCompatActivity {
                     break;
 
                 case R.id.clNavMenuSchedule:
+                    selectedNavMenuItem = NavDrawerMenu.SCHEDULE;
                     clNavMenuSchedule.setBackgroundColor(Color.WHITE);
                     tvNavMenuSchedule.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
                     break;
                 case R.id.clNavMenuSpeakers:
+                    selectedNavMenuItem = NavDrawerMenu.SPEAKERS;
                     clNavMenuSpeakers.setBackgroundColor(Color.WHITE);
                     tvNavMenuSpeakers.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
                     break;
                 case R.id.clNavMenuWorkshops:
+                    selectedNavMenuItem = NavDrawerMenu.WORKSHOPS;
                     clNavMenuWorkshops.setBackgroundColor(Color.WHITE);
                     tvNavMenuWorkshops.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
                     break;
                 case R.id.clNavMenuCommunity:
+                    selectedNavMenuItem = NavDrawerMenu.COMMUNITY;
                     clNavMenuCommunity.setBackgroundColor(Color.WHITE);
                     tvNavMenuCommunity.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
                     break;
                 case R.id.clNavMenuResources:
+                    selectedNavMenuItem = NavDrawerMenu.RESOURCES;
                     clNavMenuResources.setBackgroundColor(Color.WHITE);
                     tvNavMenuResources.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
                     break;
                 case R.id.clNavMenuVenueDirectory:
+                    selectedNavMenuItem = NavDrawerMenu.VENUEDIRECTORY;
                     clNavMenuVenueDirectory.setBackgroundColor(Color.WHITE);
                     tvNavMenuVenueDirectory.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
                     break;
                 case R.id.clNavMenuSponsors:
+                    selectedNavMenuItem = NavDrawerMenu.SPONSORS;
                     clNavMenuSponsors.setBackgroundColor(Color.WHITE);
                     tvNavMenuSponsors.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
                     break;
                 case R.id.clNavMenuInformation:
+                    selectedNavMenuItem = NavDrawerMenu.INFORMATION;
                     clNavMenuInformation.setBackgroundColor(Color.WHITE);
                     tvNavMenuInformation.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
                     break;
                 case R.id.clNavMenuTermsAndConditions:
+                    selectedNavMenuItem = NavDrawerMenu.TERMSANDCONDITIONS;
                     clNavMenuTermsAndConditions.setBackgroundColor(Color.WHITE);
                     tvNavMenuTermsAndConditions.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
                     break;
@@ -230,26 +240,9 @@ public class MainScreenActivity extends AppCompatActivity {
                 isNavEventMenuGroupShown = !isNavEventMenuGroupShown;
                 ivNavEventMenuGroupCollapsible.setImageDrawable(isNavEventMenuGroupShown ? drawableNavCollapsibleShowIcon : drawableNavCollapsibleHideIcon);
 
-                ConstraintSet constraintSetForEvents = new ConstraintSet();
-                constraintSetForEvents.setVerticalWeight(R.id.clNavMenu2, isNavEventMenuGroupShown ? 0.01f : 0.6f);
-                clNavMenu2.setConstraintSet(constraintSetForEvents);
-
-                ConstraintSet constraintSetForSocialAndOthers = new ConstraintSet();
-                constraintSetForSocialAndOthers.setVerticalWeight(R.id.clNavMenu3, isNavEventMenuGroupShown ? 0.6f : 0.3f);
-                clNavMenu3.setConstraintSet(constraintSetForSocialAndOthers);
-
-                clNavMenu2.setBackgroundColor(getResources().getColor(isNavEventMenuGroupShown ? R.color.colorText : R.color.colorIDiscipleBlue));
+                llNavMenu2.setBackgroundColor(getResources().getColor(isNavEventMenuGroupShown ? R.color.colorText : R.color.colorIDiscipleBlue));
                 ivNavMenuEvent.setImageDrawable(getDrawable(isNavEventMenuGroupShown ? R.drawable.ic_nav_event : R.drawable.ic_nav_event_active));
-
-                clNavMenuSchedule.setVisibility(isNavEventMenuGroupShown ? View.GONE : View.VISIBLE);
-                clNavMenuSpeakers.setVisibility(isNavEventMenuGroupShown ? View.GONE : View.VISIBLE);
-                clNavMenuWorkshops.setVisibility(isNavEventMenuGroupShown ? View.GONE : View.VISIBLE);
-                clNavMenuCommunity.setVisibility(isNavEventMenuGroupShown ? View.GONE : View.VISIBLE);
-                clNavMenuResources.setVisibility(isNavEventMenuGroupShown ? View.GONE : View.VISIBLE);
-                clNavMenuVenueDirectory.setVisibility(isNavEventMenuGroupShown ? View.GONE : View.VISIBLE);
-                clNavMenuSponsors.setVisibility(isNavEventMenuGroupShown ? View.GONE : View.VISIBLE);
-                clNavMenuInformation.setVisibility(isNavEventMenuGroupShown ? View.GONE : View.VISIBLE);
-                clNavMenuTermsAndConditions.setVisibility(isNavEventMenuGroupShown ? View.GONE : View.VISIBLE);
+                llNavMenu2Sub.setVisibility(isNavEventMenuGroupShown ? View.GONE : View.VISIBLE);
             }
         });
 
@@ -303,42 +296,42 @@ public class MainScreenActivity extends AppCompatActivity {
                 selectedNavMenuItem = NavDrawerMenu.LOGOUT;
                 break;
 
-//            case R.id.clNavMenuSchedule:
-//                clNavMenuSchedule.setBackgroundColor(Color.WHITE);
-//                tvNavMenuSchedule.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
-//                break;
-//            case R.id.clNavMenuSpeakers:
-//                clNavMenuSpeakers.setBackgroundColor(Color.WHITE);
-//                tvNavMenuSpeakers.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
-//                break;
-//            case R.id.clNavMenuWorkshops:
-//                clNavMenuWorkshops.setBackgroundColor(Color.WHITE);
-//                tvNavMenuWorkshops.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
-//                break;
-//            case R.id.clNavMenuCommunity:
-//                clNavMenuCommunity.setBackgroundColor(Color.WHITE);
-//                tvNavMenuCommunity.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
-//                break;
-//            case R.id.clNavMenuResources:
-//                clNavMenuResources.setBackgroundColor(Color.WHITE);
-//                tvNavMenuResources.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
-//                break;
-//            case R.id.clNavMenuVenueDirectory:
-//                clNavMenuVenueDirectory.setBackgroundColor(Color.WHITE);
-//                tvNavMenuVenueDirectory.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
-//                break;
-//            case R.id.clNavMenuSponsors:
-//                clNavMenuSponsors.setBackgroundColor(Color.WHITE);
-//                tvNavMenuSponsors.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
-//                break;
-//            case R.id.clNavMenuInformation:
-//                clNavMenuInformation.setBackgroundColor(Color.WHITE);
-//                tvNavMenuInformation.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
-//                break;
-//            case R.id.clNavMenuTermsAndConditions:
-//                clNavMenuTermsAndConditions.setBackgroundColor(Color.WHITE);
-//                tvNavMenuTermsAndConditions.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
-//                break;
+            case SCHEDULE:
+                clNavMenuSchedule.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleBlue));
+                tvNavMenuSchedule.setTextColor(Color.WHITE);
+                break;
+            case SPEAKERS:
+                clNavMenuSpeakers.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleBlue));
+                tvNavMenuSpeakers.setTextColor(Color.WHITE);
+                break;
+            case WORKSHOPS:
+                clNavMenuWorkshops.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleBlue));
+                tvNavMenuWorkshops.setTextColor(Color.WHITE);
+                break;
+            case COMMUNITY:
+                clNavMenuCommunity.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleBlue));
+                tvNavMenuCommunity.setTextColor(Color.WHITE);
+                break;
+            case RESOURCES:
+                clNavMenuResources.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleBlue));
+                tvNavMenuResources.setTextColor(Color.WHITE);
+                break;
+            case VENUEDIRECTORY:
+                clNavMenuVenueDirectory.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleBlue));
+                tvNavMenuVenueDirectory.setTextColor(Color.WHITE);
+                break;
+            case SPONSORS:
+                clNavMenuSponsors.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleBlue));
+                tvNavMenuSponsors.setTextColor(Color.WHITE);
+                break;
+            case INFORMATION:
+                clNavMenuInformation.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleBlue));
+                tvNavMenuInformation.setTextColor(Color.WHITE);
+                break;
+            case TERMSANDCONDITIONS:
+                clNavMenuTermsAndConditions.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleBlue));
+                tvNavMenuTermsAndConditions.setTextColor(Color.WHITE);
+                break;
         }
     }
 }

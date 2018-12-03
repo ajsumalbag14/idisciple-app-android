@@ -46,8 +46,8 @@
     </style>
 
     <style name="NavDrawerTextOnly">
-        <item name="android:paddingTop">@dimen/margin_very_small_2</item>
-        <item name="android:paddingBottom">@dimen/margin_very_small_2</item>
+        <item name="android:paddingTop">@dimen/margin_very_small</item>
+        <item name="android:paddingBottom">@dimen/margin_very_small</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/colorTextNavDrawerMenu</item>
         <item name="android:textSize">14sp</item>
