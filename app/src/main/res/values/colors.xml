@@ -6,6 +6,7 @@
 
     <color name="colorText">#333333</color>
     <color name="colorTextGray">#828282</color>
+    <color name="colorDividerGray">#BDBDBD</color>
     <color name="colorTextNavDrawerMenu">#E5E5E5</color>
 
     <color name="colorIDiscipleOrange">#F5891F</color>

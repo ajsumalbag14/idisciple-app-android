@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:padding="@dimen/margin_small_2"
-                android:text="@string/dialog_title_speaker_bio"
+                android:text="@string/dialog_title_workshop_info"
                 android:textAllCaps="true"
                 android:textColor="@color/colorText"
                 android:textSize="12sp"
@@ -47,20 +47,13 @@
                 android:padding="@dimen/margin_normal"
                 android:orientation="vertical">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/ivSpeakerAvatar"
-                    android:layout_width="@dimen/avatar_size"
-                    android:layout_height="@dimen/avatar_size"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/img_placeholder" />
-
                 <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldTextView
                     android:id="@+id/tvSpeakerName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:maxLines="2"
-                    android:text="Speaker name"
+                    android:text="Workshop name"
                     android:textColor="@color/colorText"
                     android:textSize="20sp"
                     android:textStyle="bold" />
