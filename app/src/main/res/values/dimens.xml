@@ -22,5 +22,5 @@
     <dimen name="nav_menu_size">180dp</dimen>
     <dimen name="nav_menu_image_text_spacing_percent">0.25</dimen>
 
-
+    <dimen name="selected_speaker_border_size">3dp</dimen>
 </resources>

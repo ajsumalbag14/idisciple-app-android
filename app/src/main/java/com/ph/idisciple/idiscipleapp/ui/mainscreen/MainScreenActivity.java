@@ -1,5 +1,7 @@
 package com.ph.idisciple.idiscipleapp.ui.mainscreen;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -19,7 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ph.idisciple.idiscipleapp.R;
-import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
+import com.ph.idisciple.idiscipleapp.ui.mainscreen.speakerscreen.SpeakerFragment;
 
 import butterknife.BindDrawable;
 import butterknife.BindView;
@@ -79,15 +81,16 @@ public class MainScreenActivity extends AppCompatActivity {
     }
     private NavDrawerMenu selectedNavMenuItem = null;
 
-    final DashboardFragment fragmentDashboard = new DashboardFragment();
-
     public View.OnClickListener onNavMenuOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Fragment selectedNewFragment = new DashboardFragment();
             if(selectedNavMenuItem != null) resetNavigationDrawerSelection();
+
             switch (v.getId()) {
                 case R.id.clNavMenuDashboard:
-                    getFragmentManager().beginTransaction().replace(R.id.flContent, fragmentDashboard).commit();
+                    selectedNewFragment = Fragment.instantiate(MainScreenActivity.this, DashboardFragment.class.getName(), null);
+
                     clNavMenuDashboard.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleOrange));
                     ivNavMenuDashboard.setImageDrawable(getDrawable(R.drawable.ic_nav_dashboard_active));
                     selectedNavMenuItem = NavDrawerMenu.DASHBOARD;
@@ -124,6 +127,8 @@ public class MainScreenActivity extends AppCompatActivity {
                     tvNavMenuSchedule.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
                     break;
                 case R.id.clNavMenuSpeakers:
+                    selectedNewFragment = Fragment.instantiate(MainScreenActivity.this, SpeakerFragment.class.getName(), null);
+
                     selectedNavMenuItem = NavDrawerMenu.SPEAKERS;
                     clNavMenuSpeakers.setBackgroundColor(Color.WHITE);
                     tvNavMenuSpeakers.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
@@ -164,6 +169,8 @@ public class MainScreenActivity extends AppCompatActivity {
                     tvNavMenuTermsAndConditions.setTextColor(getResources().getColor(R.color.colorIDiscipleBlue));
                     break;
             }
+
+            replaceFragment(selectedNewFragment, false);
 
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
@@ -333,5 +340,15 @@ public class MainScreenActivity extends AppCompatActivity {
                 tvNavMenuTermsAndConditions.setTextColor(Color.WHITE);
                 break;
         }
+    }
+
+    public void replaceFragment(Fragment fragment, boolean addToBackStack) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        if (addToBackStack) {
+            transaction.addToBackStack(null);
+        }
+        transaction.replace(R.id.flContent, fragment);
+        transaction.commit();
+        getFragmentManager().executePendingTransactions();
     }
 }
