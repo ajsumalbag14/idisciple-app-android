@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/margin_small_2"
+            android:text="@string/dialog_title_profile_delegate"
+            android:textAllCaps="true"
+            android:textColor="@color/colorText"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="@dimen/margin_very_small_2"
+            android:background="@color/colorDividerGray" />
+
+        <!-- Content -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivSpeakerAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/profile_pic_size"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/colorIDiscipleGray" />
+
+            <!-- NickName -->
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/margin_very_small_2"
+                android:paddingEnd="@dimen/margin_normal_2"
+                android:paddingStart="@dimen/margin_normal_2"
+                android:paddingTop="@dimen/margin_normal">
+
+                <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldTextView
+                    android:id="@+id/tvDelegateNickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:text="Nickname"
+                    android:textColor="@color/colorText"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                    android:id="@+id/tvDelegateFg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_small"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="FG"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorIDiscipleOrange"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tvDelegateNickName"
+                    app:layout_constraintStart_toEndOf="@id/tvDelegateNickName" />
+
+                <ImageView
+                    android:layout_width="@dimen/star_size"
+                    android:layout_height="@dimen/star_size"
+                    android:src="@drawable/ic_star_active"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
+            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                android:id="@+id/tvDelagateFullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:paddingEnd="@dimen/margin_normal_2"
+                android:paddingStart="@dimen/margin_normal_2"
+                android:text="Full name here"
+                android:textColor="@color/colorIDiscipleGray"
+                android:textSize="12sp" />
+
+            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                android:id="@+id/tvDelagateCountryDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:paddingEnd="@dimen/margin_normal_2"
+                android:paddingStart="@dimen/margin_normal_2"
+                android:text="M/F, Country"
+                android:textColor="@color/colorIDiscipleGray"
+                android:textSize="12sp" />
+
+            <!-- Assigned to -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/margin_normal_2"
+                android:paddingStart="@dimen/margin_normal_2"
+                android:paddingTop="@dimen/margin_normal">
+
+                <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:text="@string/delagete_profile_dialog_label_assigned_to"
+                    android:textColor="@color/colorText"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                    android:id="@+id/tvDelegateFamilyGroupAssignedTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="Family Group #13 >"
+                    android:textColor="@color/colorIDiscipleBlue"
+                    android:textSize="12sp"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tvAssignToFamilyGroup"
+                    app:layout_constraintStart_toEndOf="@id/tvAssignToFamilyGroup" />
+
+            </LinearLayout>
+
+            <!-- Attending -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/margin_normal"
+                android:paddingEnd="@dimen/margin_normal_2"
+                android:paddingStart="@dimen/margin_normal_2">
+
+                <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:text="@string/delagete_profile_dialog_label_attending"
+                    android:textColor="@color/colorText"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                    android:id="@+id/tvDelegateAttendingWorkshop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="Workshop Name here >"
+                    android:textColor="@color/colorIDiscipleBlue"
+                    android:textSize="12sp"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/tvAssignToFamilyGroup"
+                    app:layout_constraintStart_toEndOf="@id/tvAssignToFamilyGroup" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="@dimen/margin_very_small_2"
+            android:background="@color/colorDividerGray" />
+
+        <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+            android:id="@+id/tvDismiss"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small_2"
+            android:filterTouchesWhenObscured="true"
+            android:gravity="center_horizontal"
+            android:text="@string/button_link_dismiss"
+            android:textColor="@color/colorIDiscipleBlue"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

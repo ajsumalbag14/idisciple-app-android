@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.remote.model.Speaker;
+import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
+import com.ph.idisciple.idiscipleapp.ui.mainscreen.MainScreenActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,14 @@ public class SpeakerFragment extends BaseFragment {
         rvList.setNestedScrollingEnabled(false);
         rvList.setAdapter(mSpeakerAdapter);
 
+        SpeakerAdapter.ItemClickListener onItemClick = new SpeakerAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Speaker speakerDetails = mSpeakerList.get(position);
+                ((MainScreenActivity) getActivity()).redirectToAnotherScreen(SpeakerInfoDialog.class, null);
+            }
+        };
+        mSpeakerAdapter.setClickListener(onItemClick);
         return rootView;
 
     }

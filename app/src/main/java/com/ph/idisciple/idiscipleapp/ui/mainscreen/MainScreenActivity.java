@@ -2,6 +2,7 @@ package com.ph.idisciple.idiscipleapp.ui.mainscreen;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ph.idisciple.idiscipleapp.R;
+import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 import com.ph.idisciple.idiscipleapp.ui.mainscreen.speakerscreen.SpeakerFragment;
 
 import butterknife.BindDrawable;
@@ -351,4 +353,11 @@ public class MainScreenActivity extends AppCompatActivity {
         transaction.commit();
         getFragmentManager().executePendingTransactions();
     }
+
+    public void redirectToAnotherScreen(Class className, Bundle bundleToInclude) {
+        Intent showIntent = new Intent(MainScreenActivity.this, className);
+        if (bundleToInclude != null) showIntent.putExtras(bundleToInclude);
+        startActivity(showIntent);
+    }
+
 }

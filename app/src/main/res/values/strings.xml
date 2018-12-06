@@ -13,6 +13,8 @@
     <string name="button_email_reset_link">E-mail Reset Link</string>
     <string name="button_no">No</string>
     <string name="button_yes">Yes</string>
+    <string name="button_change_avatar">Change Avatar</string>
+    <string name="button_upload_avatar">Upload Avatar</string>
     <string name="button_link_forgot_password"><u>Forgot Password?</u></string>
     <string name="button_link_back_to_login"><u>Back to Log-In</u></string>
     <string name="button_link_dismiss"><u>Dismiss</u></string>
@@ -49,6 +51,8 @@
 
     <string name="dialog_title_speaker_bio">SPEAKER\'S BIO</string>
     <string name="dialog_title_workshop_info">WORKSHOP INFO</string>
+    <string name="dialog_title_profile_delegate">DELEGATE PROFILE</string>
+    <string name="dialog_title_profile_own">YOUR PROFILE</string>
 
     <!-- Generic dialog error -->
     <string name="dialog_error_title_no_internet">No Internet</string>
@@ -80,6 +84,11 @@
 
     <string name="first_password_title">First! Let\'s make your password personal.</string>
     <string name="title_hero">Hero</string>
+
+    <string name="delagete_profile_dialog_label_assigned_to">Assigned to</string>
+    <string name="delagete_profile_dialog_label_attending">Attending</string>
+
+    <string name="own_profile_dialog_label_attending">THAT\'S YOU!</string>
 
     <!-- fonts -->
     <string name="font_montserrat_bold">Montserrat-Bold.ttf</string>
