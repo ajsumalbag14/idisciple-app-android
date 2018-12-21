@@ -20,7 +20,11 @@
     <string name="button_link_dismiss"><u>Dismiss</u></string>
 
 
-
+    <string name="bottom_nav_item_schedule">Schedule</string>
+    <string name="bottom_nav_item_community">Community</string>
+    <string name="bottom_nav_item_speakers">Speakers</string>
+    <string name="bottom_nav_item_workshops">Workshops</string>
+    <string name="bottom_nav_item_more">More</string>
 
     <string name="button_main_my_profile">My Profile</string>
     <string name="button_main_schedule">Schedule</string>
