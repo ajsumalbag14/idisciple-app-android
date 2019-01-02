@@ -14,9 +14,7 @@ public class ProfileObject extends RealmObject {
     public enum ProfileType {
         USER_ID, USERNAME,
         FIRST_NAME, LAST_NAME, MIDDLENAME, NICKNAME,
-        MOBILE_NUMBER, BIRTHDATE,
-        GENDER, COUNTRY, IS_PWD,
-        CREATED_AT_DATE, UPDATED_AT_DATE
+        GENDER, COUNTRY,
     }
 
     public void setItemName(String name) {

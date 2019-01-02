@@ -4,118 +4,125 @@ import com.google.gson.annotations.SerializedName;
 
 public class Profile {
 
+    @SerializedName("id")
+    private String userId;
+    @SerializedName("name")
+    private String userFullName;
     @SerializedName("firstname")
-    private String firstName;
+    private String userFirstName;
     @SerializedName("lastname")
-    private String lastName;
+    private String userLastName;
     @SerializedName("middlename")
-    private String middleName;
+    private String userMiddleName;
     @SerializedName("nickname")
-    private String nickName;
-    @SerializedName("mobile_no")
-    private String mobileNumber;
-
-    @SerializedName("birthdate")
-    private String birthdate;
+    private String userNickName;
     @SerializedName("gender")
-    private String gender;
-    @SerializedName("country")
-    private String country;
-    @SerializedName("is_pwd")
-    private int isPwdTag;
+    private String userGender;
+    @SerializedName("userCountry")
+    private String userCountry;
 
-    @SerializedName("created_at")
-    private String createdAt;
-    @SerializedName("updated_at")
-    private String updatedAt;
+    @SerializedName("fg_id")
+    private String userFamilyGroupId;
+    @SerializedName("fg_name")
+    private String userFamilyGroupName;
 
-    public String getFirstName() {
-        return firstName;
+    @SerializedName("workshop_number_1")
+    private String userWorkshop1;
+    @SerializedName("workshop_number_2")
+    private String userWorkshop2;
+
+    @SerializedName("img_path")
+    private String userImagePath;
+    @SerializedName("img_name")
+    private String userImageName;
+
+
+    public String getUserId() {
+        return userId;
     }
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-
-    public String getLastName() {
-        return lastName;
-    }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-
-    public String getMiddleName() {
-        return middleName;
-    }
-    public void setMiddleName(String password) {
-        this.middleName = middleName;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-
-    public String getNickName() {
-        return nickName;
+    public String getUserFirstName() {
+        return userFirstName;
     }
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-
-    public String getBirthdate() {
-        return birthdate;
-    }
-    public void setBirthdate(String birthdate) {
-        this.birthdate = birthdate;
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
     }
 
-
-    public String getGender() {
-        return gender;
+    public String getUserLastName() {
+        return userLastName;
     }
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
+    }
+
+    public String getUserMiddleName() {
+        return userMiddleName;
+    }
+    public void setUserMiddleName(String password) {
+        this.userMiddleName = userMiddleName;
+    }
+
+    public String getUserNickName() {
+        return userNickName;
+    }
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
     }
 
 
-    public String getCountry() {
-        return country;
+    public String getUserGender() {
+        return userGender;
     }
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setUserGender(String gender) {
+        this.userGender = gender;
     }
 
-    public String getUpdatedAt() {
-        return updatedAt;
+    public String getUserCountry() {
+        return userCountry;
     }
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-
-    public Boolean isPwd () {
-        return isPwdTag == 1;
-    }
-    public int getIsPwdTag () {
-        return isPwdTag;
-    }
-    public void setIsPwd(boolean isPwd) {
-        this.isPwdTag = isPwd ? 1 : 0;
+    public void setUserCountry(String userCountry) {
+        this.userCountry = userCountry;
     }
 
-
-    public String getMobileNumber() {
-        return mobileNumber;
+    public String getUserFamilyGroupId() {
+        return userFamilyGroupId;
     }
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
+    public void setUserFamilyGroupId(String userFamilyGroupId) {
+        this.userFamilyGroupId = userFamilyGroupId;
     }
 
+    public String getUserFamilyGroupName() {
+        return userFamilyGroupName;
+    }
+    public void setUserFamilyGroupName(String userFamilyGroupName) {
+        this.userFamilyGroupName = userFamilyGroupName;
+    }
+
+    public String getUserWorkshop1() {
+        return userWorkshop1;
+    }
+    public void setUserWorkshop1(String userWorkshop1) {
+        this.userWorkshop1 = userWorkshop1;
+    }
+
+    public String getUserWorkshop2() {
+        return userWorkshop2;
+    }
+    public void setUserWorkshop2(String userWorkshop2) {
+        this.userWorkshop2 = userWorkshop2;
+    };
+
+
+    public String getUserImageUrl(){
+        return userImagePath + userImageName;
+    }
+    public void setUserImagePath(String userImagePath){
+        this.userImagePath = userImagePath;
+    }
+    public void setUserImageName(String userImageName){
+        this.userImageName = userImageName;
+    }
 }

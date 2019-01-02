@@ -84,77 +84,43 @@ public class LoginScreenPresenter implements LoginScreenContract.Presenter {
                         });
 
 
-                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.FIRST_NAME, mProfile.getFirstName(), new IProfileRepository.onSaveCallback() {
+                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.FIRST_NAME, mProfile.getUserFirstName(), new IProfileRepository.onSaveCallback() {
                             @Override
                             public void onSuccess() {
 
                             }
                         });
-                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.LAST_NAME, mProfile.getLastName(), new IProfileRepository.onSaveCallback() {
+                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.LAST_NAME, mProfile.getUserLastName(), new IProfileRepository.onSaveCallback() {
                             @Override
                             public void onSuccess() {
 
                             }
                         });
-                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.MIDDLENAME, mProfile.getMiddleName(), new IProfileRepository.onSaveCallback() {
+                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.MIDDLENAME, mProfile.getUserMiddleName(), new IProfileRepository.onSaveCallback() {
                             @Override
                             public void onSuccess() {
 
                             }
                         });
-                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.NICKNAME, mProfile.getNickName(), new IProfileRepository.onSaveCallback() {
-                            @Override
-                            public void onSuccess() {
-
-                            }
-                        });
-
-
-                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.BIRTHDATE, mProfile.getBirthdate(), new IProfileRepository.onSaveCallback() {
-                            @Override
-                            public void onSuccess() {
-
-                            }
-                        });
-                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.MOBILE_NUMBER, mProfile.getMobileNumber(), new IProfileRepository.onSaveCallback() {
-                            @Override
-                            public void onSuccess() {
-
-                            }
-                        });
-                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.GENDER, mProfile.getGender(), new IProfileRepository.onSaveCallback() {
-                            @Override
-                            public void onSuccess() {
-
-                            }
-                        });
-                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.COUNTRY, mProfile.getCountry(), new IProfileRepository.onSaveCallback() {
-                            @Override
-                            public void onSuccess() {
-
-                            }
-                        });
-                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.IS_PWD, String.valueOf(mProfile.getIsPwdTag()), new IProfileRepository.onSaveCallback() {
+                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.NICKNAME, mProfile.getUserNickName(), new IProfileRepository.onSaveCallback() {
                             @Override
                             public void onSuccess() {
 
                             }
                         });
 
-                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.CREATED_AT_DATE, mProfile.getCreatedAt(), new IProfileRepository.onSaveCallback() {
+                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.GENDER, mProfile.getUserGender(), new IProfileRepository.onSaveCallback() {
                             @Override
                             public void onSuccess() {
 
                             }
                         });
-
-                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.UPDATED_AT_DATE, mProfile.getUpdatedAt(), new IProfileRepository.onSaveCallback() {
+                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.COUNTRY, mProfile.getUserCountry(), new IProfileRepository.onSaveCallback() {
                             @Override
                             public void onSuccess() {
-                                mView.onLoginSuccess(mUserAccess.isFirstTimeUser(), mUserAccess.getToken(), mUserAccess.getUserId());
+
                             }
                         });
-                        break;
 
                     case 422:
                         Gson gson = new Gson();

@@ -12,7 +12,7 @@ import com.ph.idisciple.idiscipleapp.data.local.repository.IKeySettingsRepositor
 import com.ph.idisciple.idiscipleapp.data.local.repository.impl.KeySettingsRepository;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 import com.ph.idisciple.idiscipleapp.ui.login.LoginScreenActivity;
-import com.ph.idisciple.idiscipleapp.ui.mainscreen.MainScreenActivity;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 import com.ph.idisciple.idiscipleapp.utils.PreferenceUtils;
 
 import java.math.BigInteger;
@@ -164,7 +164,7 @@ public class SplashScreenActivity extends BaseActivity {
     }
 
     private void showMainScreen() {
-        redirectToAnotherScreenAsFirstScreen(MainScreenActivity.class);
+        redirectToAnotherScreenAsFirstScreen(MainAppScreenActivity.class);
     }
 
 }

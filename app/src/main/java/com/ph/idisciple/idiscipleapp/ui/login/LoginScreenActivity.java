@@ -22,7 +22,7 @@ import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 import com.ph.idisciple.idiscipleapp.ui.firsttimeuser.FirstTimeUserScreenActivity;
 import com.ph.idisciple.idiscipleapp.ui.forgotpassword.ForgotPasswordScreenActivity;
-import com.ph.idisciple.idiscipleapp.ui.mainscreen.MainScreenActivity;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 
 import butterknife.BindDrawable;
 import butterknife.BindString;
@@ -178,7 +178,7 @@ public class LoginScreenActivity extends BaseActivity implements LoginScreenCont
         } else {
             Bundle bundle = new Bundle();
             bundle.putString("token", token);
-            redirectToAnotherScreenAsFirstScreen(MainScreenActivity.class, bundle);
+            redirectToAnotherScreenAsFirstScreen(MainAppScreenActivity.class, bundle);
         }
     }
 

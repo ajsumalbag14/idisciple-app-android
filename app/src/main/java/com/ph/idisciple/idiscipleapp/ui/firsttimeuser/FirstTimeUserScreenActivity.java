@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
-import com.ph.idisciple.idiscipleapp.ui.mainscreen.MainScreenActivity;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -144,7 +144,7 @@ public class FirstTimeUserScreenActivity extends BaseActivity implements FirstTi
         mToken = token;
         Bundle bundle = new Bundle();
         bundle.putString("token", mToken);
-        redirectToAnotherScreenAsFirstScreen(MainScreenActivity.class, bundle);
+        redirectToAnotherScreenAsFirstScreen(MainAppScreenActivity.class, bundle);
     }
 
     @Override

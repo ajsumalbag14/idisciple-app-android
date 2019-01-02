@@ -1,0 +1,196 @@
+package com.ph.idisciple.idiscipleapp.ui.mainappscreen;
+
+import android.os.AsyncTask;
+
+import com.google.gson.Gson;
+import com.ph.idisciple.idiscipleapp.data.local.model.ProfileObject;
+import com.ph.idisciple.idiscipleapp.data.local.repository.IProfileRepository;
+import com.ph.idisciple.idiscipleapp.data.local.repository.impl.ProfileRepository;
+import com.ph.idisciple.idiscipleapp.data.remote.RestClient;
+import com.ph.idisciple.idiscipleapp.data.remote.model.Profile;
+import com.ph.idisciple.idiscipleapp.data.remote.model.Schedule;
+import com.ph.idisciple.idiscipleapp.data.remote.model.Speaker;
+import com.ph.idisciple.idiscipleapp.data.remote.model.Workshop;
+import com.ph.idisciple.idiscipleapp.data.remote.model.base.BaseApi;
+import com.ph.idisciple.idiscipleapp.data.remote.model.base.ListWrapper;
+import com.ph.idisciple.idiscipleapp.data.remote.model.base.Wrapper;
+import com.ph.idisciple.idiscipleapp.data.remote.model.response.ContentDetails;
+import com.ph.idisciple.idiscipleapp.data.remote.model.response.ContentResponseWrapper;
+import com.ph.idisciple.idiscipleapp.data.remote.service.ContentService;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
+
+    private ContentService mContentService;
+    private MainAppScreenActivity mActivity;
+    private MainAppScreenContract.View mView;
+    private ProfileRepository mProfileRepository;
+
+    public MainAppScreenPresenter(MainAppScreenActivity activity, MainAppScreenContract.View view) {
+        mView = view;
+        mActivity = activity;
+        mContentService = RestClient.getInstance().getContentService();
+        mProfileRepository = new ProfileRepository();
+
+        mProfileRepository.getKeyItem(ProfileObject.ProfileType.USER_ID, new IProfileRepository.onGetKeyItemCallback() {
+            @Override
+            public void onSuccess(ProfileObject keySettingItem) {
+                fetchData(keySettingItem.getItemValue());
+            }
+        });
+
+    }
+
+    @Override
+    public void fetchData(String userId) {
+        mContentService.getContent(userId).enqueue(new Callback<Wrapper<ContentResponseWrapper>>() {
+            @Override
+            public void onResponse(Call<Wrapper<ContentResponseWrapper>> call, Response<Wrapper<ContentResponseWrapper>> response) {
+                switch (response.code()) {
+                    case 200:
+                    case 201:
+                        ContentResponseWrapper wrapper = response.body().getData();
+                        ContentDetails contentProfile = wrapper.getAssetsData().getContentProfile();
+                        new JsonTask().execute(contentProfile.getJsonPathFile(), "0");
+                        ContentDetails contentSchedule = wrapper.getAssetsData().getContentSchedule();
+                        new JsonTask().execute(contentSchedule.getJsonPathFile(), "1");
+                        ContentDetails contentSpeakers = wrapper.getAssetsData().getContentSpeakers();
+                        new JsonTask().execute(contentSpeakers.getJsonPathFile(), "2");
+                        ContentDetails contentWorkshops = wrapper.getAssetsData().getContentWorkshops();
+                        new JsonTask().execute(contentWorkshops.getJsonPathFile(), "3");
+                        break;
+                    case 422:
+                        Gson gson = new Gson();
+                        try {
+
+                            BaseApi apiErrorResponse = gson.fromJson(response.errorBody().string(), BaseApi.class);
+                            mView.onFetchDataFailed(apiErrorResponse.getMessage());
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            mView.showGenericError();
+                        }
+                        break;
+                    default:
+                        mView.showGenericError();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Wrapper<ContentResponseWrapper>> call, Throwable t) {
+                if (t.getCause() != null && t.getCause().getMessage().contains("ENETUNREACH (Network is unreachable)"))
+                    mView.showNoInternetConnection();
+                else if ((t.getCause() != null && t.getCause().getMessage().contains("ETIMEDOUT (Connection timed out)")) || t.getMessage().contains("failed to connect"))
+                    mView.showTimeoutError();
+                else
+                    mView.showGenericError();
+            }
+        });
+    }
+
+    /**
+     * Get Json File from path_file, and save locally fetched data
+     */
+    private class JsonTask extends AsyncTask<String, String, String> {
+        String type = "-1";
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+//            pd = new ProgressDialog(MainActivity.this);
+//            pd.setMessage("Please wait");
+//            pd.setCancelable(false);
+//            pd.show();
+        }
+
+        protected String doInBackground(String... params) {
+
+            HttpURLConnection connection = null;
+            BufferedReader reader = null;
+
+
+            try {
+                type = params[1];
+                URL url = new URL(params[0]);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+
+                InputStream stream = connection.getInputStream();
+                reader = new BufferedReader(new InputStreamReader(stream));
+
+                StringBuffer buffer = new StringBuffer();
+                String line = "";
+
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line + "\n");
+                    //Log.d("Response: ", "> " + line);   //here u ll get whole response...... :-)
+                }
+                return buffer.toString();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
+                }
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            // Remove \n and make it as object not Array
+            result = result.substring(1, result.length() - 2).replace("\n","");
+            // save json items
+            Gson jsonReturned =  new Gson();
+            switch (type){
+                case "0":
+                    ListWrapper<Profile> wrapperProfile = jsonReturned.fromJson(result, ListWrapper.class);
+                    List<Profile> jsonProfile = wrapperProfile.getData();
+                    break;
+                case "1":
+                    ListWrapper<Schedule> wrapperSchedule = jsonReturned.fromJson(result, ListWrapper.class);
+                    List<Schedule> jsonSchedule = wrapperSchedule.getData();
+                    break;
+                case "2":
+                    ListWrapper<Speaker> wrapperSpeaker = jsonReturned.fromJson(result, ListWrapper.class);
+                    List<Speaker> jsonSpeaker = wrapperSpeaker.getData();
+                    break;
+                case "3":
+                    ListWrapper<Workshop> wrapperWorkshop = jsonReturned.fromJson(result, ListWrapper.class);
+                    //List<Workshop> jsonWorkshop = wrapperWorkshop.getData();
+                    break;
+            }
+//            if (pd.isShowing()) {
+//                pd.dismiss();
+//            }
+//            txtJson.setText(result);
+        }
+    }
+
+
+}

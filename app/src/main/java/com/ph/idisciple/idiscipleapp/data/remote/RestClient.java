@@ -1,6 +1,7 @@
 package com.ph.idisciple.idiscipleapp.data.remote;
 
 import com.ph.idisciple.idiscipleapp.BuildConfig;
+import com.ph.idisciple.idiscipleapp.data.remote.service.ContentService;
 import com.ph.idisciple.idiscipleapp.data.remote.service.UserService;
 
 import java.util.concurrent.TimeUnit;
@@ -12,6 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestClient {
 
+    private ContentService mContentService;
     private UserService mSetupService;
     private static RestClient mRestClient;
 
@@ -30,6 +32,7 @@ public class RestClient {
 
         Retrofit retrofit = builder.build();
         mSetupService = retrofit.create(UserService.class);
+        mContentService = retrofit.create(ContentService.class);
 
     }
 
@@ -41,6 +44,9 @@ public class RestClient {
         return mRestClient;
     }
 
+    public ContentService getContentService() {
+        return mContentService;
+    }
     public UserService getSetupService() {
         return mSetupService;
     }
