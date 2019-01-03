@@ -3,10 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menuSpeakers"
+        android:enabled="true"
+        android:icon="@drawable/ic_tab_speakers"
+        android:orderInCategory="0"
+        android:title="@string/bottom_nav_item_speakers"
+        app:showAsAction="always" />
+
+
+    <item
+        android:id="@+id/menuWorkshops"
+        android:enabled="true"
+        android:icon="@drawable/ic_tab_workshops"
+        android:orderInCategory="1"
+        android:title="@string/bottom_nav_item_workshops"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/menuSchedule"
         android:enabled="true"
         android:icon="@drawable/ic_tab_schedule"
-        android:orderInCategory="0"
+        android:orderInCategory="2"
         android:title="@string/bottom_nav_item_schedule"
         app:showAsAction="always" />
 
@@ -14,31 +31,15 @@
         android:id="@+id/menuCommunity"
         android:enabled="true"
         android:icon="@drawable/ic_tab_community"
-        android:orderInCategory="1"
-        android:title="@string/bottom_nav_item_community"
-        app:showAsAction="always" />
-
-    <item
-        android:id="@+id/menuSpeakers"
-        android:enabled="true"
-        android:icon="@drawable/ic_tab_speakers"
-        android:orderInCategory="2"
-        android:title="@string/bottom_nav_item_speakers"
-        app:showAsAction="always" />
-
-    <item
-        android:id="@+id/menuWorkshops"
-        android:enabled="true"
-        android:icon="@drawable/ic_tab_workshops"
         android:orderInCategory="3"
-        android:title="@string/bottom_nav_item_workshops"
+        android:title="@string/bottom_nav_item_community"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/menuMore"
         android:enabled="true"
         android:icon="@drawable/ic_tab_more"
-        android:orderInCategory="3"
+        android:orderInCategory="4"
         android:title="@string/bottom_nav_item_more"
         app:showAsAction="always" />
 </menu>
