@@ -1,11 +1,15 @@
-package com.ph.idisciple.idiscipleapp.data.remote.model;
+package com.ph.idisciple.idiscipleapp.data.local.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Speaker {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class Speaker  extends RealmObject {
+
+    @PrimaryKey
     @SerializedName("id")
-    private String speakerId;
+    private String id;
     @SerializedName("name")
     private String speakerName;
 
@@ -42,17 +46,17 @@ public class Speaker {
     @SerializedName("workshop_schedule_time")
     private String speakerWorkshopScheduleTime;
 
-    public Speaker(String name, String topic, String date){
-        speakerName = name;
-        speakerPlanaryTitle = topic;
-        speakerPlanaryScheduleDate = date;
-    }
+//    public Speaker(String name, String topic, String date){
+//        speakerName = name;
+//        speakerPlanaryTitle = topic;
+//        speakerPlanaryScheduleDate = date;
+//    }
 
-    public String getSpeakerId(){
-        return speakerId;
+    public String getId(){
+        return id;
     }
-    public void setSpeakerId(String id){
-        this.speakerId = id;
+    public void setId(String id){
+        this.id = id;
     }
 
     public String getSpeakerName(){

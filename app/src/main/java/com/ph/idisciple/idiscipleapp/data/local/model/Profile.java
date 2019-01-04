@@ -1,11 +1,15 @@
-package com.ph.idisciple.idiscipleapp.data.remote.model;
+package com.ph.idisciple.idiscipleapp.data.local.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Profile {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class Profile  extends RealmObject {
+
+    @PrimaryKey
     @SerializedName("id")
-    private String userId;
+    private String id;
     @SerializedName("name")
     private String userFullName;
     @SerializedName("firstname")
@@ -37,11 +41,11 @@ public class Profile {
     private String userImageName;
 
 
-    public String getUserId() {
-        return userId;
+    public String getId() {
+        return id;
     }
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUserFirstName() {

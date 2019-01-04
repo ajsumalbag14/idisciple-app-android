@@ -8,7 +8,7 @@ import com.ph.idisciple.idiscipleapp.data.local.repository.IProfileRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.impl.KeySettingsRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.impl.ProfileRepository;
 import com.ph.idisciple.idiscipleapp.data.remote.RestClient;
-import com.ph.idisciple.idiscipleapp.data.remote.model.Profile;
+import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.remote.model.base.BaseApi;
 import com.ph.idisciple.idiscipleapp.data.remote.model.base.ListWrapper;
 import com.ph.idisciple.idiscipleapp.data.remote.model.request.LoginRequest;
@@ -118,9 +118,10 @@ public class LoginScreenPresenter implements LoginScreenContract.Presenter {
                         mProfileRepository.saveKeyItem(ProfileObject.ProfileType.COUNTRY, mProfile.getUserCountry(), new IProfileRepository.onSaveCallback() {
                             @Override
                             public void onSuccess() {
-
+                                mView.onLoginSuccess(mUserAccess.isFirstTimeUser(), mUserAccess.getToken(), mUserAccess.getUserId());
                             }
                         });
+                        break;
 
                     case 422:
                         Gson gson = new Gson();

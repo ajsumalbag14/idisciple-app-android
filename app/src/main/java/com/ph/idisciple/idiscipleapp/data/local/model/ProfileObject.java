@@ -2,6 +2,9 @@ package com.ph.idisciple.idiscipleapp.data.local.model;
 
 import io.realm.RealmObject;
 
+/**
+ * Current Profile details
+ */
 public class ProfileObject extends RealmObject {
 
     public static final String FIELD_ID = "id";

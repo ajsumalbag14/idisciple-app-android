@@ -1,11 +1,15 @@
-package com.ph.idisciple.idiscipleapp.data.remote.model;
+package com.ph.idisciple.idiscipleapp.data.local.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Schedule {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class Schedule  extends RealmObject {
+
+    @PrimaryKey
     @SerializedName("sched_id")
-    private String scheduleId;
+    private String id;
     @SerializedName("sched_name")
     private String scheduleName;
     @SerializedName("sched_venue")
@@ -18,11 +22,11 @@ public class Schedule {
     @SerializedName("sched_end_time")
     private String scheduleEndTime;
 
-    public String getScheduleId(){
-        return scheduleId;
+    public String getId(){
+        return id;
     }
-    public void setScheduleId(String id){
-        this.scheduleId = id;
+    public void setId(String id){
+        this.id = id;
     }
 
     public String getScheduleName(){

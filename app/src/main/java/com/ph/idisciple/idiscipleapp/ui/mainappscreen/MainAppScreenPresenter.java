@@ -3,14 +3,19 @@ package com.ph.idisciple.idiscipleapp.ui.mainappscreen;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.local.model.ProfileObject;
+import com.ph.idisciple.idiscipleapp.data.local.model.Schedule;
+import com.ph.idisciple.idiscipleapp.data.local.model.Speaker;
+import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
+import com.ph.idisciple.idiscipleapp.data.local.repository.Attendees.AttendeesRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.IProfileRepository;
+import com.ph.idisciple.idiscipleapp.data.local.repository.Schedule.ScheduleRepository;
+import com.ph.idisciple.idiscipleapp.data.local.repository.Speaker.SpeakerRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.impl.ProfileRepository;
+import com.ph.idisciple.idiscipleapp.data.local.repository.workshop.WorkshopRepository;
 import com.ph.idisciple.idiscipleapp.data.remote.RestClient;
-import com.ph.idisciple.idiscipleapp.data.remote.model.Profile;
-import com.ph.idisciple.idiscipleapp.data.remote.model.Schedule;
-import com.ph.idisciple.idiscipleapp.data.remote.model.Speaker;
-import com.ph.idisciple.idiscipleapp.data.remote.model.Workshop;
 import com.ph.idisciple.idiscipleapp.data.remote.model.base.BaseApi;
 import com.ph.idisciple.idiscipleapp.data.remote.model.base.ListWrapper;
 import com.ph.idisciple.idiscipleapp.data.remote.model.base.Wrapper;
@@ -22,6 +27,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -164,25 +170,41 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
             super.onPostExecute(result);
 
             // Remove \n and make it as object not Array
+            if (result.startsWith("\uFEFF")) {
+                result = result.substring(1);
+            }
+
             result = result.substring(1, result.length() - 2).replace("\n","");
             // save json items
             Gson jsonReturned =  new Gson();
             switch (type){
                 case "0":
-                    ListWrapper<Profile> wrapperProfile = jsonReturned.fromJson(result, ListWrapper.class);
+                    Type typeProfileWrapper = new TypeToken<ListWrapper<Profile>>() {}.getType();
+                    ListWrapper<Profile> wrapperProfile = jsonReturned.fromJson(result, typeProfileWrapper);
                     List<Profile> jsonProfile = wrapperProfile.getData();
+                    AttendeesRepository repositoryAttendees = new AttendeesRepository();
+                    repositoryAttendees.addItemList(jsonProfile);
                     break;
                 case "1":
-                    ListWrapper<Schedule> wrapperSchedule = jsonReturned.fromJson(result, ListWrapper.class);
+                    Type typeScheduleWrapper = new TypeToken<ListWrapper<Schedule>>() {}.getType();
+                    ListWrapper<Schedule> wrapperSchedule = jsonReturned.fromJson(result, typeScheduleWrapper);
                     List<Schedule> jsonSchedule = wrapperSchedule.getData();
+                    ScheduleRepository repositorySchedules = new ScheduleRepository();
+                    repositorySchedules.addItemList(jsonSchedule);
                     break;
                 case "2":
-                    ListWrapper<Speaker> wrapperSpeaker = jsonReturned.fromJson(result, ListWrapper.class);
+                    Type typeSpeakerWrapper = new TypeToken<ListWrapper<Speaker>>() {}.getType();
+                    ListWrapper<Speaker> wrapperSpeaker = jsonReturned.fromJson(result, typeSpeakerWrapper);
                     List<Speaker> jsonSpeaker = wrapperSpeaker.getData();
+                    SpeakerRepository repositorySpeakers = new SpeakerRepository();
+                    repositorySpeakers.addItemList(jsonSpeaker);
                     break;
                 case "3":
-                    ListWrapper<Workshop> wrapperWorkshop = jsonReturned.fromJson(result, ListWrapper.class);
-                    //List<Workshop> jsonWorkshop = wrapperWorkshop.getData();
+                    Type typeWorkshopWrapper = new TypeToken<ListWrapper<Workshop>>() {}.getType();
+                    ListWrapper<Workshop> wrapperWorkshop = jsonReturned.fromJson(result, typeWorkshopWrapper);
+                    List<Workshop> jsonWorkshop = wrapperWorkshop.getData();
+                    WorkshopRepository repositoryWorkshops = new WorkshopRepository();
+                    repositoryWorkshops.addItemList(jsonWorkshop);
                     break;
             }
 //            if (pd.isShowing()) {
