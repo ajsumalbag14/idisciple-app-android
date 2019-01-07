@@ -13,8 +13,11 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.speakerfragment.SpeakerFragment;
 
 import butterknife.BindView;
+
+import static com.ph.idisciple.idiscipleapp.ui.BaseFragment.newInstance;
 
 public class MainAppScreenActivity extends BaseActivity implements MainAppScreenContract.View, BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -57,6 +60,8 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter = new MainAppScreenPresenter(MainAppScreenActivity.this, this);
+        showLoadingDialog();
+        mPresenter.fetchData();
         prepareColorStateList();
         prepareBottomNavigationBar();
     }
@@ -76,42 +81,31 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
             case R.id.menuSpeakers:
                 bottomNavigationItemView.setIconTintList(cslSpeaker);
                 bottomNavigationItemView.setTextColor(cslSpeaker);
-
-//                getFragmentManager().beginTransaction().hide(fragmentActive).show(fragmentTabFavorites).commit();
-//                fragmentActive = fragmentTabFavorites;
+                fragmentActive = newInstance(SpeakerFragment.class);
                 break;
             case R.id.menuWorkshops:
                 bottomNavigationItemView.setIconTintList(cslWorkshops);
                 bottomNavigationItemView.setTextColor(cslWorkshops);
-
-//                getFragmentManager().beginTransaction().hide(fragmentActive).show(fragmentTabAccount).commit();
-//                fragmentActive = fragmentTabAccount;
-//                mPresenter.fetchProfile();
+                fragmentActive = newInstance(SpeakerFragment.class);
                 break;
             case R.id.menuSchedule:
                 bottomNavigationItemView.setIconTintList(cslSchedule);
                 bottomNavigationItemView.setTextColor(cslSchedule);
-//                bottomNavigationItemView.setItemBackground(getDrawable(R.drawable.shape_button_red_flat));
-
-//                getFragmentManager().beginTransaction().hide(fragmentActive).show(fragmentTabMap).commit();
-//                fragmentActive = fragmentTabMap;
-//                onRefreshButtonClick(); // Refresh every time user selects Map Tab
+                fragmentActive = newInstance(SpeakerFragment.class);
                 break;
             case R.id.menuCommunity:
                 bottomNavigationItemView.setIconTintList(cslCommunity);
                 bottomNavigationItemView.setTextColor(cslCommunity);
-//                getFragmentManager().beginTransaction().hide(fragmentActive).show(fragmentTabList).commit();
-//                fragmentActive = fragmentTabList;
-//                if(!isSpeechToTextFromMap) onRefreshButtonClick(); // Refresh every time user selects List Tab
+                fragmentActive = newInstance(SpeakerFragment.class);
+                showFragment( getSupportFragmentManager(), R.id.flContainter, fragmentActive, false, null);
                 break;
             case R.id.menuMore:
                 bottomNavigationItemView.setIconTintList(cslMore);
                 bottomNavigationItemView.setTextColor(cslMore);
-
+                fragmentActive = newInstance(SpeakerFragment.class);
+                showFragment( getSupportFragmentManager(), R.id.flContainter, fragmentActive, false, null);
                 break;
         }
-
-//        refreshedListApplyToTabs();
 
         return false;
     }
@@ -195,26 +189,30 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
 
     @Override
     public void onFetchDataFailed(String errorMessage) {
-
+        getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_generic), getString(R.string.dialog_error_message_generic));
+        hideLoadingDialog();
     }
 
     @Override
     public void onFetchDataSuccess() {
-
+        hideLoadingDialog();
     }
 
     @Override
     public void showNoInternetConnection() {
         getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_no_internet), getString(R.string.dialog_error_message_no_internet));
+        hideLoadingDialog();
     }
 
     @Override
     public void showTimeoutError() {
         getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_timeout), getString(R.string.dialog_error_message_no_internet));
+        hideLoadingDialog();
     }
 
     @Override
     public void showGenericError() {
         getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_generic), getString(R.string.dialog_error_message_generic));
+        hideLoadingDialog();
     }
 }

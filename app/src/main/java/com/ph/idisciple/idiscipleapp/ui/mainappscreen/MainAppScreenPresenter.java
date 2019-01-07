@@ -49,18 +49,19 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
         mActivity = activity;
         mContentService = RestClient.getInstance().getContentService();
         mProfileRepository = new ProfileRepository();
+    }
 
+    @Override
+    public void fetchData(){
         mProfileRepository.getKeyItem(ProfileObject.ProfileType.USER_ID, new IProfileRepository.onGetKeyItemCallback() {
             @Override
             public void onSuccess(ProfileObject keySettingItem) {
                 fetchData(keySettingItem.getItemValue());
             }
         });
-
     }
 
-    @Override
-    public void fetchData(String userId) {
+    private void fetchData(String userId) {
         mContentService.getContent(userId).enqueue(new Callback<Wrapper<ContentResponseWrapper>>() {
             @Override
             public void onResponse(Call<Wrapper<ContentResponseWrapper>> call, Response<Wrapper<ContentResponseWrapper>> response) {
@@ -207,10 +208,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     repositoryWorkshops.addItemList(jsonWorkshop);
                     break;
             }
-//            if (pd.isShowing()) {
-//                pd.dismiss();
-//            }
-//            txtJson.setText(result);
+            mView.onFetchDataSuccess();
         }
     }
 

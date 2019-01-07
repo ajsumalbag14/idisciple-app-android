@@ -1,6 +1,7 @@
 package com.ph.idisciple.idiscipleapp.ui;
 
-import android.app.Fragment;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 
 import butterknife.ButterKnife;
@@ -25,4 +26,26 @@ public abstract class BaseFragment extends Fragment {
         return (BaseActivity) getActivity();
     }
 
+    /**
+     * Create new Fragment instance
+     * @param clazz
+     * @param bundle
+     * @param <T>
+     * @return
+     */
+    public static <T extends BaseFragment> T newInstance(Class<T> clazz, Bundle bundle) {
+        try {
+            T newInstance = clazz.newInstance();
+            newInstance.setArguments(bundle);
+            return newInstance;
+        } catch (java.lang.InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static <T extends BaseFragment> T newInstance(Class<T> clazz) {
+        return newInstance(clazz, null);
+    }
 }

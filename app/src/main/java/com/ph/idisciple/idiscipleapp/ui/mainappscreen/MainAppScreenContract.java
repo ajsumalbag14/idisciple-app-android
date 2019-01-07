@@ -11,6 +11,6 @@ public class MainAppScreenContract {
     }
 
     interface Presenter extends BasePresenter {
-        void fetchData(String userId);
+        void fetchData();
     }
 }
