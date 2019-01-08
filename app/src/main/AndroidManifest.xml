@@ -38,7 +38,7 @@
 
         <activity
             android:theme="@style/AppTheme.NoActionBar"
-            android:name=".ui.mainscreen.speakerscreen.SpeakerInfoDialog" />
+            android:name=".ui.mainappscreen.speakerfragment.SpeakerInfoDialogActivity" />
 
     </application>
 

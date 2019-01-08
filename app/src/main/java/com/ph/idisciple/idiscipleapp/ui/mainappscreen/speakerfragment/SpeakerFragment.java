@@ -10,8 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ph.idisciple.idiscipleapp.R;
+import com.ph.idisciple.idiscipleapp.data.local.model.Speaker;
+import com.ph.idisciple.idiscipleapp.data.local.repository.Speaker.SpeakerRepository;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -22,6 +26,8 @@ public class SpeakerFragment extends BaseFragment {
     private MainAppScreenActivity mActivity;
     private GridLayoutManager mGridLayoutManager;
     private SpeakerAdapter mAdapter;
+    private SpeakerRepository mSpeakerRepository;
+    private List<Speaker> mSpeakerList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,6 +36,8 @@ public class SpeakerFragment extends BaseFragment {
         bind(rootView);
 
         mActivity = (MainAppScreenActivity) getActivity();
+        mSpeakerRepository = new SpeakerRepository();
+        mSpeakerList = mSpeakerRepository.getContentList();
 
         mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         rvList.setLayoutManager(mGridLayoutManager);
@@ -37,9 +45,21 @@ public class SpeakerFragment extends BaseFragment {
         rvList.setNestedScrollingEnabled(false);
         rvList.setHasFixedSize(true);
 
-        mAdapter = new SpeakerAdapter(mActivity, new String[]{"John Piper", "Tim Keller"});
+        mAdapter = new SpeakerAdapter(mActivity, mSpeakerList);
         rvList.setAdapter(mAdapter);
 
+        mAdapter.setClickListener(new SpeakerAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Speaker selectedSpeaker = mSpeakerList.get(position);
+                Bundle bundleToInclude = new Bundle();
+                bundleToInclude.putString("name", selectedSpeaker.getSpeakerName());
+                bundleToInclude.putString("topic", selectedSpeaker.getSpeakerPlanaryTitle());
+                bundleToInclude.putString("bio", selectedSpeaker.getSpeakerBio());
+                bundleToInclude.putString("avatar", selectedSpeaker.getSpeakerImageUrl());
+                mActivity.redirectToAnotherScreen(SpeakerInfoDialogActivity.class, bundleToInclude);
+            }
+        });
 
         return rootView;
     }

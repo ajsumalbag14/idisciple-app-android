@@ -2,10 +2,12 @@ package com.ph.idisciple.idiscipleapp.data.local.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Speaker  extends RealmObject {
+public class Speaker extends RealmObject implements Serializable {
 
     @PrimaryKey
     @SerializedName("id")

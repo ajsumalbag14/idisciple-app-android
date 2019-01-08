@@ -9,19 +9,25 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.ph.idisciple.idiscipleapp.R;
+import com.ph.idisciple.idiscipleapp.data.local.model.Speaker;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SpeakerAdapter extends RecyclerView.Adapter<SpeakerAdapter.ViewHolder> {
 
-    private String[] mData;
+    private List<Speaker> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private Context mContext;
 
     // data is passed into the constructor
-    public SpeakerAdapter(Context context, String[] data) {
+    public SpeakerAdapter(Context context, List<Speaker> data) {
+        mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -37,13 +43,17 @@ public class SpeakerAdapter extends RecyclerView.Adapter<SpeakerAdapter.ViewHold
     // binds the data to the TextView in each cell
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tvSpeakerName.setText(mData[position]);
+        Speaker itemSpeaker = getItem(position);
+        holder.tvSpeakerName.setText(itemSpeaker.getSpeakerName());
+        holder.tvSpeakerTopic.setText(itemSpeaker.getSpeakerPlanaryTitle());
+        holder.tvSpeakerDateTime.setText(itemSpeaker.getSpeakerPlanaryScheduleDate() + " " + itemSpeaker.getSpeakerPlanaryScheduleTime());
+        Glide.with(mContext).load(itemSpeaker.getSpeakerImageUrl()).into(holder.ivSpeakerAvatar);
     }
 
     // total number of cells
     @Override
     public int getItemCount() {
-        return mData.length;
+        return mData.size();
     }
 
 
@@ -68,8 +78,8 @@ public class SpeakerAdapter extends RecyclerView.Adapter<SpeakerAdapter.ViewHold
     }
 
     // convenience method for getting data at click position
-    String getItem(int id) {
-        return mData[id];
+    Speaker getItem(int id) {
+        return mData.get(id);
     }
 
     // allows clicks events to be caught
