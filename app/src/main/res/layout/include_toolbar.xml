@@ -3,46 +3,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@android:color/white"
+    android:background="@color/colorIDiscipleRed"
+    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     android:contentInsetEnd="0dp"
-    android:elevation="0dp"
+    android:elevation="5dp"
     app:contentInsetStart="0dp">
 
     <RelativeLayout
+        android:id="@+id/rlToolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:orientation="vertical">
+        android:layout_height="?attr/actionBarSize" >
 
         <ImageView
             android:id="@+id/ivToolbarLogo"
-            android:layout_width="@dimen/margin_big"
-            android:layout_height="@dimen/margin_big"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_logo"
-            android:layout_marginEnd="@dimen/margin_normal"
-            android:filterTouchesWhenObscured="true"
-            android:padding="@dimen/margin_very_small" />
-
-        <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-            android:id="@+id/tvToolbarTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textColor="@color/colorIDiscipleGray"
-            android:textSize="18sp"
-            android:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/ivToolbarNavMenu"
-            android:layout_width="@dimen/margin_big"
-            android:layout_height="@dimen/margin_big"
+            android:layout_width="@dimen/toolbar_menu_size"
+            android:layout_height="@dimen/toolbar_menu_size"
+            android:src="@drawable/ic_logo_white"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_hamburger"
-            android:layout_marginStart="@dimen/margin_small_2"
+            android:layout_marginStart="@dimen/margin_small"
+            android:filterTouchesWhenObscured="true"
+            android:padding="@dimen/margin_small" />
+
+        <ImageView
+            android:id="@+id/ivToolbarMenuInfo"
+            android:layout_width="@dimen/toolbar_menu_size"
+            android:layout_height="@dimen/toolbar_menu_size"
+            android:src="@drawable/ic_toolbar_info"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/ivToolbarMenuProfile"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:filterTouchesWhenObscured="true"
+            android:padding="@dimen/margin_small" />
+
+        <ImageView
+            android:id="@+id/ivToolbarMenuProfile"
+            android:layout_width="@dimen/toolbar_menu_size"
+            android:layout_height="@dimen/toolbar_menu_size"
+            android:src="@drawable/img_placeholder"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/margin_small"
             android:filterTouchesWhenObscured="true"
             android:padding="@dimen/margin_very_small" />
 

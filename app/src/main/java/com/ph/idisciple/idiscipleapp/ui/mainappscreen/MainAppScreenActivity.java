@@ -8,6 +8,7 @@ import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.ph.idisciple.idiscipleapp.R;
@@ -21,9 +22,17 @@ import static com.ph.idisciple.idiscipleapp.ui.BaseFragment.newInstance;
 
 public class MainAppScreenActivity extends BaseActivity implements MainAppScreenContract.View, BottomNavigationView.OnNavigationItemSelectedListener {
 
+    final int[][] states = new int[][]{
+            new int[]{android.R.attr.state_enabled}, // enabled
+            new int[]{android.R.attr.state_pressed}  // pressed
+    };
+    final int[][] statesDefault = new int[][]{
+            new int[]{-android.R.attr.state_enabled}, // disabled
+            new int[]{-android.R.attr.state_checked} // unchecked
+    };
+    @BindView(R.id.rlToolbar) RelativeLayout rlToolbar;
     @BindView(R.id.bottomNavigation)
     BottomNavigationViewEx bottomNavigationView;
-
     /* BottomNavigationViewEx Colors */
     int[] colorDefault;
     int[] colorSpeaker;
@@ -37,17 +46,6 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
     ColorStateList cslSchedule;
     ColorStateList cslCommunity;
     ColorStateList cslMore;
-
-    final int[][] states = new int[][] {
-            new int[] { android.R.attr.state_enabled}, // enabled
-            new int[] { android.R.attr.state_pressed}  // pressed
-    };
-
-    final int[][] statesDefault = new int[][] {
-            new int[] {-android.R.attr.state_enabled}, // disabled
-            new int[] {-android.R.attr.state_checked} // unchecked
-    };
-
     private BaseFragment fragmentActive = null;
     private MainAppScreenContract.Presenter mPresenter;
 
@@ -79,78 +77,83 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
         switch (menuItem.getItemId()) {
 
             case R.id.menuSpeakers:
+                rlToolbar.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleOrange));
                 bottomNavigationItemView.setIconTintList(cslSpeaker);
                 bottomNavigationItemView.setTextColor(cslSpeaker);
                 fragmentActive = newInstance(SpeakerFragment.class);
                 break;
             case R.id.menuWorkshops:
+                rlToolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 bottomNavigationItemView.setIconTintList(cslWorkshops);
                 bottomNavigationItemView.setTextColor(cslWorkshops);
                 fragmentActive = newInstance(SpeakerFragment.class);
                 break;
             case R.id.menuSchedule:
+                rlToolbar.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleRed));
                 bottomNavigationItemView.setIconTintList(cslSchedule);
                 bottomNavigationItemView.setTextColor(cslSchedule);
                 fragmentActive = newInstance(SpeakerFragment.class);
                 break;
             case R.id.menuCommunity:
+                rlToolbar.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleBlue));
                 bottomNavigationItemView.setIconTintList(cslCommunity);
                 bottomNavigationItemView.setTextColor(cslCommunity);
                 fragmentActive = newInstance(SpeakerFragment.class);
-                showFragment( getSupportFragmentManager(), R.id.flContainter, fragmentActive, false, null);
+                showFragment(getSupportFragmentManager(), R.id.flContainter, fragmentActive, false, null);
                 break;
             case R.id.menuMore:
+                rlToolbar.setBackgroundColor(getResources().getColor(R.color.colorDividerGray));
                 bottomNavigationItemView.setIconTintList(cslMore);
                 bottomNavigationItemView.setTextColor(cslMore);
                 fragmentActive = newInstance(SpeakerFragment.class);
-                showFragment( getSupportFragmentManager(), R.id.flContainter, fragmentActive, false, null);
+                showFragment(getSupportFragmentManager(), R.id.flContainter, fragmentActive, false, null);
                 break;
         }
 
         return false;
     }
 
-    private void prepareColorStateList(){
+    private void prepareColorStateList() {
 
-        colorDefault = new int[] {
+        colorDefault = new int[]{
                 getResources().getColor(R.color.colorDividerGray),   // disabled
                 getResources().getColor(R.color.colorDividerGray)   // unchecked
         };
 
-        colorSpeaker = new int[] {
+        colorSpeaker = new int[]{
                 getResources().getColor(R.color.colorIDiscipleOrange), // enabled
                 getResources().getColor(R.color.colorIDiscipleOrange)  // pressed
         };
 
-        colorWorkshops = new int[] {
+        colorWorkshops = new int[]{
                 getResources().getColor(R.color.colorPrimary), // enabled
                 getResources().getColor(R.color.colorPrimary)  // pressed
         };
 
-        colorSchedule = new int[] {
+        colorSchedule = new int[]{
                 getResources().getColor(R.color.colorIDiscipleRed), // enabled
                 getResources().getColor(R.color.colorIDiscipleRed)  // pressed
         };
 
-        colorCommunity = new int[] {
+        colorCommunity = new int[]{
                 getResources().getColor(R.color.colorIDiscipleBlue), // enabled
                 getResources().getColor(R.color.colorIDiscipleBlue)  // pressed
         };
 
-        colorMore = new int[] {
+        colorMore = new int[]{
                 getResources().getColor(R.color.colorText),   // enabled
                 getResources().getColor(R.color.colorText)   // pressed
         };
 
         cslDefault = new ColorStateList(statesDefault, colorDefault);
         cslSpeaker = new ColorStateList(states, colorSpeaker);
-        cslCommunity= new ColorStateList(states, colorCommunity);
-        cslSchedule= new ColorStateList(states, colorSchedule);
-        cslWorkshops= new ColorStateList(states, colorWorkshops);
+        cslCommunity = new ColorStateList(states, colorCommunity);
+        cslSchedule = new ColorStateList(states, colorSchedule);
+        cslWorkshops = new ColorStateList(states, colorWorkshops);
         cslMore = new ColorStateList(states, colorMore);
     }
 
-    private void prepareBottomNavigationBar(){
+    private void prepareBottomNavigationBar() {
 
         // Remove Animation & Shifting to BottomNavigationView
         bottomNavigationView.enableAnimation(false);
@@ -169,7 +172,7 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
 
     }
 
-    private void resetBottomNavigationView(){
+    private void resetBottomNavigationView() {
         bottomNavigationView.getMenu().setGroupCheckable(0, false, true); //hack because it won't be unselected
         bottomNavigationView.setIconTintList(0, cslDefault);
         bottomNavigationView.setTextTintList(0, cslDefault);
