@@ -77,39 +77,37 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
         switch (menuItem.getItemId()) {
 
             case R.id.menuSpeakers:
+                fragmentActive = newInstance(SpeakerFragment.class);
                 rlToolbar.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleOrange));
                 bottomNavigationItemView.setIconTintList(cslSpeaker);
                 bottomNavigationItemView.setTextColor(cslSpeaker);
-                fragmentActive = newInstance(SpeakerFragment.class);
                 break;
             case R.id.menuWorkshops:
+                fragmentActive = newInstance(SpeakerFragment.class);
                 rlToolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 bottomNavigationItemView.setIconTintList(cslWorkshops);
                 bottomNavigationItemView.setTextColor(cslWorkshops);
-                fragmentActive = newInstance(SpeakerFragment.class);
                 break;
             case R.id.menuSchedule:
+                fragmentActive = newInstance(SpeakerFragment.class);
                 rlToolbar.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleRed));
                 bottomNavigationItemView.setIconTintList(cslSchedule);
                 bottomNavigationItemView.setTextColor(cslSchedule);
-                fragmentActive = newInstance(SpeakerFragment.class);
                 break;
             case R.id.menuCommunity:
+                fragmentActive = newInstance(SpeakerFragment.class);
                 rlToolbar.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleBlue));
                 bottomNavigationItemView.setIconTintList(cslCommunity);
                 bottomNavigationItemView.setTextColor(cslCommunity);
-                fragmentActive = newInstance(SpeakerFragment.class);
-                showFragment(getSupportFragmentManager(), R.id.flContainter, fragmentActive, false, null);
                 break;
             case R.id.menuMore:
+                fragmentActive = newInstance(SpeakerFragment.class);
                 rlToolbar.setBackgroundColor(getResources().getColor(R.color.colorDividerGray));
                 bottomNavigationItemView.setIconTintList(cslMore);
                 bottomNavigationItemView.setTextColor(cslMore);
-                fragmentActive = newInstance(SpeakerFragment.class);
-                showFragment(getSupportFragmentManager(), R.id.flContainter, fragmentActive, false, null);
                 break;
         }
-
+        showFragment(getSupportFragmentManager(), R.id.flContainter, fragmentActive, false, null);
         return false;
     }
 
