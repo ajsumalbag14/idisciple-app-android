@@ -32,7 +32,7 @@ public class SpeakerFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_speakers, container, false);
+        rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_recyclerview, container, false);
         bind(rootView);
 
         mActivity = (MainAppScreenActivity) getActivity();
