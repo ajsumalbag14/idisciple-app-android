@@ -97,6 +97,7 @@
 
     <string name="own_profile_dialog_label_attending">THAT\'S YOU!</string>
     <string name="item_workshop_yours">YOUR WORKSHOP</string>
+    <string name="item_event_is_happening">HAPPENING NOW</string>
 
     <!-- fonts -->
     <string name="font_montserrat_bold">Montserrat-Bold.ttf</string>

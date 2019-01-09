@@ -92,4 +92,5 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${retrofit2_lib_version}"
     implementation "com.squareup.retrofit2:converter-gson:${retrofit2_lib_version}"
 
+    implementation 'com.jpardogo.materialtabstrip:library:1.1.1'
 }
