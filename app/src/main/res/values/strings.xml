@@ -96,6 +96,7 @@
     <string name="delagete_profile_dialog_label_attending">Attending</string>
 
     <string name="own_profile_dialog_label_attending">THAT\'S YOU!</string>
+    <string name="item_workshop_yours">YOUR WORKSHOP</string>
 
     <!-- fonts -->
     <string name="font_montserrat_bold">Montserrat-Bold.ttf</string>

@@ -106,6 +106,7 @@ public class WorkshopAdapter extends RecyclerView.Adapter<WorkshopAdapter.ViewHo
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.tvWorkshopYours) TextView tvWorkshopYours;
         @BindView(R.id.tvWorkshopName) TextView tvWorkshopName;
         @BindView(R.id.tvWorkshopSpeakerName) TextView tvWorkshopSpeakerName;
         @BindView(R.id.tvWorkshopDateTimeLocation) TextView tvWorkshopDateTimeLocation;

@@ -54,13 +54,27 @@
 
             <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
                 android:id="@+id/tvWorkshopDateTimeLocation"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/tvWorkshopSpeakerName"
-                android:maxLines="2"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_toEndOf="@+id/tvWorkshopYours"
                 android:text="Date and Time / Location"
                 android:textColor="@color/colorIDiscipleGray"
                 android:textSize="12sp" />
+
+            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                android:id="@+id/tvWorkshopYours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/tvWorkshopSpeakerName"
+                android:text="@string/item_workshop_yours"
+                android:textAllCaps="true"
+                android:textColor="@color/colorIDiscipleOrange"
+                android:textSize="12sp"
+                android:visibility="gone" />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
