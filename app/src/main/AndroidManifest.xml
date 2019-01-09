@@ -36,9 +36,14 @@
             android:name=".ui.firsttimeuser.FirstTimeUserScreenActivity"
             android:screenOrientation="portrait" />
 
+        <!-- Custom Dialogs -->
         <activity
             android:theme="@style/AppTheme.NoActionBar"
             android:name=".ui.mainappscreen.speakerfragment.SpeakerInfoDialogActivity" />
+
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".ui.mainappscreen.workshopfragment.WorkshopInfoDialogActivity" />
 
     </application>
 

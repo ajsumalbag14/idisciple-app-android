@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    android:background="@drawable/shape_dialog">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             android:padding="@dimen/margin_normal">
 
             <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldTextView
-                android:id="@+id/tvSpeakerName"
+                android:id="@+id/tvWorkshopName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -46,19 +46,19 @@
                 android:textStyle="bold" />
 
             <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                android:id="@+id/tvSpeakerTopic"
+                android:id="@+id/tvWorkshopType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_small"
                 android:gravity="center"
                 android:maxLines="2"
-                android:text="Planary topic"
+                android:text="Workshop item"
                 android:textColor="@color/colorIDiscipleGray"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
             <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                android:id="@+id/tvSpeakerBio"
+                android:id="@+id/tvWorkshopDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

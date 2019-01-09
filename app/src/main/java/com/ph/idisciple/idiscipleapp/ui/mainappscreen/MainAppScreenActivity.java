@@ -15,6 +15,7 @@ import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.speakerfragment.SpeakerFragment;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.workshopfragment.WorkshopFragment;
 
 import butterknife.BindView;
 
@@ -83,7 +84,7 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
                 bottomNavigationItemView.setTextColor(cslSpeaker);
                 break;
             case R.id.menuWorkshops:
-                fragmentActive = newInstance(SpeakerFragment.class);
+                fragmentActive = newInstance(WorkshopFragment.class);
                 rlToolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 bottomNavigationItemView.setIconTintList(cslWorkshops);
                 bottomNavigationItemView.setTextColor(cslWorkshops);

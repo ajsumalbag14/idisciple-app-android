@@ -50,6 +50,9 @@
     <string name="nav_menu_about">About</string>
     <string name="nav_menu_logout">Log-out</string>
 
+    <string name="menu_workshop_option_view_desc">View Description</string>
+    <string name="menu_workshop_option_view_outline">View Outline</string>
+
     <!-- Dialogs -->
     <string name="dialog_message_loading">Loading...</string>
 
