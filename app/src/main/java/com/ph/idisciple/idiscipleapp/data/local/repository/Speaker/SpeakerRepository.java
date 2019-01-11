@@ -19,16 +19,16 @@ public class SpeakerRepository extends BaseRepository implements ISpeakerReposit
     }
 
     @Override
-    public Speaker findItemById(int speakerId) {
-        return realm.where(Speaker.class).equalTo("id", speakerId).findFirst();
+    public Speaker findItemById(int id) {
+        return realm.where(Speaker.class).equalTo("id", id).findFirst();
     }
 
     @Override
-    public void addItemList(final List<Speaker> speakers) {
+    public void addItemList(final List<Speaker> itemList) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.copyToRealmOrUpdate(speakers);
+                realm.copyToRealmOrUpdate(itemList);
             }
         });
     }

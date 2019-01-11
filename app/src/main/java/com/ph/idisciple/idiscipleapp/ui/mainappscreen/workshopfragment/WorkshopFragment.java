@@ -26,7 +26,6 @@ public class WorkshopFragment extends BaseFragment {
     private MainAppScreenActivity mActivity;
     private LinearLayoutManager mLinearLayoutManager;
     private WorkshopAdapter mAdapter;
-    private WorkshopRepository mWorkshopRepository;
     private List<Workshop> mWorkshopList;
 
     @Override
@@ -36,8 +35,7 @@ public class WorkshopFragment extends BaseFragment {
         bind(rootView);
 
         mActivity = (MainAppScreenActivity) getActivity();
-        mWorkshopRepository = new WorkshopRepository();
-        mWorkshopList = mWorkshopRepository.getContentList();
+        mWorkshopList = mActivity.mPresenter.mWorkshopRepository.getContentList();
 
         mLinearLayoutManager = new LinearLayoutManager(mActivity);
         rvList.setLayoutManager(mLinearLayoutManager);

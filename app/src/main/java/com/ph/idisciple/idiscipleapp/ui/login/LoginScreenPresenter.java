@@ -9,6 +9,7 @@ import com.ph.idisciple.idiscipleapp.data.local.repository.impl.KeySettingsRepos
 import com.ph.idisciple.idiscipleapp.data.local.repository.impl.ProfileRepository;
 import com.ph.idisciple.idiscipleapp.data.remote.RestClient;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
+import com.ph.idisciple.idiscipleapp.data.remote.model.EventDetails;
 import com.ph.idisciple.idiscipleapp.data.remote.model.base.BaseApi;
 import com.ph.idisciple.idiscipleapp.data.remote.model.base.ListWrapper;
 import com.ph.idisciple.idiscipleapp.data.remote.model.request.LoginRequest;
@@ -54,6 +55,7 @@ public class LoginScreenPresenter implements LoginScreenContract.Presenter {
                     case 201:
                         final LoginUserAccount mUserAccess = response.body().getData().get(0).getUserAccess();
                         Profile mProfile = response.body().getData().get(0).getProfile();
+                        EventDetails mEventDetails = response.body().getData().get(0).getEventDetails();
 
                         if(!mUserAccess.isFirstTimeUser())
                             mKeySettingsRepository.saveKeyItem(KeySettings.ItemType.IS_LOGGED_IN, "true", new IKeySettingsRepository.onSaveCallback() {
@@ -70,6 +72,7 @@ public class LoginScreenPresenter implements LoginScreenContract.Presenter {
                             }
                         });
 
+                        // Profile
                         mProfileRepository.saveKeyItem(ProfileObject.ProfileType.USER_ID, mUserAccess.getUserId(), new IProfileRepository.onSaveCallback() {
                             @Override
                             public void onSuccess() {
@@ -118,9 +121,48 @@ public class LoginScreenPresenter implements LoginScreenContract.Presenter {
                         mProfileRepository.saveKeyItem(ProfileObject.ProfileType.COUNTRY, mProfile.getUserCountry(), new IProfileRepository.onSaveCallback() {
                             @Override
                             public void onSuccess() {
+
+                            }
+                        });
+
+                        // Event Details
+                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.ROOM_NUMBER, mEventDetails.getRooomNumber(), new IProfileRepository.onSaveCallback() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+                        });
+                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.WORKSHOP_ID1, mEventDetails.getWorkshopId1(), new IProfileRepository.onSaveCallback() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+                        });
+                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.WORKSHOP_ID2, mEventDetails.getWorkshopId2(), new IProfileRepository.onSaveCallback() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+                        });
+                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.FAMILY_GROUP_ID, mEventDetails.getFamilyGroupId(), new IProfileRepository.onSaveCallback() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+                        });
+                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.TSHIRT_SIZE, mEventDetails.getTshirtSize(), new IProfileRepository.onSaveCallback() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+                        });
+                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.IS_CITY_TOUR, mEventDetails.getTagCityTour(), new IProfileRepository.onSaveCallback() {
+                            @Override
+                            public void onSuccess() {
                                 mView.onLoginSuccess(mUserAccess.isFirstTimeUser(), mUserAccess.getToken(), mUserAccess.getUserId());
                             }
                         });
+
                         break;
 
                     case 422:

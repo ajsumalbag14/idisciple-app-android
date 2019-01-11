@@ -28,7 +28,6 @@ public class ScheduleFragment extends BaseFragment {
 
     private MainAppScreenActivity mActivity;
     private List<Schedule> mData;
-    private ScheduleRepository mScheduleRepository;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,8 +36,7 @@ public class ScheduleFragment extends BaseFragment {
         bind(rootView);
 
         mActivity = (MainAppScreenActivity) getActivity();
-        mScheduleRepository = new ScheduleRepository();
-        mData = mScheduleRepository.getContentList();
+        mData = mActivity.mPresenter.mScheduleRepository.getContentList();
 
         viewpager.setAdapter(new SchedulePagerAdapter(getChildFragmentManager()));
         tabStrip.setViewPager(viewpager);

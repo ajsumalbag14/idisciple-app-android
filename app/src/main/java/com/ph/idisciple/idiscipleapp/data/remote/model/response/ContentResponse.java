@@ -12,6 +12,8 @@ public class ContentResponse {
     private ContentDetails contentSchedule;
     @SerializedName("profile")
     private ContentDetails contentProfile;
+    @SerializedName("family_groups")
+    private ContentDetails contentFamilyGroup;
 
     public ContentDetails getContentSpeakers() {
         return contentSpeakers;
@@ -39,6 +41,13 @@ public class ContentResponse {
     }
     public void setContentProfile(ContentDetails contentProfile) {
         this.contentProfile = contentProfile;
+    }
+
+    public ContentDetails getContentFamilyGroup() {
+        return contentFamilyGroup;
+    }
+    public void setContentFamilyGroup(ContentDetails contentFamilyGroup) {
+        this.contentFamilyGroup = contentFamilyGroup;
     }
 
 }

@@ -19,16 +19,16 @@ public class ScheduleRepository extends BaseRepository implements IScheduleRepos
     }
 
     @Override
-    public Schedule findItemById(int speakerId) {
-        return realm.where(Schedule.class).equalTo("id", speakerId).findFirst();
+    public Schedule findItemById(int id) {
+        return realm.where(Schedule.class).equalTo("id", id).findFirst();
     }
 
     @Override
-    public void addItemList(final List<Schedule> schedules) {
+    public void addItemList(final List<Schedule> itemList) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.copyToRealmOrUpdate(schedules);
+                realm.copyToRealmOrUpdate(itemList);
             }
         });
     }

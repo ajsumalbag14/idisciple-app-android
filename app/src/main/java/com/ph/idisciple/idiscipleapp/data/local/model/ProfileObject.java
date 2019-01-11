@@ -18,6 +18,8 @@ public class ProfileObject extends RealmObject {
         USER_ID, USERNAME,
         FIRST_NAME, LAST_NAME, MIDDLENAME, NICKNAME,
         GENDER, COUNTRY,
+        WORKSHOP_ID1, WORKSHOP_ID2, FAMILY_GROUP_ID,
+        TSHIRT_SIZE, IS_CITY_TOUR, ROOM_NUMBER
     }
 
     public void setItemName(String name) {

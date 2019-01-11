@@ -49,7 +49,7 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
     ColorStateList cslCommunity;
     ColorStateList cslMore;
     private BaseFragment fragmentActive = null;
-    private MainAppScreenContract.Presenter mPresenter;
+    public MainAppScreenPresenter mPresenter;
 
     @Override
     protected int getLayout() {

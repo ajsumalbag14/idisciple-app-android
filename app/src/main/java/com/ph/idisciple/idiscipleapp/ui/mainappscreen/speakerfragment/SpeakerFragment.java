@@ -26,7 +26,6 @@ public class SpeakerFragment extends BaseFragment {
     private MainAppScreenActivity mActivity;
     private GridLayoutManager mGridLayoutManager;
     private SpeakerAdapter mAdapter;
-    private SpeakerRepository mSpeakerRepository;
     private List<Speaker> mSpeakerList;
 
     @Override
@@ -36,8 +35,7 @@ public class SpeakerFragment extends BaseFragment {
         bind(rootView);
 
         mActivity = (MainAppScreenActivity) getActivity();
-        mSpeakerRepository = new SpeakerRepository();
-        mSpeakerList = mSpeakerRepository.getContentList();
+        mSpeakerList = mActivity.mPresenter.mSpeakerRepository.getContentList();
 
         mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         rvList.setLayoutManager(mGridLayoutManager);

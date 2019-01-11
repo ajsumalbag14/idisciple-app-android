@@ -19,16 +19,16 @@ public class WorkshopRepository extends BaseRepository implements IWorkshopRepos
     }
 
     @Override
-    public Workshop findItemById(int speakerId) {
-        return realm.where(Workshop.class).equalTo("id", speakerId).findFirst();
+    public Workshop findItemById(int id) {
+        return realm.where(Workshop.class).equalTo("id", id).findFirst();
     }
 
     @Override
-    public void addItemList(final List<Workshop> speakers) {
+    public void addItemList(final List<Workshop> itemList) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.copyToRealmOrUpdate(speakers);
+                realm.copyToRealmOrUpdate(itemList);
             }
         });
     }

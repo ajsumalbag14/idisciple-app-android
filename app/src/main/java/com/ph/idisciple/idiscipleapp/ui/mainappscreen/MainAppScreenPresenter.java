@@ -4,12 +4,14 @@ import android.os.AsyncTask;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.ph.idisciple.idiscipleapp.data.local.model.FamilyGroup;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.local.model.ProfileObject;
 import com.ph.idisciple.idiscipleapp.data.local.model.Schedule;
 import com.ph.idisciple.idiscipleapp.data.local.model.Speaker;
 import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
 import com.ph.idisciple.idiscipleapp.data.local.repository.Attendees.AttendeesRepository;
+import com.ph.idisciple.idiscipleapp.data.local.repository.FamilyGroups.FamilyGroupRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.IProfileRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.Schedule.ScheduleRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.Speaker.SpeakerRepository;
@@ -44,11 +46,23 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
     private MainAppScreenContract.View mView;
     private ProfileRepository mProfileRepository;
 
+    public AttendeesRepository mAttendeesRepository;
+    public ScheduleRepository mScheduleRepository;
+    public SpeakerRepository mSpeakerRepository;
+    public WorkshopRepository mWorkshopRepository;
+    public FamilyGroupRepository mFamilyGroupRepository;
+
     public MainAppScreenPresenter(MainAppScreenActivity activity, MainAppScreenContract.View view) {
         mView = view;
         mActivity = activity;
         mContentService = RestClient.getInstance().getContentService();
         mProfileRepository = new ProfileRepository();
+
+        mAttendeesRepository = new AttendeesRepository();
+        mScheduleRepository = new ScheduleRepository();
+        mSpeakerRepository = new SpeakerRepository();
+        mWorkshopRepository = new WorkshopRepository();
+        mFamilyGroupRepository = new FamilyGroupRepository();
     }
 
     @Override
@@ -77,6 +91,8 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                         new JsonTask().execute(contentSpeakers.getJsonPathFile(), "2");
                         ContentDetails contentWorkshops = wrapper.getAssetsData().getContentWorkshops();
                         new JsonTask().execute(contentWorkshops.getJsonPathFile(), "3");
+                        ContentDetails contentFamilyGroup = wrapper.getAssetsData().getContentFamilyGroup();
+                        new JsonTask().execute(contentFamilyGroup.getJsonPathFile(), "4");
                         break;
                     case 422:
                         Gson gson = new Gson();
@@ -183,29 +199,31 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     Type typeProfileWrapper = new TypeToken<ListWrapper<Profile>>() {}.getType();
                     ListWrapper<Profile> wrapperProfile = jsonReturned.fromJson(result, typeProfileWrapper);
                     List<Profile> jsonProfile = wrapperProfile.getData();
-                    AttendeesRepository repositoryAttendees = new AttendeesRepository();
-                    repositoryAttendees.addItemList(jsonProfile);
+                    mAttendeesRepository.addItemList(jsonProfile);
                     break;
                 case "1":
                     Type typeScheduleWrapper = new TypeToken<ListWrapper<Schedule>>() {}.getType();
                     ListWrapper<Schedule> wrapperSchedule = jsonReturned.fromJson(result, typeScheduleWrapper);
                     List<Schedule> jsonSchedule = wrapperSchedule.getData();
-                    ScheduleRepository repositorySchedules = new ScheduleRepository();
-                    repositorySchedules.addItemList(jsonSchedule);
+                    mScheduleRepository.addItemList(jsonSchedule);
                     break;
                 case "2":
                     Type typeSpeakerWrapper = new TypeToken<ListWrapper<Speaker>>() {}.getType();
                     ListWrapper<Speaker> wrapperSpeaker = jsonReturned.fromJson(result, typeSpeakerWrapper);
                     List<Speaker> jsonSpeaker = wrapperSpeaker.getData();
-                    SpeakerRepository repositorySpeakers = new SpeakerRepository();
-                    repositorySpeakers.addItemList(jsonSpeaker);
+                    mSpeakerRepository.addItemList(jsonSpeaker);
                     break;
                 case "3":
                     Type typeWorkshopWrapper = new TypeToken<ListWrapper<Workshop>>() {}.getType();
                     ListWrapper<Workshop> wrapperWorkshop = jsonReturned.fromJson(result, typeWorkshopWrapper);
                     List<Workshop> jsonWorkshop = wrapperWorkshop.getData();
-                    WorkshopRepository repositoryWorkshops = new WorkshopRepository();
-                    repositoryWorkshops.addItemList(jsonWorkshop);
+                    mWorkshopRepository.addItemList(jsonWorkshop);
+                    break;
+                case "4":
+                    Type typeFamilyGroupWrapper = new TypeToken<ListWrapper<FamilyGroup>>() {}.getType();
+                    ListWrapper<FamilyGroup> wrapperFamilyGroup = jsonReturned.fromJson(result, typeFamilyGroupWrapper);
+                    List<FamilyGroup> jsonFamilyGroup = wrapperFamilyGroup.getData();
+                    mFamilyGroupRepository.addItemList(jsonFamilyGroup);
                     break;
             }
             mView.onFetchDataSuccess();

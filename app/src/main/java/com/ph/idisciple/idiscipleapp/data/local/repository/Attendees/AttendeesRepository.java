@@ -19,16 +19,16 @@ public class AttendeesRepository extends BaseRepository implements IAttendeesRep
     }
 
     @Override
-    public Profile findItemById(int speakerId) {
-        return realm.where(Profile.class).equalTo("id", speakerId).findFirst();
+    public Profile findItemById(int id) {
+        return realm.where(Profile.class).equalTo("id", id).findFirst();
     }
 
     @Override
-    public void addItemList(final List<Profile> speakers) {
+    public void addItemList(final List<Profile> itemList) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.copyToRealmOrUpdate(speakers);
+                realm.copyToRealmOrUpdate(itemList);
             }
         });
     }
