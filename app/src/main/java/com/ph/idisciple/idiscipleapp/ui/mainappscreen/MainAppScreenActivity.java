@@ -14,6 +14,7 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.CommunityFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.schedulefragment.ScheduleFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.speakerfragment.SpeakerFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.workshopfragment.WorkshopFragment;
@@ -97,7 +98,7 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
                 bottomNavigationItemView.setTextColor(cslSchedule);
                 break;
             case R.id.menuCommunity:
-                fragmentActive = newInstance(SpeakerFragment.class);
+                fragmentActive = newInstance(CommunityFragment.class);
                 rlToolbar.setBackgroundColor(getResources().getColor(R.color.colorIDiscipleBlue));
                 bottomNavigationItemView.setIconTintList(cslCommunity);
                 bottomNavigationItemView.setTextColor(cslCommunity);

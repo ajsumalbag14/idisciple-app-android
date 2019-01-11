@@ -99,6 +99,9 @@
     <string name="item_workshop_yours">YOUR WORKSHOP</string>
     <string name="item_event_is_happening">HAPPENING NOW</string>
 
+    <string name="tab_community_groups">GROUPS</string>
+    <string name="tab_community_delegates">DELEGATES</string>
+
     <!-- fonts -->
     <string name="font_montserrat_bold">Montserrat-Bold.ttf</string>
     <string name="font_montserrat_semibold">Montserrat-SemiBold.ttf</string>
