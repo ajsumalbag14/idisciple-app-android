@@ -1,12 +1,8 @@
 package com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -28,6 +24,7 @@ public class CommunityFragment extends BaseFragment {
 
     private MainAppScreenActivity mActivity;
     private SimpleFragmentPagerAdapter adapter;
+    private BaseFragment fragmentActive = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,23 +37,6 @@ public class CommunityFragment extends BaseFragment {
         adapter = new SimpleFragmentPagerAdapter(mActivity, getChildFragmentManager());
         viewpager.setAdapter(adapter);
         tabStrip.setViewPager(viewpager);
-
-        tabStrip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-                adapter.getItem(i);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
-        });
 
         return rootView;
     }
@@ -72,7 +52,7 @@ public class CommunityFragment extends BaseFragment {
 
         // This determines the fragment for each tab
         @Override
-        public Fragment getItem(int position) {
+        public BaseFragment getItem(int position) {
             if (position == 0) {
                 return newInstance(CommunityTabGroupsFragment.class);
             } else {
