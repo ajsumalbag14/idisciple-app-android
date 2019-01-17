@@ -86,7 +86,9 @@ public class CommunityTabGroupsFragment extends BaseFragment {
 
         @Override
         public Fragment getItem(int position) {
-            return newInstance(ScheduleListFragment.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("familyGroupId", mData.get(position).getId());
+            return newInstance(ContactListPerGroupFragment.class, bundle);
         }
     }
 }

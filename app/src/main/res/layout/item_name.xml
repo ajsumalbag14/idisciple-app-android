@@ -40,6 +40,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldTextView
+            android:id="@+id/tvFamilyGroupLeaderTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_small"
@@ -54,6 +55,7 @@
 
 
         <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+            android:id="@+id/tvCompleteName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Complete Name"
