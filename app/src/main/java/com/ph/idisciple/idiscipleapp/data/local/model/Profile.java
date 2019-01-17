@@ -48,6 +48,13 @@ public class Profile  extends RealmObject {
         this.id = id;
     }
 
+    public String getUserFullName() {
+        return userFullName;
+    }
+    public void setUserFullName(String userFullName) {
+        this.userFullName = userFullName;
+    }
+
     public String getUserFirstName() {
         return userFirstName;
     }
