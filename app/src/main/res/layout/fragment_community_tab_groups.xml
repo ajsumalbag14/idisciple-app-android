@@ -6,17 +6,104 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <com.astuetz.PagerSlidingTabStrip
-        android:id="@+id/tabStripGroups"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        app:pstsPaddingMiddle="true"
-        app:pstsTabTextColor="@drawable/community_tab_host_item_color_state"
-        app:pstsTabTextSize="30sp"
-        android:padding="@dimen/margin_normal"
-        app:pstsIndicatorColor="@android:color/transparent"
-        app:pstsUnderlineColor="@android:color/transparent" />
+        android:layout_height="wrap_content">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline1stDigitLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".1" />
+
+        <ImageView
+            android:id="@+id/ivFamilyGroup1stDigitDown"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            app:layout_constraintTop_toTopOf="@+id/llFamilyGroupDigits"
+            app:layout_constraintStart_toStartOf="@+id/guideline1stDigitLeft"
+            app:layout_constraintBottom_toBottomOf="@+id/llFamilyGroupDigits"
+            app:layout_constraintWidth_percent="0.1"
+            app:layout_constraintHeight_percent="0.5"
+            android:src="@drawable/selector_arrow_down"/>
+
+        <ImageView
+            android:id="@+id/ivFamilyGroup1stDigitUp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:layout_marginStart="@dimen/margin_small"
+            app:layout_constraintTop_toTopOf="@+id/llFamilyGroupDigits"
+            app:layout_constraintStart_toEndOf="@+id/ivFamilyGroup1stDigitDown"
+            app:layout_constraintBottom_toBottomOf="@+id/llFamilyGroupDigits"
+            app:layout_constraintWidth_percent="0.1"
+            app:layout_constraintHeight_percent="0.5"
+            android:src="@drawable/selector_arrow_up"/>
+
+        <LinearLayout
+            android:id="@+id/llFamilyGroupDigits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldTextView
+                android:id="@+id/tvFamilyGroup1stDigit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorIDiscipleBlue"
+                android:textSize="38sp"
+                android:textStyle="bold"
+                android:text="0"/>
+
+            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldTextView
+                android:id="@+id/tvFamilyGroup2ndDigit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorIDiscipleBlue"
+                android:textSize="38sp"
+                android:textStyle="bold"
+                android:layout_marginStart="@dimen/margin_small"
+                android:text="1"/>
+
+        </LinearLayout>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2ndDigitRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".9" />
+
+        <ImageView
+            android:id="@+id/ivFamilyGroup2ndDigitDown"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:layout_marginEnd="@dimen/margin_small"
+            app:layout_constraintTop_toTopOf="@+id/llFamilyGroupDigits"
+            app:layout_constraintEnd_toStartOf="@+id/ivFamilyGroup2ndDigitUp"
+            app:layout_constraintBottom_toBottomOf="@+id/llFamilyGroupDigits"
+            app:layout_constraintWidth_percent="0.1"
+            app:layout_constraintHeight_percent="0.5"
+            android:src="@drawable/selector_arrow_down" />
+
+        <ImageView
+            android:id="@+id/ivFamilyGroup2ndDigitUp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            app:layout_constraintTop_toTopOf="@+id/llFamilyGroupDigits"
+            app:layout_constraintEnd_toEndOf="@+id/guideline2ndDigitRight"
+            app:layout_constraintBottom_toBottomOf="@+id/llFamilyGroupDigits"
+            app:layout_constraintWidth_percent="0.1"
+            app:layout_constraintHeight_percent="0.5"
+            android:src="@drawable/selector_arrow_up"/>
+
+    </android.support.constraint.ConstraintLayout>
 
     <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldTextView
         android:id="@+id/tvFamilyGroupName"
@@ -29,7 +116,7 @@
         android:textColor="@color/colorText"
         android:textSize="16sp" />
 
-    <android.support.v4.view.ViewPager
+    <com.ph.idisciple.idiscipleapp.widgets.NonSwipeableViewPager
         android:id="@+id/viewpagerGroups"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
