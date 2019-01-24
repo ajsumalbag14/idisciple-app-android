@@ -70,7 +70,8 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
         mProfileRepository.getKeyItem(ProfileObject.ProfileType.USER_ID, new IProfileRepository.onGetKeyItemCallback() {
             @Override
             public void onSuccess(ProfileObject keySettingItem) {
-                fetchData(keySettingItem.getItemValue());
+                mActivity.mUserId = keySettingItem.getItemValue();
+                fetchData(mActivity.mUserId);
             }
         });
     }
