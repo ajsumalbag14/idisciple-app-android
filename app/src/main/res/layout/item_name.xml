@@ -53,7 +53,6 @@
             app:layout_constraintTop_toTopOf="@+id/tvNickname"
             app:layout_constraintVertical_bias="0.68" />
 
-
         <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
             android:id="@+id/tvCompleteName"
             android:layout_width="wrap_content"
@@ -61,7 +60,18 @@
             android:text="Complete Name"
             android:textColor="@color/colorTextGray"
             android:textSize="12sp"
-            app:layout_constraintTop_toBottomOf="@+id/tvNickname" />
+            app:layout_constraintTop_toBottomOf="@+id/tvNickname"
+            android:visibility="gone" />
+
+        <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+            android:id="@+id/tvThatsYou"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/own_profile_dialog_label_attending"
+            android:textColor="@color/colorIDiscipleOrange"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@+id/tvNickname"
+            android:visibility="visible" />
 
     </android.support.constraint.ConstraintLayout>
 

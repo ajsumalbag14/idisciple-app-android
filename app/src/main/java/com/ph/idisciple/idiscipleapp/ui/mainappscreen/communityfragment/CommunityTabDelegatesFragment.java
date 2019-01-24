@@ -19,6 +19,7 @@ import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
+import com.wagnerandade.coollection.query.order.Order;
 
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class CommunityTabDelegatesFragment extends BaseFragment {
 
         mActivity = (MainAppScreenActivity) getActivity();
         mAllContactList = mActivity.mPresenter.mAttendeesRepository.getContentList();
-        mFilteredContactList = mActivity.mPresenter.mAttendeesRepository.getContentList();
+        mFilteredContactList = from(mAllContactList).orderBy("getUserFullNameCapslock", Order.ASC).all();
 
         mLinearLayoutManager = new LinearLayoutManager(mActivity);
         rvList.setLayoutManager(mLinearLayoutManager);
@@ -100,7 +101,7 @@ public class CommunityTabDelegatesFragment extends BaseFragment {
             public void afterTextChanged(Editable editable) {
 
                if(etSearchName.getText().toString().length() > 0){
-                   mFilteredContactList = from(mAllContactList).where("getUserFullName", contains(etSearchName.getText().toString())).all();
+                   mFilteredContactList = from(mAllContactList).where("getUserFullName", contains(etSearchName.getText().toString())).orderBy("getUserFullNameCapslock", Order.ASC).all();
                    mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList);
                    rvList.setAdapter(mAdapter);
                } else {

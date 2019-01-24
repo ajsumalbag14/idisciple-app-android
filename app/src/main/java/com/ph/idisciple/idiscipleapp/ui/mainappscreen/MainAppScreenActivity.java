@@ -15,6 +15,7 @@ import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.CommunityFragment;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.morefragment.MoreFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.schedulefragment.ScheduleFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.speakerfragment.SpeakerFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.workshopfragment.WorkshopFragment;
@@ -51,6 +52,8 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
     ColorStateList cslMore;
     private BaseFragment fragmentActive = null;
     public MainAppScreenPresenter mPresenter;
+    public String mUserId;
+    int mCurrentSelectedBottomNav = -1;
 
     @Override
     protected int getLayout() {
@@ -104,13 +107,19 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
                 bottomNavigationItemView.setTextColor(cslCommunity);
                 break;
             case R.id.menuMore:
-                fragmentActive = newInstance(SpeakerFragment.class);
+                fragmentActive = newInstance(MoreFragment.class);
                 rlToolbar.setBackgroundColor(getResources().getColor(R.color.colorDividerGray));
                 bottomNavigationItemView.setIconTintList(cslMore);
                 bottomNavigationItemView.setTextColor(cslMore);
                 break;
         }
-        showFragment(getSupportFragmentManager(), R.id.flContainter, fragmentActive, false, null);
+
+        // Avoid double selection of same tab
+        if(mCurrentSelectedBottomNav != order) {
+            showFragment(getSupportFragmentManager(), R.id.flContainter, fragmentActive, false, null);
+            mCurrentSelectedBottomNav = order;
+        }
+
         return false;
     }
 
