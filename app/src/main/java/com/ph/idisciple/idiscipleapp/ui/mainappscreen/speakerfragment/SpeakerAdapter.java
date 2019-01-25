@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.Speaker;
 
@@ -47,7 +48,12 @@ public class SpeakerAdapter extends RecyclerView.Adapter<SpeakerAdapter.ViewHold
         holder.tvSpeakerName.setText(itemSpeaker.getSpeakerName());
         holder.tvSpeakerTopic.setText(itemSpeaker.getSpeakerPlanaryTitle());
         holder.tvSpeakerDateTime.setText(itemSpeaker.getSpeakerPlanaryScheduleDate() + " " + itemSpeaker.getSpeakerPlanaryScheduleTime());
-        Glide.with(mContext).load(itemSpeaker.getSpeakerImageUrl()).into(holder.ivSpeakerAvatar);
+        Glide.with(mContext)
+                .load(itemSpeaker.getSpeakerImageUrl())
+                .apply( RequestOptions
+                        .circleCropTransform()
+                        .error(R.drawable.img_placeholder))
+                .into(holder.ivSpeakerAvatar);
     }
 
     // total number of cells

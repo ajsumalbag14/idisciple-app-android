@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.FamilyGroup;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
@@ -64,7 +65,12 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Profile item = getItem(position);
         holder.tvNickname.setText(item.getUserNickName());
-        Glide.with(mContext).load(item.getUserImageUrl()).into(holder.ivAvatar);
+        Glide.with(mContext)
+                .load(item.getUserImageUrl())
+                .apply( RequestOptions
+                        .circleCropTransform()
+                        .error(R.drawable.img_placeholder))
+                .into(holder.ivAvatar);
 
         // Determine if profile is yours
         if (mActivity.mUserId.equals(item.getId())) {

@@ -27,8 +27,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ivSpeakerAvatar"
-                android:layout_width="@dimen/avatar_size"
-                android:layout_height="@dimen/avatar_size"
+                android:layout_width="@dimen/speaker_avatar_size"
+                android:layout_height="@dimen/speaker_avatar_size"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/img_placeholder" />
 
