@@ -72,6 +72,9 @@ dependencies {
     // Coollection
     implementation files('libs/coollection-0.2.0.jar')
 
+    // Expansion Panel
+    implementation "com.github.florent37:expansionpanel:1.0.3"
+
     // Firebase
     implementation ("com.google.firebase:firebase-core:${firebase_version}"){
         exclude group: 'com.android.support'
