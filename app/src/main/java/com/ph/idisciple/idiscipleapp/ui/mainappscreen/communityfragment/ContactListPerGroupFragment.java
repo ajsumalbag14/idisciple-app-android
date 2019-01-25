@@ -53,7 +53,7 @@ public class ContactListPerGroupFragment extends BaseFragment{
         rvList.setNestedScrollingEnabled(false);
         rvList.setHasFixedSize(true);
 
-        mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList == null ? mAllContactList : mFilteredContactList);
+        mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList == null ? mAllContactList : mFilteredContactList, selectedFamilyGroupId);
         rvList.setAdapter(mAdapter);
 
         return rootView;

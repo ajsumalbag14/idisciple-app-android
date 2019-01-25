@@ -21,6 +21,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.wagnerandade.coollection.Coollection.eq;
+import static com.wagnerandade.coollection.Coollection.from;
+
 public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.ViewHolder> {
 
     private List<Profile> mData;
@@ -36,6 +39,16 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
         mFamilyGroupList = mActivity.mPresenter.mFamilyGroupRepository.getContentList();
+    }
+
+    // data is passed into the constructor
+    public AttendeesAdapter(Context context, List<Profile> data, String familyGroupId) {
+        mContext = context;
+        mActivity = (MainAppScreenActivity) mContext;
+        this.mInflater = LayoutInflater.from(context);
+        this.mData = data;
+        mFamilyGroupList = mActivity.mPresenter.mFamilyGroupRepository.getContentList();
+        mFamilyGroupList = from(mFamilyGroupList).where("getId", eq(familyGroupId)).all();
     }
 
     // inflates the cell layout from xml when needed
