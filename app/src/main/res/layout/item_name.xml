@@ -87,7 +87,7 @@
         android:layout_width="@dimen/margin_normal_2"
         android:layout_height="@dimen/margin_normal_2"
         android:layout_marginEnd="@dimen/margin_small"
-        android:src="@drawable/ic_star_active"
+        android:src="@drawable/ic_star"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/llNames" />
 

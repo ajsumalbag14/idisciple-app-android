@@ -19,7 +19,7 @@ public class ScheduleRepository extends BaseRepository implements IScheduleRepos
     }
 
     @Override
-    public Schedule findItemById(int id) {
+    public Schedule findItemById(String id) {
         return realm.where(Schedule.class).equalTo("id", id).findFirst();
     }
 

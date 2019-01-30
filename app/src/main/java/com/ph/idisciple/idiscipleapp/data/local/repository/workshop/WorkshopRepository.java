@@ -19,7 +19,7 @@ public class WorkshopRepository extends BaseRepository implements IWorkshopRepos
     }
 
     @Override
-    public Workshop findItemById(int id) {
+    public Workshop findItemById(String id) {
         return realm.where(Workshop.class).equalTo("id", id).findFirst();
     }
 

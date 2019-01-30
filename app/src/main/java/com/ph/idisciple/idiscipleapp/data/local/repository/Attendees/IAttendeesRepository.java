@@ -8,7 +8,7 @@ import java.util.List;
 public interface IAttendeesRepository {
     ArrayList<Profile> getContentList();
 
-    Profile findItemById(int id);
+    Profile findItemById(String id);
 
     void addItemList(List<Profile> itemList);
 

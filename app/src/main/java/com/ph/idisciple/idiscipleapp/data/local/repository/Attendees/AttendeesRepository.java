@@ -19,7 +19,7 @@ public class AttendeesRepository extends BaseRepository implements IAttendeesRep
     }
 
     @Override
-    public Profile findItemById(int id) {
+    public Profile findItemById(String id) {
         return realm.where(Profile.class).equalTo("id", id).findFirst();
     }
 

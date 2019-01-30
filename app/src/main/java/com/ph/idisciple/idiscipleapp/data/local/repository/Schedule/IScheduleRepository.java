@@ -8,7 +8,7 @@ import java.util.List;
 public interface IScheduleRepository {
     ArrayList<Schedule> getContentList();
 
-    Schedule findItemById(int id);
+    Schedule findItemById(String id);
 
     void addItemList(List<Schedule> itemList);
 

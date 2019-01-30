@@ -21,7 +21,7 @@ public class FamilyGroupRepository extends BaseRepository implements IFamilyGrou
     }
 
     @Override
-    public FamilyGroup findItemById(int id) {
+    public FamilyGroup findItemById(String id) {
         return realm.where(FamilyGroup.class).equalTo("id", id).findFirst();
     }
 

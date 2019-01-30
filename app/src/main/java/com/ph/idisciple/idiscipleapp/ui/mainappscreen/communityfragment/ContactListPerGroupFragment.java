@@ -14,6 +14,10 @@ import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,6 +32,7 @@ public class ContactListPerGroupFragment extends BaseFragment{
     private MainAppScreenActivity mActivity;
     private LinearLayoutManager mLinearLayoutManager;
     private AttendeesAdapter mAdapter;
+    private List<Profile> mAllContactList = null;
     private List<Profile> mFilteredContactList = null;
     private String selectedFamilyGroupId;
 
@@ -38,7 +43,7 @@ public class ContactListPerGroupFragment extends BaseFragment{
         bind(rootView);
 
         mActivity = (MainAppScreenActivity) getActivity();
-        List<Profile> mAllContactList = mActivity.mPresenter.mAttendeesRepository.getContentList();
+        mAllContactList = mActivity.mPresenter.mAttendeesRepository.getContentList();
 
         Bundle bundle = getArguments();
         if(bundle != null)
@@ -59,6 +64,23 @@ public class ContactListPerGroupFragment extends BaseFragment{
         return rootView;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateFavorite(RefreshFavoriteEvent event){
+        mActivity = (MainAppScreenActivity) getActivity();
+        mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList == null ? mAllContactList : mFilteredContactList, selectedFamilyGroupId);
+        rvList.setAdapter(mAdapter);
+    }
 
 }

@@ -16,6 +16,10 @@ import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 import com.ph.idisciple.idiscipleapp.widgets.NonSwipeableViewPager;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -44,7 +48,7 @@ public class CommunityTabGroupsFragment extends BaseFragment {
 
         currentItemCount = (fg1stDigit * 10) + fg2ndDigit;
 
-        if(currentItemCount == 0) {
+        if (currentItemCount == 0) {
             fg2ndDigit = 1;
             currentItemCount = 1;
             tvFamilyGroup2ndDigit.setText(String.valueOf(fg2ndDigit));
@@ -60,7 +64,7 @@ public class CommunityTabGroupsFragment extends BaseFragment {
             fg1stDigit++;
 
         currentItemCount = (fg1stDigit * 10) + fg2ndDigit;
-        if(currentItemCount > totalFgCount) {
+        if (currentItemCount > totalFgCount) {
             tvFamilyGroup2ndDigit.setText(String.valueOf(totalFgCount).substring(1));
             fg2ndDigit = Integer.valueOf(tvFamilyGroup2ndDigit.getText().toString());
         }
@@ -83,7 +87,7 @@ public class CommunityTabGroupsFragment extends BaseFragment {
     @OnClick(R.id.ivFamilyGroup2ndDigitUp)
     public void onAddFamilyGroup2ndDigit() {
         int maxDigit = 9;
-        if(fg1stDigit > max1stDigit - 1 )
+        if (fg1stDigit > max1stDigit - 1)
             maxDigit = totalFgCount % (fg1stDigit * 10);
 
         if (fg2ndDigit < maxDigit)
@@ -108,15 +112,15 @@ public class CommunityTabGroupsFragment extends BaseFragment {
         mAdapter = new CommunityGroupAdapter(getChildFragmentManager());
         viewpager.setAdapter(mAdapter);
 
-
-
         // Show First Family Group Name
-        tvFamilyGroupName.setText(mData.get(0).getFamilyGroupName());
+        if (mData != null)
+            tvFamilyGroupName.setText(mData.get(0).getFamilyGroupName());
 
         return rootView;
     }
 
-    private void updateFamilyGroupScreen(){
+
+    private void updateFamilyGroupScreen() {
         tvFamilyGroupName.setText(mData.get(currentItemCount - 1).getFamilyGroupName());
         viewpager.setCurrentItem(currentItemCount - 1);
     }

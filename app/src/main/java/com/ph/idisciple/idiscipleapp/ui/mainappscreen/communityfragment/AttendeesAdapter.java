@@ -1,6 +1,7 @@
 package com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,7 +16,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.FamilyGroup;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
+import com.ph.idisciple.idiscipleapp.data.local.model.SavedProfileFavorites;
+import com.ph.idisciple.idiscipleapp.data.local.repository.SavedProfileFavorites.ISavedProfileFavoritesRepository;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -62,12 +67,12 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
 
     // binds the data to the TextView in each cell
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        Profile item = getItem(position);
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        final Profile item = getItem(position);
         holder.tvNickname.setText(item.getUserNickName());
         Glide.with(mContext)
                 .load(item.getUserImageUrl())
-                .apply( RequestOptions
+                .apply(RequestOptions
                         .circleCropTransform()
                         .error(R.drawable.img_placeholder))
                 .into(holder.ivAvatar);
@@ -94,6 +99,32 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
                 holder.tvFamilyGroupLeaderTag.setVisibility(View.GONE);
         }
 
+        final SavedProfileFavorites profileFavorite = mActivity.mPresenter.mSavedProfileFavoritesRepository.findItemById(item.getId());
+        setImageForFavorites(profileFavorite != null ? profileFavorite.isTagAsFavorite() : false, holder.ivFavorite);
+        holder.ivFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Store in local DB
+                boolean isSelectedAsFavorite = false;
+                if (profileFavorite != null)
+                    isSelectedAsFavorite = !profileFavorite.isTagAsFavorite();
+
+                mActivity.mPresenter.mSavedProfileFavoritesRepository.setAsFavorite(item.getId(), isSelectedAsFavorite, new ISavedProfileFavoritesRepository.onSaveCallback() {
+                    @Override
+                    public void onSuccess(boolean isFavoriteSet) {
+                        setImageForFavorites(isFavoriteSet, holder.ivFavorite);
+                        EventBus.getDefault().post(new RefreshFavoriteEvent());
+                    }
+                });
+
+            }
+        });
+
+    }
+
+    private void setImageForFavorites(boolean isSetAsFavorite, ImageView ivIsFavorite) {
+        Drawable isFavoriteDrawable = mActivity.getDrawable(isSetAsFavorite ? R.drawable.ic_star_active : R.drawable.ic_star);
+        Glide.with(mActivity).load(isFavoriteDrawable).into(ivIsFavorite);
     }
 
     // total number of cells

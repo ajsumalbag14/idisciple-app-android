@@ -21,6 +21,10 @@ import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 import com.wagnerandade.coollection.query.order.Order;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -101,15 +105,13 @@ public class CommunityTabDelegatesFragment extends BaseFragment {
             public void afterTextChanged(Editable editable) {
 
                if(etSearchName.getText().toString().length() > 0){
-                   mFilteredContactList = from(mAllContactList).where("getUserFullName", contains(etSearchName.getText().toString())).orderBy("getUserFullNameCapslock", Order.ASC).all();
+                   mFilteredContactList = from(mAllContactList).where("getUserFullNameCapslock", contains(etSearchName.getText().toString().toUpperCase())).orderBy("getUserFullNameCapslock", Order.ASC).all();
                    mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList);
                    rvList.setAdapter(mAdapter);
                } else {
                    mAdapter = new AttendeesAdapter(mActivity, mAllContactList);
                    rvList.setAdapter(mAdapter);
                }
-
-
             }
         });
 
@@ -124,6 +126,7 @@ public class CommunityTabDelegatesFragment extends BaseFragment {
         return rootView;
     }
 
+
     private void showKeyboard(){
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(etSearchName, InputMethodManager.SHOW_FORCED);
@@ -136,5 +139,24 @@ public class CommunityTabDelegatesFragment extends BaseFragment {
             etSearchName.requestFocus();
             showKeyboard();
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateFavorite(RefreshFavoriteEvent event){
+        mActivity = (MainAppScreenActivity) getActivity();
+        mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList);
+        rvList.setAdapter(mAdapter);
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 public interface IWorkshopRepository {
     ArrayList<Workshop> getContentList();
 
-    Workshop findItemById(int id);
+    Workshop findItemById(String id);
 
     void addItemList(List<Workshop> itemList);
 

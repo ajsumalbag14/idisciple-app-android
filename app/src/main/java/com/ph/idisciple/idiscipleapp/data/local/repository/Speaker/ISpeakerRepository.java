@@ -8,7 +8,7 @@ import java.util.List;
 public interface ISpeakerRepository {
     ArrayList<Speaker> getContentList();
 
-    Speaker findItemById(int id);
+    Speaker findItemById(String id);
 
     void addItemList(List<Speaker> itemList);
 

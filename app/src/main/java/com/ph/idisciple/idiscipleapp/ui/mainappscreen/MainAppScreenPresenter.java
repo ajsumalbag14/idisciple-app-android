@@ -7,12 +7,14 @@ import com.google.gson.reflect.TypeToken;
 import com.ph.idisciple.idiscipleapp.data.local.model.FamilyGroup;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.local.model.ProfileObject;
+import com.ph.idisciple.idiscipleapp.data.local.model.SavedProfileFavorites;
 import com.ph.idisciple.idiscipleapp.data.local.model.Schedule;
 import com.ph.idisciple.idiscipleapp.data.local.model.Speaker;
 import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
 import com.ph.idisciple.idiscipleapp.data.local.repository.Attendees.AttendeesRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.FamilyGroups.FamilyGroupRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.IProfileRepository;
+import com.ph.idisciple.idiscipleapp.data.local.repository.SavedProfileFavorites.SavedProfileFavoritesRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.Schedule.ScheduleRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.Speaker.SpeakerRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.impl.ProfileRepository;
@@ -51,6 +53,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
     public SpeakerRepository mSpeakerRepository;
     public WorkshopRepository mWorkshopRepository;
     public FamilyGroupRepository mFamilyGroupRepository;
+    public SavedProfileFavoritesRepository mSavedProfileFavoritesRepository;
 
     public MainAppScreenPresenter(MainAppScreenActivity activity, MainAppScreenContract.View view) {
         mView = view;
@@ -63,6 +66,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
         mSpeakerRepository = new SpeakerRepository();
         mWorkshopRepository = new WorkshopRepository();
         mFamilyGroupRepository = new FamilyGroupRepository();
+        mSavedProfileFavoritesRepository = new SavedProfileFavoritesRepository();
     }
 
     @Override
@@ -201,6 +205,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     ListWrapper<Profile> wrapperProfile = jsonReturned.fromJson(result, typeProfileWrapper);
                     List<Profile> jsonProfile = wrapperProfile.getData();
                     mAttendeesRepository.addItemList(jsonProfile);
+                    if(mSavedProfileFavoritesRepository.size() == 0) mSavedProfileFavoritesRepository.addItemList(jsonProfile);
                     break;
                 case "1":
                     Type typeScheduleWrapper = new TypeToken<ListWrapper<Schedule>>() {}.getType();

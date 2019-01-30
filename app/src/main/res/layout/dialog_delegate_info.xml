@@ -83,7 +83,7 @@
                 <ImageView
                     android:layout_width="@dimen/star_size"
                     android:layout_height="@dimen/star_size"
-                    android:src="@drawable/ic_star_active"
+                    android:src="@drawable/ic_star"
                     app:layout_constraintEnd_toEndOf="parent" />
             </android.support.constraint.ConstraintLayout>
 
