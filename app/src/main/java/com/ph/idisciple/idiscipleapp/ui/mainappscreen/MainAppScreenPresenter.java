@@ -26,6 +26,9 @@ import com.ph.idisciple.idiscipleapp.data.remote.model.base.Wrapper;
 import com.ph.idisciple.idiscipleapp.data.remote.model.response.ContentDetails;
 import com.ph.idisciple.idiscipleapp.data.remote.model.response.ContentResponseWrapper;
 import com.ph.idisciple.idiscipleapp.data.remote.service.ContentService;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.speakerfragment.RefreshSpeakerListEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -218,6 +221,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     ListWrapper<Speaker> wrapperSpeaker = jsonReturned.fromJson(result, typeSpeakerWrapper);
                     List<Speaker> jsonSpeaker = wrapperSpeaker.getData();
                     mSpeakerRepository.addItemList(jsonSpeaker);
+                    EventBus.getDefault().post(new RefreshSpeakerListEvent());
                     break;
                 case "3":
                     Type typeWorkshopWrapper = new TypeToken<ListWrapper<Workshop>>() {}.getType();

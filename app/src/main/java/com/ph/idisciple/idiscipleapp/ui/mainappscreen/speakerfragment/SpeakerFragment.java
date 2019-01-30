@@ -15,6 +15,10 @@ import com.ph.idisciple.idiscipleapp.data.local.repository.Speaker.SpeakerReposi
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -60,5 +64,25 @@ public class SpeakerFragment extends BaseFragment {
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateSpeakerList(RefreshSpeakerListEvent event){
+        mActivity = (MainAppScreenActivity) getActivity();
+        mSpeakerList = mActivity.mPresenter.mSpeakerRepository.getContentList();
+        mAdapter = new SpeakerAdapter(mActivity, mSpeakerList);
+        rvList.setAdapter(mAdapter);
     }
 }
