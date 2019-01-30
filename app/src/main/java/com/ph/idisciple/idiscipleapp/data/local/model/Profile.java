@@ -22,7 +22,7 @@ public class Profile  extends RealmObject {
     private String userNickName;
     @SerializedName("gender")
     private String userGender;
-    @SerializedName("userCountry")
+    @SerializedName("country")
     private String userCountry;
 
     @SerializedName("fg_id")

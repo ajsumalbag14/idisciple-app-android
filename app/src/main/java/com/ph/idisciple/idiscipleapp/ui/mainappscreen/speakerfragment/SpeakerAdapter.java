@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.Speaker;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 
 import java.util.List;
 
@@ -25,10 +26,12 @@ public class SpeakerAdapter extends RecyclerView.Adapter<SpeakerAdapter.ViewHold
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
     private Context mContext;
+    private MainAppScreenActivity mActivity;
 
     // data is passed into the constructor
     public SpeakerAdapter(Context context, List<Speaker> data) {
         mContext = context;
+        mActivity = (MainAppScreenActivity) mContext;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -52,7 +55,7 @@ public class SpeakerAdapter extends RecyclerView.Adapter<SpeakerAdapter.ViewHold
                 .load(itemSpeaker.getSpeakerImageUrl())
                 .apply( RequestOptions
                         .circleCropTransform()
-                        .error(R.drawable.img_placeholder))
+                        .error(mActivity.getDrawableCountryRes(itemSpeaker.getSpeakerNationality())))
                 .into(holder.ivSpeakerAvatar);
     }
 

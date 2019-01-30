@@ -70,11 +70,12 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final Profile item = getItem(position);
         holder.tvNickname.setText(item.getUserNickName());
+
         Glide.with(mContext)
                 .load(item.getUserImageUrl())
                 .apply(RequestOptions
                         .circleCropTransform()
-                        .error(R.drawable.img_placeholder))
+                        .error(mActivity.getDrawableCountryRes(item.getUserCountry())))
                 .into(holder.ivAvatar);
 
         // Determine if profile is yours
