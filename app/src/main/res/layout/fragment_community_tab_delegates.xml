@@ -50,15 +50,15 @@
             android:visibility="visible">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_email" />
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_magnifying_glass" />
 
             <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
                 android:id="@+id/tvSearchName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginStart="@dimen/margin_small"
                 android:background="@drawable/shape_transparent"
                 android:inputType="textCapWords"
                 android:text="@string/hint_search_name"
