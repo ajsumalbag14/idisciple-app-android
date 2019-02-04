@@ -4,14 +4,15 @@ import android.os.AsyncTask;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.ph.idisciple.idiscipleapp.data.local.model.Country;
 import com.ph.idisciple.idiscipleapp.data.local.model.FamilyGroup;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.local.model.ProfileObject;
-import com.ph.idisciple.idiscipleapp.data.local.model.SavedProfileFavorites;
 import com.ph.idisciple.idiscipleapp.data.local.model.Schedule;
 import com.ph.idisciple.idiscipleapp.data.local.model.Speaker;
 import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
 import com.ph.idisciple.idiscipleapp.data.local.repository.Attendees.AttendeesRepository;
+import com.ph.idisciple.idiscipleapp.data.local.repository.Country.CountryRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.FamilyGroups.FamilyGroupRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.IProfileRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.SavedProfileFavorites.SavedProfileFavoritesRepository;
@@ -56,6 +57,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
     public SpeakerRepository mSpeakerRepository;
     public WorkshopRepository mWorkshopRepository;
     public FamilyGroupRepository mFamilyGroupRepository;
+    public CountryRepository mCountryRepository;
     public SavedProfileFavoritesRepository mSavedProfileFavoritesRepository;
 
     public MainAppScreenPresenter(MainAppScreenActivity activity, MainAppScreenContract.View view) {
@@ -69,6 +71,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
         mSpeakerRepository = new SpeakerRepository();
         mWorkshopRepository = new WorkshopRepository();
         mFamilyGroupRepository = new FamilyGroupRepository();
+        mCountryRepository = new CountryRepository();
         mSavedProfileFavoritesRepository = new SavedProfileFavoritesRepository();
     }
 
@@ -101,6 +104,8 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                         new JsonTask().execute(contentWorkshops.getJsonPathFile(), "3");
                         ContentDetails contentFamilyGroup = wrapper.getAssetsData().getContentFamilyGroup();
                         new JsonTask().execute(contentFamilyGroup.getJsonPathFile(), "4");
+                        ContentDetails contentCountry = wrapper.getAssetsData().getContentCountry();
+                        new JsonTask().execute(contentCountry.getJsonPathFile(), "5");
                         break;
                     case 422:
                         Gson gson = new Gson();
@@ -234,6 +239,12 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     ListWrapper<FamilyGroup> wrapperFamilyGroup = jsonReturned.fromJson(result, typeFamilyGroupWrapper);
                     List<FamilyGroup> jsonFamilyGroup = wrapperFamilyGroup.getData();
                     mFamilyGroupRepository.addItemList(jsonFamilyGroup);
+                    break;
+                case "5":
+                    Type typeCountryWrapper = new TypeToken<ListWrapper<Country>>() {}.getType();
+                    ListWrapper<Country> wrapperCountry = jsonReturned.fromJson(result, typeCountryWrapper);
+                    List<Country> jsonCountry = wrapperCountry.getData();
+                    mCountryRepository.addItemList(jsonCountry);
                     break;
             }
             mView.onFetchDataSuccess();

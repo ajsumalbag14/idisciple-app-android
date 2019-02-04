@@ -45,6 +45,10 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:name=".ui.mainappscreen.workshopfragment.WorkshopInfoDialogActivity" />
 
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".ui.mainappscreen.communityfragment.YourProfileInfoDialogActivity" />
+
     </application>
 
 </manifest>

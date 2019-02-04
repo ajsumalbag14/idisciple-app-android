@@ -2,7 +2,9 @@ package com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.ph.idisciple.idiscipleapp.R;
+import com.ph.idisciple.idiscipleapp.data.local.model.Country;
 import com.ph.idisciple.idiscipleapp.data.local.model.FamilyGroup;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.local.model.SavedProfileFavorites;
@@ -34,6 +37,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
 
     private List<Profile> mData;
     private List<FamilyGroup> mFamilyGroupList;
+    private List<Country> mCountryList;
     private LayoutInflater mInflater;
     private Context mContext;
     private MainAppScreenActivity mActivity;
@@ -45,6 +49,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
         mFamilyGroupList = mActivity.mPresenter.mFamilyGroupRepository.getContentList();
+        mCountryList = mActivity.mPresenter.mCountryRepository.getContentList();
     }
 
     // data is passed into the constructor
@@ -55,6 +60,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         this.mData = data;
         mFamilyGroupList = mActivity.mPresenter.mFamilyGroupRepository.getContentList();
         mFamilyGroupList = from(mFamilyGroupList).where("getId", eq(familyGroupId)).all();
+        mCountryList = mActivity.mPresenter.mCountryRepository.getContentList();
     }
 
     // inflates the cell layout from xml when needed
@@ -121,6 +127,20 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
             }
         });
 
+        holder.clItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Profile selectedAttendee = mData.get(position);
+                Bundle bundleToInclude = new Bundle();
+                bundleToInclude.putString("fullname", selectedAttendee.getUserFullName());
+                bundleToInclude.putString("nickname", selectedAttendee.getUserNickName());
+                bundleToInclude.putString("country", selectedAttendee.getUserCountry());
+                bundleToInclude.putString("familyGroupName", selectedAttendee.getUserFamilyGroupName());
+                bundleToInclude.putString("workshop1", selectedAttendee.getUserWorkshop1());
+                bundleToInclude.putString("avatar", selectedAttendee.getUserImageUrl());
+                mActivity.redirectToAnotherScreen(YourProfileInfoDialogActivity.class, bundleToInclude);
+            }
+        });
     }
 
     private void setImageForFavorites(boolean isSetAsFavorite, ImageView ivIsFavorite) {
@@ -142,6 +162,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.clItem) ConstraintLayout clItem;
         @BindView(R.id.tvNickname) TextView tvNickname;
         @BindView(R.id.tvFamilyGroupLeaderTag) TextView tvFamilyGroupLeaderTag;
         @BindView(R.id.tvCompleteName) TextView tvCompleteName;
