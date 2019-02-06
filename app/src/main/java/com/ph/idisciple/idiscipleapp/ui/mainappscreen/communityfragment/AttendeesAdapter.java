@@ -20,6 +20,7 @@ import com.ph.idisciple.idiscipleapp.data.local.model.Country;
 import com.ph.idisciple.idiscipleapp.data.local.model.FamilyGroup;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.local.model.SavedProfileFavorites;
+import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
 import com.ph.idisciple.idiscipleapp.data.local.repository.SavedProfileFavorites.ISavedProfileFavoritesRepository;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 
@@ -36,6 +37,7 @@ import static com.wagnerandade.coollection.Coollection.from;
 public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.ViewHolder> {
 
     private List<Profile> mData;
+    private List<Workshop> mWorkshopList;
     private List<FamilyGroup> mFamilyGroupList;
     private List<Country> mCountryList;
     private LayoutInflater mInflater;
@@ -50,6 +52,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         this.mData = data;
         mFamilyGroupList = mActivity.mPresenter.mFamilyGroupRepository.getContentList();
         mCountryList = mActivity.mPresenter.mCountryRepository.getContentList();
+        mWorkshopList = mActivity.mPresenter.mWorkshopRepository.getContentList();
     }
 
     // data is passed into the constructor
@@ -134,10 +137,36 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
                 Bundle bundleToInclude = new Bundle();
                 bundleToInclude.putString("fullname", selectedAttendee.getUserFullName());
                 bundleToInclude.putString("nickname", selectedAttendee.getUserNickName());
-                bundleToInclude.putString("country", selectedAttendee.getUserCountry());
-                bundleToInclude.putString("familyGroupName", selectedAttendee.getUserFamilyGroupName());
-                bundleToInclude.putString("workshop1", selectedAttendee.getUserWorkshop1());
                 bundleToInclude.putString("avatar", selectedAttendee.getUserImageUrl());
+
+                // Get Country Name based on countryId
+                bundleToInclude.putString("countryId", selectedAttendee.getUserCountry());
+                if(selectedAttendee.getUserCountry() != null) {
+                    Country country = from(mCountryList).where("getId", eq(selectedAttendee.getUserCountry())).first();
+                    bundleToInclude.putString("countryName", country.getCountryName());
+                }
+
+                // Get Family Group Name based on FamilyGroupId
+                bundleToInclude.putString("familyGroupId", selectedAttendee.getUserFamilyGroupId());
+                if(selectedAttendee.getUserFamilyGroupId() != null) {
+                    FamilyGroup familyGroup = from(mFamilyGroupList).where("getId", eq(selectedAttendee.getUserFamilyGroupId())).first();
+                    bundleToInclude.putString("familyGroupName", familyGroup.getFamilyGroupName());
+                }
+
+                // Get Workshop Name based on WorkshopId
+                bundleToInclude.putString("workshopId1", selectedAttendee.getUserWorkshop1());
+                if(selectedAttendee.getUserWorkshop1() != null) {
+                    Workshop workshop = from(mWorkshopList).where("getId", eq(selectedAttendee.getUserWorkshop1())).first();
+                    bundleToInclude.putString("workshopId1Name", workshop.getWorkshopName());
+                }
+
+                bundleToInclude.putString("workshopId2", selectedAttendee.getUserWorkshop2());
+                if(selectedAttendee.getUserWorkshop2() != null) {
+                    Workshop workshop = from(mWorkshopList).where("getId", eq(selectedAttendee.getUserWorkshop2())).first();
+                    bundleToInclude.putString("workshopId2Name", workshop.getWorkshopName());
+                }
+
+
                 mActivity.redirectToAnotherScreen(YourProfileInfoDialogActivity.class, bundleToInclude);
             }
         });

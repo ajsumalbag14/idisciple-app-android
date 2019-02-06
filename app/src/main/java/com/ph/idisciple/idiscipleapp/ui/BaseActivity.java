@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.utils.ShowMessageUtil;
 
 import butterknife.ButterKnife;
@@ -148,4 +149,78 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+
+
+    public int getDrawableCountryRes(String country) {
+        int drawablePlaceholderRes = R.drawable.img_avatar_06_philippines;
+        if (country != null) {
+            try {
+                switch (Integer.parseInt(country)) {
+                    case 117:
+                        drawablePlaceholderRes = R.drawable.img_avatar_00_korea;
+                        break;
+                    case 110:
+                        drawablePlaceholderRes = R.drawable.img_avatar_01_japan;
+                        break;
+                    case 217:
+                        drawablePlaceholderRes = R.drawable.img_avatar_02_taiwan;
+                        break;
+                    case 129:
+                        drawablePlaceholderRes = R.drawable.img_avatar_03_macau;
+                        break;
+                    case 98:
+                        drawablePlaceholderRes = R.drawable.img_avatar_04_hongkong;
+                        break;
+                    case 102:
+                        drawablePlaceholderRes = R.drawable.img_avatar_05_indonesia;
+                        break;
+                    case 178:
+                        drawablePlaceholderRes = R.drawable.img_avatar_06_philippines;
+                        break;
+                    case 201:
+                        drawablePlaceholderRes = R.drawable.img_avatar_07_singapore;
+                        break;
+                    case 133:
+                        drawablePlaceholderRes = R.drawable.img_avatar_08_malaysia;
+                        break;
+                    case 101:
+                        drawablePlaceholderRes = R.drawable.img_avatar_09_india;
+                        break;
+                    case 19:
+                        drawablePlaceholderRes = R.drawable.img_avatar_10_bangladesh;
+                        break;
+                    case 158:
+                        drawablePlaceholderRes = R.drawable.img_avatar_11_nepal;
+                        break;
+                    case 209:
+                        drawablePlaceholderRes = R.drawable.img_avatar_12_srilanka;
+                        break;
+                    case 220:
+                        drawablePlaceholderRes = R.drawable.img_avatar_13_thailand;
+                        break;
+                    case 150:
+                        drawablePlaceholderRes = R.drawable.img_avatar_14_myanmar;
+                        break;
+                    case 37:
+                        drawablePlaceholderRes = R.drawable.img_avatar_15_cambodia;
+                        break;
+                    case 241:
+                        drawablePlaceholderRes = R.drawable.img_avatar_16_vietnam;
+                        break;
+                    case 14:
+                        drawablePlaceholderRes = R.drawable.img_avatar_17_australia;
+                        break;
+                    case 162:
+                        drawablePlaceholderRes = R.drawable.img_avatar_18_newzealand;
+                        break;
+                    case 72:
+                        drawablePlaceholderRes = R.drawable.img_avatar_19_fiji;
+                        break;
+                }
+            } catch (Exception ex){
+
+            }
+        }
+        return drawablePlaceholderRes;
+    }
 }

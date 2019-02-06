@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    android:background="@drawable/shape_dialog">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -181,7 +181,7 @@
                     android:id="@+id/tvFamilyGroupAssignedTo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginStart="@dimen/margin_very_small_2"
                     android:gravity="center"
                     android:maxLines="1"
                     android:text="Family Group #13 >"
@@ -217,7 +217,7 @@
                     android:id="@+id/tvAttendingWorkshop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginStart="@dimen/margin_very_small_2"
                     android:gravity="center"
                     android:maxLines="1"
                     android:text="Workshop Name here >"

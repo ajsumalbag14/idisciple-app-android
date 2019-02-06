@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 
@@ -55,10 +56,15 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
         if(bundle != null) {
             tvDelegateNickName.setText(bundle.getString("nickname"));
             tvFullName.setText(bundle.getString("fullname"));
-            tvCountryDetails.setText(bundle.getString("country"));
+            tvCountryDetails.setText(bundle.getString("countryName"));
             tvFamilyGroupAssignedTo.setText(bundle.getString("familyGroupName"));
-            tvAttendingWorkshop.setText(bundle.getString("workshop1"));
-            Glide.with(YourProfileInfoDialogActivity.this).load(bundle.getString("avatar")).into(ivAvatar);
+            tvAttendingWorkshop.setText(bundle.getString("workshopId1Name"));
+            Glide.with(YourProfileInfoDialogActivity.this)
+                    .load(bundle.getString("avatar"))
+                    .apply(RequestOptions
+                            .circleCropTransform()
+                            .error(getDrawableCountryRes(bundle.getString("countryId"))))
+                    .into(ivAvatar);
         }
     }
 }
