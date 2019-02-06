@@ -90,7 +90,8 @@
     <string name="delagete_profile_dialog_label_assigned_to">Assigned to</string>
     <string name="delagete_profile_dialog_label_attending">Attending</string>
 
-    <string name="own_profile_dialog_label_attending">That\'s You!</string>
+    <string name="profile_tag_own">That\'s You!</string>
+    <string name="profile_tag_fg">FG</string>
     <string name="item_workshop_yours">YOUR WORKSHOP</string>
     <string name="item_event_is_happening">HAPPENING NOW</string>
 

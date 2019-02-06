@@ -47,6 +47,10 @@
 
         <activity
             android:theme="@style/AppTheme.NoActionBar"
+            android:name=".ui.mainappscreen.communityfragment.ShowProfileInfoDialogActivity" />
+
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
             android:name=".ui.mainappscreen.communityfragment.YourProfileInfoDialogActivity" />
 
     </application>

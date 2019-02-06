@@ -124,7 +124,7 @@
                     android:layout_marginStart="@dimen/margin_small"
                     android:gravity="center"
                     android:maxLines="1"
-                    android:text="@string/own_profile_dialog_label_attending"
+                    android:text="@string/profile_tag_own"
                     android:textAllCaps="true"
                     android:textColor="@color/colorIDiscipleOrange"
                     android:textSize="12sp"

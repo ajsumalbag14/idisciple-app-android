@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    android:background="@drawable/shape_dialog">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,12 +34,19 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/ivSpeakerAvatar"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/profile_pic_size"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/colorIDiscipleGray" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivAvatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/profile_pic_size"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/colorTextNavDrawerMenu" />
+
+            </android.support.constraint.ConstraintLayout>
+
 
             <!-- NickName -->
             <android.support.constraint.ConstraintLayout
@@ -65,7 +72,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                    android:id="@+id/tvDelegateFg"
+                    android:id="@+id/tvFamilyGroupLeaderTag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_small"
@@ -81,14 +88,18 @@
                     app:layout_constraintStart_toEndOf="@id/tvDelegateNickName" />
 
                 <ImageView
-                    android:layout_width="@dimen/star_size"
-                    android:layout_height="@dimen/star_size"
+                    android:id="@+id/ivFavorite"
+                    android:layout_width="@dimen/margin_normal_2"
+                    android:layout_height="@dimen/margin_normal_2"
+                    android:layout_marginEnd="@dimen/margin_small"
                     android:src="@drawable/ic_star"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintBottom_toBottomOf="@+id/tvDelegateNickName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tvDelegateNickName" />
             </android.support.constraint.ConstraintLayout>
 
             <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                android:id="@+id/tvDelagateFullName"
+                android:id="@+id/tvFullName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
@@ -99,7 +110,7 @@
                 android:textSize="12sp" />
 
             <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                android:id="@+id/tvDelagateCountryDetails"
+                android:id="@+id/tvCountryDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
@@ -131,10 +142,10 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                    android:id="@+id/tvDelegateFamilyGroupAssignedTo"
+                    android:id="@+id/tvFamilyGroupAssignedTo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginStart="@dimen/margin_very_small_2"
                     android:gravity="center"
                     android:maxLines="1"
                     android:text="Family Group #13 >"
@@ -167,10 +178,10 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                    android:id="@+id/tvDelegateAttendingWorkshop"
+                    android:id="@+id/tvAttendingWorkshop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginStart="@dimen/margin_very_small_2"
                     android:gravity="center"
                     android:maxLines="1"
                     android:text="Workshop Name here >"

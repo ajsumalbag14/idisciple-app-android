@@ -50,8 +50,8 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         mActivity = (MainAppScreenActivity) mContext;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
-        mFamilyGroupList = mActivity.mPresenter.mFamilyGroupRepository.getContentList();
         mCountryList = mActivity.mPresenter.mCountryRepository.getContentList();
+        mFamilyGroupList = mActivity.mPresenter.mFamilyGroupRepository.getContentList();
         mWorkshopList = mActivity.mPresenter.mWorkshopRepository.getContentList();
     }
 
@@ -64,6 +64,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         mFamilyGroupList = mActivity.mPresenter.mFamilyGroupRepository.getContentList();
         mFamilyGroupList = from(mFamilyGroupList).where("getId", eq(familyGroupId)).all();
         mCountryList = mActivity.mPresenter.mCountryRepository.getContentList();
+        mWorkshopList = mActivity.mPresenter.mWorkshopRepository.getContentList();
     }
 
     // inflates the cell layout from xml when needed
@@ -110,6 +111,13 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         }
 
         final SavedProfileFavorites profileFavorite = mActivity.mPresenter.mSavedProfileFavoritesRepository.findItemById(item.getId());
+        if(profileFavorite == null)
+            mActivity.mPresenter.mSavedProfileFavoritesRepository.setAsFavorite(item.getId(), false, new ISavedProfileFavoritesRepository.onSaveCallback() {
+                @Override
+                public void onSuccess(boolean isFavoriteSet) {
+
+                }
+            });
         setImageForFavorites(profileFavorite != null ? profileFavorite.isTagAsFavorite() : false, holder.ivFavorite);
         holder.ivFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,8 +174,16 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
                     bundleToInclude.putString("workshopId2Name", workshop.getWorkshopName());
                 }
 
+                if(holder.tvThatsYou.getVisibility() == View.VISIBLE)
+                    mActivity.redirectToAnotherScreen(YourProfileInfoDialogActivity.class, bundleToInclude);
+                else {
+                    bundleToInclude.putString("id", selectedAttendee.getId());
+                    bundleToInclude.putBoolean("isFgTag", holder.tvFamilyGroupLeaderTag.getVisibility() == View.VISIBLE);
 
-                mActivity.redirectToAnotherScreen(YourProfileInfoDialogActivity.class, bundleToInclude);
+                    SavedProfileFavorites profileFavoriteSelected = mActivity.mPresenter.mSavedProfileFavoritesRepository.findItemById(item.getId());
+                    bundleToInclude.putBoolean("isFavorite", profileFavoriteSelected.isTagAsFavorite());
+                    mActivity.redirectToAnotherScreen(ShowProfileInfoDialogActivity.class, bundleToInclude);
+                }
             }
         });
     }
