@@ -31,6 +31,11 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
         finish();
     }
 
+    @OnClick(R.id.tvLogout)
+    public void onLogoutClicked(){
+
+    }
+
     @OnClick(R.id.cvUploadAvatar)
     public void onUploadAvatarClicked(){
 
@@ -40,7 +45,6 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
     public void onChangeAvatarClicked(){
 
     }
-
 
     @Override
     protected int getLayout() {

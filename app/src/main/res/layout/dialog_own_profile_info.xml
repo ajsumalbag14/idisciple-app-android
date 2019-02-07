@@ -236,17 +236,43 @@
             android:layout_margin="@dimen/margin_very_small_2"
             android:background="@color/colorDividerGray" />
 
-        <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-            android:id="@+id/tvDismiss"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small_2"
-            android:filterTouchesWhenObscured="true"
-            android:gravity="center_horizontal"
-            android:text="@string/button_link_dismiss"
-            android:textColor="@color/colorIDiscipleBlue"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_margin="@dimen/margin_small"
+            android:orientation="horizontal">
+
+            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                android:id="@+id/tvLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.45"
+                android:filterTouchesWhenObscured="true"
+                android:gravity="center_horizontal"
+                android:text="@string/button_link_logout"
+                android:textColor="@color/colorIDiscipleBlue"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/margin_very_small_2"
+                android:background="@color/colorDividerGray" />
+
+            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                android:id="@+id/tvDismiss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.45"
+                android:filterTouchesWhenObscured="true"
+                android:gravity="center_horizontal"
+                android:text="@string/button_link_dismiss"
+                android:textColor="@color/colorIDiscipleBlue"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
 
     </LinearLayout>
 
