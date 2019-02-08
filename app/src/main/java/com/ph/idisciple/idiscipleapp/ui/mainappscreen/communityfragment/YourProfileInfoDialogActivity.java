@@ -3,6 +3,7 @@ package com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -64,6 +65,11 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
         });
     }
 
+    @OnClick(R.id.tvFamilyGroupAssignedTo)
+    public void onFamilyGroupAssignedToClick(){
+
+    }
+
     @OnClick(R.id.cvUploadAvatar)
     public void onUploadAvatarClicked() {
 
@@ -93,13 +99,18 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
             tvFullName.setText(bundle.getString("fullname"));
             tvCountryDetails.setText(bundle.getString("countryName"));
             tvFamilyGroupAssignedTo.setText(bundle.getString("familyGroupName"));
-            tvAttendingWorkshop.setText(bundle.getString("workshopId1Name"));
+
             Glide.with(YourProfileInfoDialogActivity.this)
                     .load(bundle.getString("avatar"))
                     .apply(RequestOptions
                             .circleCropTransform()
                             .error(getDrawableCountryRes(bundle.getString("countryId"))))
                     .into(ivAvatar);
+
+            String workshopName1 = bundle.getString("workshopId1Name");
+            String workshopName2 = bundle.getString("workshopId2Name");
+            String workshopCombined = TextUtils.isEmpty(workshopName1) ? "none" : workshopName1 + (TextUtils.isEmpty(workshopName2) ? "" : " & " + workshopName2) ;
+            tvAttendingWorkshop.setText( workshopCombined );
         }
     }
 }

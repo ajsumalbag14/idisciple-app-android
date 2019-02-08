@@ -3,6 +3,7 @@ package com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,12 +32,12 @@ public class ShowProfileInfoDialogActivity extends BaseActivity {
     @BindView(R.id.tvAttendingWorkshop) TextView tvAttendingWorkshop;
 
     @OnClick(R.id.tvDismiss)
-    public void onDismissClicked(){
+    public void onDismissClick(){
         finish();
     }
 
     @OnClick(R.id.ivFavorite)
-    public void onFavoriteToggleClicked(){
+    public void onFavoriteToggleClick(){
         // Store in local DB
         final boolean isSelectedAsFavorite = !isFavorite;
 
@@ -48,6 +49,11 @@ public class ShowProfileInfoDialogActivity extends BaseActivity {
                 EventBus.getDefault().post(new RefreshFavoriteEvent());
             }
         });
+    }
+
+    @OnClick(R.id.tvFamilyGroupAssignedTo)
+    public void onFamilyGroupAssignedToClick(){
+
     }
 
     private String id;
@@ -73,7 +79,7 @@ public class ShowProfileInfoDialogActivity extends BaseActivity {
             tvFullName.setText(bundle.getString("fullname"));
             tvCountryDetails.setText(bundle.getString("countryName"));
             tvFamilyGroupAssignedTo.setText(bundle.getString("familyGroupName"));
-            tvAttendingWorkshop.setText(bundle.getString("workshopId1Name"));
+
             Glide.with(ShowProfileInfoDialogActivity.this)
                     .load(bundle.getString("avatar"))
                     .apply(RequestOptions
@@ -85,6 +91,11 @@ public class ShowProfileInfoDialogActivity extends BaseActivity {
             isFavorite = bundle.getBoolean("isFavorite", false);
             setImageForFavorites(isFavorite, ivFavorite);
             id = bundle.getString("id");
+
+            String workshopName1 = bundle.getString("workshopId1Name");
+            String workshopName2 = bundle.getString("workshopId2Name");
+            String workshopCombined = TextUtils.isEmpty(workshopName1) ? "none" : workshopName1 + (TextUtils.isEmpty(workshopName2) ? "" : " & " + workshopName2) ;
+            tvAttendingWorkshop.setText( workshopCombined );
         }
     }
 
