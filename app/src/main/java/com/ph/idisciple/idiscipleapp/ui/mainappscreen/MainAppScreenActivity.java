@@ -12,17 +12,27 @@ import android.widget.RelativeLayout;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.ph.idisciple.idiscipleapp.R;
+import com.ph.idisciple.idiscipleapp.data.local.model.Country;
+import com.ph.idisciple.idiscipleapp.data.local.model.FamilyGroup;
+import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
+import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.CommunityFragment;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.YourProfileInfoDialogActivity;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.morefragment.MoreFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.schedulefragment.ScheduleFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.speakerfragment.SpeakerFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.workshopfragment.WorkshopFragment;
 
+import java.util.List;
+
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.ph.idisciple.idiscipleapp.ui.BaseFragment.newInstance;
+import static com.wagnerandade.coollection.Coollection.eq;
+import static com.wagnerandade.coollection.Coollection.from;
 
 public class MainAppScreenActivity extends BaseActivity implements MainAppScreenContract.View, BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -34,6 +44,8 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
             new int[]{-android.R.attr.state_enabled}, // disabled
             new int[]{-android.R.attr.state_checked} // unchecked
     };
+    public MainAppScreenPresenter mPresenter;
+    public String mUserId;
     @BindView(R.id.rlToolbar) RelativeLayout rlToolbar;
     @BindView(R.id.bottomNavigation)
     BottomNavigationViewEx bottomNavigationView;
@@ -50,14 +62,56 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
     ColorStateList cslSchedule;
     ColorStateList cslCommunity;
     ColorStateList cslMore;
-    private BaseFragment fragmentActive = null;
-    public MainAppScreenPresenter mPresenter;
-    public String mUserId;
     int mCurrentSelectedBottomNav = -1;
+    private BaseFragment fragmentActive = null;
+    private Bundle bundleToInclude;
 
     @Override
     protected int getLayout() {
         return R.layout.activity_main_screen;
+    }
+
+    @OnClick(R.id.ivToolbarMenuProfile)
+    public void onToolbarProfileClick() {
+        bundleToInclude = new Bundle();
+        List<Country> mCountryList = mPresenter.mCountryRepository.getContentList();
+        List<FamilyGroup> mFamilyGroupList = mPresenter.mFamilyGroupRepository.getContentList();
+        List<Workshop> mWorkshopList = mPresenter.mWorkshopRepository.getContentList();
+        List<Profile> AttendeesList = mPresenter.mAttendeesRepository.getContentList();
+
+        Profile currentProfile = from(AttendeesList).where("getId", eq(mUserId)).first();
+        bundleToInclude.putString("avatar", currentProfile.getUserImageUrl());
+        bundleToInclude.putString("fullname", currentProfile.getUserFullName());
+        bundleToInclude.putString("nickname", currentProfile.getUserNickName());
+        bundleToInclude.putString("id", currentProfile.getId());
+
+        String countryId = currentProfile.getUserCountry();
+        if (countryId != null) {
+            bundleToInclude.putString("countryId", countryId);
+            Country country = from(mCountryList).where("getId", eq(countryId)).first();
+            bundleToInclude.putString("countryName", country == null ? "" : country.getCountryName());
+        }
+        String familyGroupId = currentProfile.getUserFamilyGroupId();
+        if (familyGroupId != null) {
+            bundleToInclude.putString("familyGroupId", familyGroupId);
+            FamilyGroup familyGroup = from(mFamilyGroupList).where("getId", eq(familyGroupId)).first();
+            bundleToInclude.putString("familyGroupName", familyGroup == null ? "" : familyGroup.getFamilyGroupName());
+        }
+
+        String workshopId1 = currentProfile.getUserWorkshop1();
+        if (workshopId1 != null) {
+            bundleToInclude.putString("workshopId1", workshopId1);
+            Workshop workshop = from(mWorkshopList).where("getId", eq(workshopId1)).first();
+            bundleToInclude.putString("workshopId1Name", workshop == null ? "" : workshop.getWorkshopName());
+        }
+
+        String workshopId2 = currentProfile.getUserWorkshop2();
+        if (workshopId2 != null) {
+            bundleToInclude.putString("workshopId2", workshopId2);
+            Workshop workshop = from(mWorkshopList).where("getId", eq(workshopId2)).first();
+            bundleToInclude.putString("workshopId2Name", workshop == null ? "" : workshop.getWorkshopName());
+        }
+        redirectToAnotherScreen(YourProfileInfoDialogActivity.class, bundleToInclude);
     }
 
     @Override
@@ -75,6 +129,7 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         resetBottomNavigationView();
         String name = menuItem.getTitle().toString();
+        bundleToInclude = new Bundle();
 
         int order = menuItem.getOrder();
         BottomNavigationItemView bottomNavigationItemView = bottomNavigationView.getBottomNavigationItemView(order);
@@ -115,7 +170,7 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
         }
 
         // Avoid double selection of same tab
-        if(mCurrentSelectedBottomNav != order) {
+        if (mCurrentSelectedBottomNav != order) {
             showFragment(getSupportFragmentManager(), R.id.flContainter, fragmentActive, false, null);
             mCurrentSelectedBottomNav = order;
         }

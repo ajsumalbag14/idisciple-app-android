@@ -2,13 +2,13 @@ package com.ph.idisciple.idiscipleapp.ui.login;
 
 import com.google.gson.Gson;
 import com.ph.idisciple.idiscipleapp.data.local.model.KeySettings;
+import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.local.model.ProfileObject;
 import com.ph.idisciple.idiscipleapp.data.local.repository.IKeySettingsRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.IProfileRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.impl.KeySettingsRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.impl.ProfileRepository;
 import com.ph.idisciple.idiscipleapp.data.remote.RestClient;
-import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.remote.model.EventDetails;
 import com.ph.idisciple.idiscipleapp.data.remote.model.base.BaseApi;
 import com.ph.idisciple.idiscipleapp.data.remote.model.base.ListWrapper;
@@ -86,6 +86,18 @@ public class LoginScreenPresenter implements LoginScreenContract.Presenter {
                             }
                         });
 
+                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.FULL_NAME, mProfile.getUserFullName(), new IProfileRepository.onSaveCallback() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+                        });
+                        mProfileRepository.saveKeyItem(ProfileObject.ProfileType.AVATAR, mProfile.getUserImageUrl(), new IProfileRepository.onSaveCallback() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+                        });
 
                         mProfileRepository.saveKeyItem(ProfileObject.ProfileType.FIRST_NAME, mProfile.getUserFirstName(), new IProfileRepository.onSaveCallback() {
                             @Override

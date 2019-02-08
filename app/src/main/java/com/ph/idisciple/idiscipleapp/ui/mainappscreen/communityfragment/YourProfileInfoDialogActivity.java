@@ -10,7 +10,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.ph.idisciple.idiscipleapp.R;
+import com.ph.idisciple.idiscipleapp.data.local.model.KeySettings;
+import com.ph.idisciple.idiscipleapp.data.local.repository.IKeySettingsRepository;
+import com.ph.idisciple.idiscipleapp.data.local.repository.IProfileRepository;
+import com.ph.idisciple.idiscipleapp.data.local.repository.impl.KeySettingsRepository;
+import com.ph.idisciple.idiscipleapp.data.local.repository.impl.ProfileRepository;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
+import com.ph.idisciple.idiscipleapp.ui.login.LoginScreenActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -25,24 +31,46 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
     @BindView(R.id.tvAttendingWorkshop) TextView tvAttendingWorkshop;
     @BindView(R.id.cvUploadAvatar) CardView cvUploadAvatar;
     @BindView(R.id.llChangeAvatar) LinearLayout llChangeAvatar;
+    private KeySettingsRepository mKeySettingsRepository;
+    private ProfileRepository mProfileRepository;
 
     @OnClick(R.id.tvDismiss)
-    public void onDismissClicked(){
+    public void onDismissClicked() {
         finish();
     }
 
     @OnClick(R.id.tvLogout)
-    public void onLogoutClicked(){
+    public void onLogoutClicked() {
+        mKeySettingsRepository.saveKeyItem(KeySettings.ItemType.IS_LOGGED_IN, "false", new IKeySettingsRepository.onSaveCallback() {
+            @Override
+            public void onSuccess() {
 
+            }
+        });
+
+        mKeySettingsRepository.saveKeyItem(KeySettings.ItemType.TOKEN, "", new IKeySettingsRepository.onSaveCallback() {
+            @Override
+            public void onSuccess() {
+
+            }
+        });
+
+        mProfileRepository.resetStorage(new IProfileRepository.onSaveCallback() {
+            @Override
+            public void onSuccess() {
+                // Go back to LoginScreen
+                redirectToAnotherScreenAsFirstScreen(LoginScreenActivity.class);
+            }
+        });
     }
 
     @OnClick(R.id.cvUploadAvatar)
-    public void onUploadAvatarClicked(){
+    public void onUploadAvatarClicked() {
 
     }
 
     @OnClick(R.id.llChangeAvatar)
-    public void onChangeAvatarClicked(){
+    public void onChangeAvatarClicked() {
 
     }
 
@@ -56,8 +84,11 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         this.setFinishOnTouchOutside(false);
 
+        mKeySettingsRepository = new KeySettingsRepository();
+        mProfileRepository = new ProfileRepository();
+
         Bundle bundle = getIntent().getExtras();
-        if(bundle != null) {
+        if (bundle != null) {
             tvDelegateNickName.setText(bundle.getString("nickname"));
             tvFullName.setText(bundle.getString("fullname"));
             tvCountryDetails.setText(bundle.getString("countryName"));

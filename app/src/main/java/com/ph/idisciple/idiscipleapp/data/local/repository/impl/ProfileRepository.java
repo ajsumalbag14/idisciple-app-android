@@ -4,6 +4,8 @@ package com.ph.idisciple.idiscipleapp.data.local.repository.impl;
 import com.ph.idisciple.idiscipleapp.data.local.model.ProfileObject;
 import com.ph.idisciple.idiscipleapp.data.local.repository.IProfileRepository;
 
+import java.util.ArrayList;
+
 import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -72,5 +74,13 @@ public class ProfileRepository implements IProfileRepository {
                 if (callback != null) callback.onSuccess();
             }
         });
+    }
+
+    @Override
+    public ArrayList<ProfileObject> getContentList() {
+        RealmResults<ProfileObject> realmResults = realm.where(ProfileObject.class).findAll();
+        ArrayList<ProfileObject> arrayList = new ArrayList<>();
+        arrayList.addAll(realmResults);
+        return arrayList;
     }
 }

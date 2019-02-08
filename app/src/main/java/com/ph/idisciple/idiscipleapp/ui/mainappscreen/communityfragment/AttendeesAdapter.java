@@ -111,7 +111,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         }
 
         final SavedProfileFavorites profileFavorite = mActivity.mPresenter.mSavedProfileFavoritesRepository.findItemById(item.getId());
-        if(profileFavorite == null)
+        if (profileFavorite == null)
             mActivity.mPresenter.mSavedProfileFavoritesRepository.setAsFavorite(item.getId(), false, new ISavedProfileFavoritesRepository.onSaveCallback() {
                 @Override
                 public void onSuccess(boolean isFavoriteSet) {
@@ -149,32 +149,33 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
 
                 // Get Country Name based on countryId
                 bundleToInclude.putString("countryId", selectedAttendee.getUserCountry());
-                if(selectedAttendee.getUserCountry() != null) {
+                if (selectedAttendee.getUserCountry() != null) {
+                    // Set default as Philippines (178)
                     Country country = from(mCountryList).where("getId", eq(selectedAttendee.getUserCountry())).first();
-                    bundleToInclude.putString("countryName", country.getCountryName());
+                    bundleToInclude.putString("countryName", country == null ? "178" : country.getCountryName());
                 }
 
                 // Get Family Group Name based on FamilyGroupId
                 bundleToInclude.putString("familyGroupId", selectedAttendee.getUserFamilyGroupId());
-                if(selectedAttendee.getUserFamilyGroupId() != null) {
+                if (selectedAttendee.getUserFamilyGroupId() != null) {
                     FamilyGroup familyGroup = from(mFamilyGroupList).where("getId", eq(selectedAttendee.getUserFamilyGroupId())).first();
                     bundleToInclude.putString("familyGroupName", familyGroup.getFamilyGroupName());
                 }
 
                 // Get Workshop Name based on WorkshopId
                 bundleToInclude.putString("workshopId1", selectedAttendee.getUserWorkshop1());
-                if(selectedAttendee.getUserWorkshop1() != null) {
+                if (selectedAttendee.getUserWorkshop1() != null) {
                     Workshop workshop = from(mWorkshopList).where("getId", eq(selectedAttendee.getUserWorkshop1())).first();
                     bundleToInclude.putString("workshopId1Name", workshop.getWorkshopName());
                 }
 
                 bundleToInclude.putString("workshopId2", selectedAttendee.getUserWorkshop2());
-                if(selectedAttendee.getUserWorkshop2() != null) {
+                if (selectedAttendee.getUserWorkshop2() != null) {
                     Workshop workshop = from(mWorkshopList).where("getId", eq(selectedAttendee.getUserWorkshop2())).first();
-                    bundleToInclude.putString("workshopId2Name", workshop.getWorkshopName());
+                    bundleToInclude.putString("workshopId2Name", workshop == null ? "" : workshop.getWorkshopName());
                 }
 
-                if(holder.tvThatsYou.getVisibility() == View.VISIBLE)
+                if (holder.tvThatsYou.getVisibility() == View.VISIBLE)
                     mActivity.redirectToAnotherScreen(YourProfileInfoDialogActivity.class, bundleToInclude);
                 else {
                     bundleToInclude.putString("id", selectedAttendee.getId());

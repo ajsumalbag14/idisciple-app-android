@@ -16,12 +16,16 @@ public class ProfileObject extends RealmObject {
 
     public enum ProfileType {
         USER_ID, USERNAME,
-        FIRST_NAME, LAST_NAME, MIDDLENAME, NICKNAME,
+        FULL_NAME, NICKNAME, AVATAR,
+        FIRST_NAME, LAST_NAME, MIDDLENAME,
         GENDER, COUNTRY,
         WORKSHOP_ID1, WORKSHOP_ID2, FAMILY_GROUP_ID,
         TSHIRT_SIZE, IS_CITY_TOUR, ROOM_NUMBER
     }
 
+    public String getItemName() {
+        return item;
+    }
     public void setItemName(String name) {
         this.item = name;
     }
