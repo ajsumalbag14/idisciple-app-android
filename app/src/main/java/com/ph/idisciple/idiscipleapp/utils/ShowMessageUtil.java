@@ -105,6 +105,35 @@ public class ShowMessageUtil {
         return mDialog;
     }
 
+    public AlertDialog showConfirmMessage(String title, String message,
+                                           View.OnClickListener onConfirmClickListener) {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_decision, null);
+
+        mDialog = new AlertDialog.Builder(mContext)
+                .setView(view)
+                .setCancelable(false)
+                .create();
+
+        TextView tvDialogHeader = (TextView) view.findViewById(R.id.tvDialogHeader);
+        TextView tvDialogMessage = (TextView) view.findViewById(R.id.tvDialogMessage);
+        Button bConfirm = (Button) view.findViewById(R.id.bConfirm);
+        Button bDecline = (Button) view.findViewById(R.id.bDecline);
+
+        tvDialogHeader.setText(title);
+        tvDialogMessage.setText(message);
+
+        bConfirm.setOnClickListener(onConfirmClickListener);
+        bDecline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDialog.dismiss();
+            }
+        });
+
+        mDialog.show();
+        return mDialog;
+    }
+
     public AlertDialog showDecisionMessage(String title, String message,
                                            View.OnClickListener onConfirmClickListener,
                                            View.OnClickListener onDeclineClickListener) {

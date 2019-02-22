@@ -54,6 +54,7 @@
     <string name="dialog_title_workshop_info">WORKSHOP INFO</string>
     <string name="dialog_title_profile_delegate">DELEGATE PROFILE</string>
     <string name="dialog_title_profile_own">YOUR PROFILE</string>
+    <string name="dialog_confirm_logout">Do you want to log-out?</string>
 
     <!-- Generic dialog error -->
     <string name="dialog_error_title_no_internet">No Internet</string>

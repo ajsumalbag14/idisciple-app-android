@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,25 +43,30 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
 
     @OnClick(R.id.tvLogout)
     public void onLogoutClicked() {
-        mKeySettingsRepository.saveKeyItem(KeySettings.ItemType.IS_LOGGED_IN, "false", new IKeySettingsRepository.onSaveCallback() {
+        getShowMessageUtil().showConfirmMessage("Log-out", getString(R.string.dialog_confirm_logout), new View.OnClickListener() {
             @Override
-            public void onSuccess() {
+            public void onClick(View v) {
+                mKeySettingsRepository.saveKeyItem(KeySettings.ItemType.IS_LOGGED_IN, "false", new IKeySettingsRepository.onSaveCallback() {
+                    @Override
+                    public void onSuccess() {
 
-            }
-        });
+                    }
+                });
 
-        mKeySettingsRepository.saveKeyItem(KeySettings.ItemType.TOKEN, "", new IKeySettingsRepository.onSaveCallback() {
-            @Override
-            public void onSuccess() {
+                mKeySettingsRepository.saveKeyItem(KeySettings.ItemType.TOKEN, "", new IKeySettingsRepository.onSaveCallback() {
+                    @Override
+                    public void onSuccess() {
 
-            }
-        });
+                    }
+                });
 
-        mProfileRepository.resetStorage(new IProfileRepository.onSaveCallback() {
-            @Override
-            public void onSuccess() {
-                // Go back to LoginScreen
-                redirectToAnotherScreenAsFirstScreen(LoginScreenActivity.class);
+                mProfileRepository.resetStorage(new IProfileRepository.onSaveCallback() {
+                    @Override
+                    public void onSuccess() {
+                        // Go back to LoginScreen
+                        redirectToAnotherScreenAsFirstScreen(LoginScreenActivity.class);
+                    }
+                });
             }
         });
     }
