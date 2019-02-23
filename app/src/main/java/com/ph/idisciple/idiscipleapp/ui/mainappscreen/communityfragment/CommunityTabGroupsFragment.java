@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ph.idisciple.idiscipleapp.R;
@@ -15,10 +16,6 @@ import com.ph.idisciple.idiscipleapp.data.local.model.FamilyGroup;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 import com.ph.idisciple.idiscipleapp.widgets.NonSwipeableViewPager;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -32,6 +29,11 @@ public class CommunityTabGroupsFragment extends BaseFragment {
     @BindView(R.id.viewpagerGroups) NonSwipeableViewPager viewpager;
     @BindView(R.id.tvFamilyGroupName) TextView tvFamilyGroupName;
 
+    @BindView(R.id.ivFamilyGroup2ndDigitDown) ImageView ivFamilyGroup2ndDigitDown;
+    @BindView(R.id.ivFamilyGroup2ndDigitUp) ImageView ivFamilyGroup2ndDigitUp;
+    @BindView(R.id.ivFamilyGroup1stDigitDown) ImageView ivFamilyGroup1stDigitDown;
+    @BindView(R.id.ivFamilyGroup1stDigitUp) ImageView ivFamilyGroup1stDigitUp;
+
     private MainAppScreenActivity mActivity;
     private List<FamilyGroup> mData;
     private CommunityGroupAdapter mAdapter;
@@ -43,15 +45,23 @@ public class CommunityTabGroupsFragment extends BaseFragment {
 
     @OnClick(R.id.ivFamilyGroup1stDigitDown)
     public void onDeductFamilyGroup1stDigit() {
-        if (fg1stDigit > 0)
+        if (fg1stDigit > 0) {
             fg1stDigit--;
+            enableDisableUpDownImage((fg1stDigit == 0) ? false : true, ivFamilyGroup1stDigitDown);
+            enableDisableUpDownImage( true, ivFamilyGroup1stDigitUp);
+            enableDisableUpDownImage( true, ivFamilyGroup2ndDigitUp);
+            enableDisableUpDownImage( ((fg1stDigit == 0 && fg2ndDigit == 1) || (fg1stDigit > 0 && fg2ndDigit == 0)) ? false : true, ivFamilyGroup2ndDigitDown);
+        }
 
         currentItemCount = (fg1stDigit * 10) + fg2ndDigit;
 
         if (currentItemCount == 0) {
+            // Making sure we won't reach 0 so make it 01
             fg2ndDigit = 1;
             currentItemCount = 1;
             tvFamilyGroup2ndDigit.setText(String.valueOf(fg2ndDigit));
+            enableDisableUpDownImage( false, ivFamilyGroup2ndDigitDown);
+            enableDisableUpDownImage( true, ivFamilyGroup2ndDigitUp);
         }
 
         tvFamilyGroup1stDigit.setText(String.valueOf(fg1stDigit));
@@ -60,14 +70,21 @@ public class CommunityTabGroupsFragment extends BaseFragment {
 
     @OnClick(R.id.ivFamilyGroup1stDigitUp)
     public void onAddFamilyGroup1stDigit() {
-        if (fg1stDigit < max1stDigit)
+        if (fg1stDigit < max1stDigit) {
             fg1stDigit++;
+            enableDisableUpDownImage((fg1stDigit == 0) ? false : true, ivFamilyGroup1stDigitDown);
+            enableDisableUpDownImage((fg1stDigit == max1stDigit) ? false : true, ivFamilyGroup1stDigitUp);
+        }
 
         currentItemCount = (fg1stDigit * 10) + fg2ndDigit;
         if (currentItemCount > totalFgCount) {
             tvFamilyGroup2ndDigit.setText(String.valueOf(totalFgCount).substring(1));
             fg2ndDigit = Integer.valueOf(tvFamilyGroup2ndDigit.getText().toString());
-        }
+            enableDisableUpDownImage(false, ivFamilyGroup1stDigitUp);
+            enableDisableUpDownImage(false, ivFamilyGroup2ndDigitUp);
+            enableDisableUpDownImage((fg2ndDigit == 0) ? false : true, ivFamilyGroup2ndDigitDown);
+        } else if(currentItemCount == totalFgCount)
+            enableDisableUpDownImage(false, ivFamilyGroup1stDigitUp);
 
         currentItemCount = (fg1stDigit * 10) + fg2ndDigit;
         tvFamilyGroup1stDigit.setText(String.valueOf(fg1stDigit));
@@ -76,8 +93,11 @@ public class CommunityTabGroupsFragment extends BaseFragment {
 
     @OnClick(R.id.ivFamilyGroup2ndDigitDown)
     public void onDeductFamilyGroup2ndDigit() {
-        if (fg2ndDigit > 1)
+        if ((fg1stDigit == 0 && fg2ndDigit > 1) || (fg1stDigit > 0 && fg2ndDigit > 0) ) {
             fg2ndDigit--;
+            enableDisableUpDownImage(((fg1stDigit == 0 && fg2ndDigit == 1) || (fg1stDigit > 0 && fg2ndDigit == 0)) ? false : true, ivFamilyGroup2ndDigitDown);
+            enableDisableUpDownImage((fg2ndDigit == 9) ? false : true, ivFamilyGroup2ndDigitUp);
+        }
 
         currentItemCount = (fg1stDigit * 10) + fg2ndDigit;
         tvFamilyGroup2ndDigit.setText(String.valueOf(fg2ndDigit));
@@ -87,11 +107,25 @@ public class CommunityTabGroupsFragment extends BaseFragment {
     @OnClick(R.id.ivFamilyGroup2ndDigitUp)
     public void onAddFamilyGroup2ndDigit() {
         int maxDigit = 9;
-        if (fg1stDigit > max1stDigit - 1)
+        if (fg1stDigit > max1stDigit - 1) {
             maxDigit = totalFgCount % (fg1stDigit * 10);
 
-        if (fg2ndDigit < maxDigit)
+            // If divisible by 10
+            if (maxDigit == 0) {
+                enableDisableUpDownImage(false, ivFamilyGroup2ndDigitUp);
+                enableDisableUpDownImage(false, ivFamilyGroup2ndDigitDown);
+            }
+        }
+
+        if (fg2ndDigit < maxDigit) {
             fg2ndDigit++;
+            enableDisableUpDownImage((fg2ndDigit == maxDigit) ? false : true, ivFamilyGroup2ndDigitUp);
+            enableDisableUpDownImage((fg2ndDigit == 1) ? false : true, ivFamilyGroup2ndDigitDown);
+        } else {
+            // maxDigit will be reached
+            enableDisableUpDownImage(false, ivFamilyGroup2ndDigitUp);
+        }
+
 
         currentItemCount = (fg1stDigit * 10) + fg2ndDigit;
         tvFamilyGroup2ndDigit.setText(String.valueOf(fg2ndDigit));
@@ -116,9 +150,22 @@ public class CommunityTabGroupsFragment extends BaseFragment {
         if (mData != null)
             tvFamilyGroupName.setText(mData.get(0).getFamilyGroupName());
 
+        enableDisableUpDownImage( false, ivFamilyGroup1stDigitDown);
+        enableDisableUpDownImage( false, ivFamilyGroup2ndDigitDown);
+
         return rootView;
     }
 
+
+    private void enableDisableUpDownImage(boolean isEnabled, ImageView imageView){
+        if(isEnabled) {
+            imageView.setAlpha(1f);
+            imageView.setEnabled(true);
+        } else {
+            imageView.setAlpha(0.5f);
+            imageView.setEnabled(false);
+        }
+    }
 
     private void updateFamilyGroupScreen() {
         tvFamilyGroupName.setText(mData.get(currentItemCount - 1).getFamilyGroupName());
