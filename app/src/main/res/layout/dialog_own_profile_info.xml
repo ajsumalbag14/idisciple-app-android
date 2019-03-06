@@ -43,7 +43,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/profile_pic_size"
                     android:layout_gravity="center_horizontal"
-                    android:background="@color/colorTextNavDrawerMenu" />
+                    android:adjustViewBounds="true"
+                    android:background="@color/colorTextNavDrawerMenu"
+                    android:scaleType="fitCenter" />
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cvUploadAvatar"
