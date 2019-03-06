@@ -13,8 +13,6 @@
         android:id="@+id/ivAvatar"
         android:layout_width="@dimen/avatar_size"
         android:layout_height="@dimen/avatar_size"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
         android:src="@drawable/img_placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
