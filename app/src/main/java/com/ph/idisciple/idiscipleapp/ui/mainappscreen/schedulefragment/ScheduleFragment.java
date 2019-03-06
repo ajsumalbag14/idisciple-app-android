@@ -13,11 +13,14 @@ import android.view.ViewGroup;
 import com.astuetz.PagerSlidingTabStrip;
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.Schedule;
-import com.ph.idisciple.idiscipleapp.data.local.repository.Schedule.ScheduleRepository;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 
@@ -28,6 +31,12 @@ public class ScheduleFragment extends BaseFragment {
 
     private MainAppScreenActivity mActivity;
     private List<Schedule> mData;
+    private String[] arrConferenceDates = {"2019-03-05", "2019-03-06", "2019-03-07", "2019-03-08"}; //{"2019-05-21", "2019-05-22", "2019-05-23", "2019-05-24"};
+    private int currentTodayPositionTab = 0;
+
+    private String dateTodayString;
+    private Calendar calendarDateToday = Calendar.getInstance();
+    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -35,11 +44,13 @@ public class ScheduleFragment extends BaseFragment {
         rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_schedule, container, false);
         bind(rootView);
 
+        dateTodayString = formatter.format(Calendar.getInstance().getTime());
         mActivity = (MainAppScreenActivity) getActivity();
         mData = mActivity.mPresenter.mScheduleRepository.getContentList();
 
         viewpager.setAdapter(new SchedulePagerAdapter(getChildFragmentManager()));
         tabStrip.setViewPager(viewpager);
+        viewpager.setCurrentItem(currentTodayPositionTab);
 
         return rootView;
     }
@@ -52,12 +63,43 @@ public class ScheduleFragment extends BaseFragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return mData.get(position).getScheduleDate();
+            String selectedDate = arrConferenceDates[position];
+            Calendar calendarDateParsed = Calendar.getInstance();
+
+            try {
+                calendarDateToday.setTime(formatter.parse(dateTodayString));
+
+                calendarDateParsed = Calendar.getInstance();
+                calendarDateParsed.setTime(formatter.parse(selectedDate));
+
+                if(selectedDate.equals(dateTodayString)) {
+                    currentTodayPositionTab = position;
+                    viewpager.setCurrentItem(currentTodayPositionTab);
+                    return "  TODAY   ";
+                } else if(calendarDateParsed.before(calendarDateToday)){
+                    calendarDateToday.add(Calendar.DATE, -1);
+
+                    if(selectedDate.equals(formatter.format(calendarDateToday.getTime())))
+                        return "YESTERDAY ";
+                    else
+                        return selectedDate;
+                } else if(calendarDateParsed.after(calendarDateToday)){
+                    calendarDateToday.add(Calendar.DATE, +1);
+
+                    if(selectedDate.equals(formatter.format(calendarDateToday.getTime())))
+                        return "TOMORROW ";
+                    else
+                        return selectedDate;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return  selectedDate;
         }
 
         @Override
         public int getCount() {
-            return mData.size();
+            return arrConferenceDates.length;
         }
 
         @Override
@@ -65,4 +107,5 @@ public class ScheduleFragment extends BaseFragment {
             return newInstance(ScheduleListFragment.class);
         }
     }
+
 }
