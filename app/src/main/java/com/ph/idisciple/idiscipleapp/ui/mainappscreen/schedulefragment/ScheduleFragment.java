@@ -9,17 +9,17 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.ph.idisciple.idiscipleapp.R;
-import com.ph.idisciple.idiscipleapp.data.local.model.Schedule;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -30,9 +30,8 @@ public class ScheduleFragment extends BaseFragment {
     @BindView(R.id.viewpager) ViewPager viewpager;
 
     private MainAppScreenActivity mActivity;
-    private List<Schedule> mData;
-    private String[] arrConferenceDates = {"2019-03-05", "2019-03-06", "2019-03-07", "2019-03-08"}; //{"2019-05-21", "2019-05-22", "2019-05-23", "2019-05-24"};
-    private int currentTodayPositionTab = 0;
+    private String[] arrConferenceDates = {"2019-05-21", "2019-05-22", "2019-05-23", "2019-05-24"}; //{"2019-03-05", "2019-03-06", "2019-03-07", "2019-03-08"};
+    private int currentTodayPositionTab = -1;
 
     private String dateTodayString;
     private Calendar calendarDateToday = Calendar.getInstance();
@@ -46,11 +45,16 @@ public class ScheduleFragment extends BaseFragment {
 
         dateTodayString = formatter.format(Calendar.getInstance().getTime());
         mActivity = (MainAppScreenActivity) getActivity();
-        mData = mActivity.mPresenter.mScheduleRepository.getContentList();
 
         viewpager.setAdapter(new SchedulePagerAdapter(getChildFragmentManager()));
         tabStrip.setViewPager(viewpager);
-        viewpager.setCurrentItem(currentTodayPositionTab);
+
+        // Adjust Tab Text (So it won't be cut)
+        LinearLayout tabsContainer = (LinearLayout) tabStrip.getChildAt(0);
+        for (int i=0; i < tabsContainer.getChildCount(); i++) {
+            TextView tab = (TextView)tabsContainer.getChildAt(i);
+            tab.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
+        }
 
         return rootView;
     }
@@ -104,7 +108,11 @@ public class ScheduleFragment extends BaseFragment {
 
         @Override
         public Fragment getItem(int position) {
-            return newInstance(ScheduleListFragment.class);
+            String selectedDate = arrConferenceDates[position];
+            Bundle bundle = new Bundle();
+            bundle.putString("selectedDate", selectedDate);
+            bundle.putBoolean("isToday", currentTodayPositionTab == position);
+            return newInstance(ScheduleListFragment.class, bundle);
         }
     }
 
