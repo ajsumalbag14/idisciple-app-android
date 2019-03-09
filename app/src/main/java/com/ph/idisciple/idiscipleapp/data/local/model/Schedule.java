@@ -16,6 +16,8 @@ public class Schedule  extends RealmObject {
     private String scheduleVenue;
     @SerializedName("sched_date")
     private String scheduleDate;
+    @SerializedName("workshop_id")
+    private String workshopId;
 
     @SerializedName("sched_start_time")
     private String scheduleStartTime;
@@ -27,6 +29,13 @@ public class Schedule  extends RealmObject {
     }
     public void setId(String id){
         this.id = id;
+    }
+
+    public String getWorkshopId(){
+        return workshopId;
+    }
+    public void setWorkshopId(String id){
+        this.workshopId = id;
     }
 
     public String getScheduleName(){

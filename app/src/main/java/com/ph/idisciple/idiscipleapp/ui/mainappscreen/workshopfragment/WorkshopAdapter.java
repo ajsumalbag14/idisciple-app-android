@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ph.idisciple.idiscipleapp.R;
+import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 
@@ -27,12 +28,14 @@ public class WorkshopAdapter extends RecyclerView.Adapter<WorkshopAdapter.ViewHo
     private LayoutInflater mInflater;
     private Context mContext;
     private int selectedItemPosition = -1;
+    private Profile currentProfile;
 
     // data is passed into the constructor
-    public WorkshopAdapter(Context context, List<Workshop> data) {
+    public WorkshopAdapter(Context context, List<Workshop> data, Profile currentProfile) {
         mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        this.currentProfile = currentProfile;
     }
 
     // inflates the cell layout from xml when needed
@@ -58,6 +61,12 @@ public class WorkshopAdapter extends RecyclerView.Adapter<WorkshopAdapter.ViewHo
                 selectedItemPosition = position;
             }
         });
+
+        if(currentProfile.getUserWorkshop1().equals(itemWorkshop.getId()) || currentProfile.getUserWorkshop1().equals(itemWorkshop.getId())){
+            holder.tvWorkshopYours.setVisibility(View.VISIBLE);
+        } else
+            holder.tvWorkshopYours.setVisibility(View.GONE);
+
     }
 
     // total number of cells

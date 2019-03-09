@@ -40,40 +40,38 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <RelativeLayout
+            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                android:id="@+id/tvEventVenue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Venue Name"
+                android:textColor="@color/colorText"
+                android:textSize="12sp" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                    android:id="@+id/tvEventVenue"
+                    android:id="@+id/tvWorkshopYours"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Venue Name"
-                    android:layout_alignParentStart="true"
-                    android:textColor="@color/colorText"
-                    android:textSize="12sp" />
+                    android:layout_marginEnd="@dimen/margin_small"
+                    android:text="@string/item_workshop_yours"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorIDiscipleOrange"
+                    android:textSize="12sp"
+                    android:visibility="visible"/>
 
                 <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
                     android:id="@+id/tvEventHappening"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/item_event_is_happening"
-                    android:layout_alignParentEnd="true"
                     android:textColor="@color/colorIDiscipleBlue"
-                    android:textSize="12sp"
-                    android:visibility="gone" />
-
-                <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                    android:id="@+id/tvWorkshopYours"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="@string/item_workshop_yours"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorIDiscipleOrange"
-                    android:textSize="12sp"
-                    android:visibility="gone" />
-            </RelativeLayout>
+                    android:textSize="12sp" />
+            </LinearLayout>
 
 
         </LinearLayout>

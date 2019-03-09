@@ -10,14 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ph.idisciple.idiscipleapp.R;
+import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
-import com.ph.idisciple.idiscipleapp.data.local.repository.workshop.WorkshopRepository;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 
 import java.util.List;
 
 import butterknife.BindView;
+
+import static com.wagnerandade.coollection.Coollection.eq;
+import static com.wagnerandade.coollection.Coollection.from;
 
 public class WorkshopFragment extends BaseFragment {
 
@@ -37,13 +40,16 @@ public class WorkshopFragment extends BaseFragment {
         mActivity = (MainAppScreenActivity) getActivity();
         mWorkshopList = mActivity.mPresenter.mWorkshopRepository.getContentList();
 
+        List<Profile> AttendeesList = ((MainAppScreenActivity) getActivity()).mPresenter.mAttendeesRepository.getContentList();
+        Profile currentProfile = from(AttendeesList).where("getId", eq(((MainAppScreenActivity) getActivity()).mUserId)).first();
+
         mLinearLayoutManager = new LinearLayoutManager(mActivity);
         rvList.setLayoutManager(mLinearLayoutManager);
         rvList.setItemAnimator(new DefaultItemAnimator());
         rvList.setNestedScrollingEnabled(false);
         rvList.setHasFixedSize(true);
 
-        mAdapter = new WorkshopAdapter(mActivity, mWorkshopList);
+        mAdapter = new WorkshopAdapter(mActivity, mWorkshopList, currentProfile);
         rvList.setAdapter(mAdapter);
 
         return rootView;

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ph.idisciple.idiscipleapp.R;
+import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.local.model.Schedule;
 
 import java.text.ParseException;
@@ -25,12 +26,14 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
     private LayoutInflater mInflater;
     private Context mContext;
     private boolean isToday;
+    private Profile currentProfile;
 
-    public ScheduleListAdapter(Context context, List<Schedule> data, boolean isToday){
+    public ScheduleListAdapter(Context context, List<Schedule> data, boolean isToday, Profile currentProfile){
         mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
         this.isToday = isToday;
+        this.currentProfile = currentProfile;
     }
 
     @NonNull
@@ -47,6 +50,12 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
         holder.tvScheduleTime.setText(scheduleTime);
         holder.tvEventName.setText(itemSchedule.getScheduleName());
         holder.tvEventVenue.setText(itemSchedule.getScheduleVenue());
+
+        if(!itemSchedule.getWorkshopId().equals("0") && (currentProfile.getUserWorkshop1().equals(itemSchedule.getWorkshopId()) || currentProfile.getUserWorkshop1().equals(itemSchedule.getWorkshopId()))){
+            holder.tvWorkshopYours.setVisibility(View.VISIBLE);
+        } else
+            holder.tvWorkshopYours.setVisibility(View.GONE);
+
 
         // Check if it's happening today
         if(isToday) {
@@ -84,7 +93,8 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-        }
+        } else
+            holder.tvEventHappening.setVisibility(View.GONE);
     }
 
     @Override

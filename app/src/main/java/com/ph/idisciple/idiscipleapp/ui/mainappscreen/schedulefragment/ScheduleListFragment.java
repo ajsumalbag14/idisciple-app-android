@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ph.idisciple.idiscipleapp.R;
+import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.local.model.Schedule;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
@@ -39,13 +40,16 @@ public class ScheduleListFragment extends BaseFragment {
         mData = ((MainAppScreenActivity) getActivity()).mPresenter.mScheduleRepository.getContentList();
         List<Schedule> selectedScheduleList = from(mData).where("getScheduleDate", eq(selectedDate)).all();
 
+        List<Profile> AttendeesList = ((MainAppScreenActivity) getActivity()).mPresenter.mAttendeesRepository.getContentList();
+        Profile currentProfile = from(AttendeesList).where("getId", eq(((MainAppScreenActivity) getActivity()).mUserId)).first();
+
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         rvList.setLayoutManager(mLinearLayoutManager);
         rvList.setItemAnimator(new DefaultItemAnimator());
         rvList.setNestedScrollingEnabled(false);
         rvList.setHasFixedSize(true);
 
-        mAdapter = new ScheduleListAdapter(getContext(), selectedScheduleList, isToday);
+        mAdapter = new ScheduleListAdapter(getContext(), selectedScheduleList, isToday, currentProfile);
         rvList.setAdapter(mAdapter);
 
         return rootView;
