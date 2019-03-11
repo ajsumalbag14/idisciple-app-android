@@ -3,6 +3,9 @@ package com.ph.idisciple.idiscipleapp.data.local.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -123,8 +126,15 @@ public class Speaker extends RealmObject implements Serializable {
         this.speakerPlanaryTitle = speakerPlanaryTitle;
     }
 
-    public String getSpeakerPlanaryScheduleDate(){
-        return speakerPlanaryScheduleDate;
+    public String getSpeakerPlanaryScheduleDate()  {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar calendarParsedDate = Calendar.getInstance();
+            calendarParsedDate.setTime(formatter.parse(speakerPlanaryScheduleDate));
+            return String.format("%1$02d/%2$s/%3$s", calendarParsedDate.get(Calendar.MONTH) + 1, calendarParsedDate.get(Calendar.DAY_OF_MONTH), calendarParsedDate.get(Calendar.YEAR));
+        } catch (ParseException ex){
+            return speakerPlanaryScheduleDate;
+        }
     }
     public void setSpeakerPlanaryScheduleDate(String speakerPlanaryScheduleDate){
         this.speakerPlanaryScheduleDate = speakerPlanaryScheduleDate;

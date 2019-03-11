@@ -30,12 +30,12 @@ public class ScheduleFragment extends BaseFragment {
     @BindView(R.id.viewpager) ViewPager viewpager;
 
     private MainAppScreenActivity mActivity;
-    private String[] arrConferenceDates = {"2019-05-21", "2019-05-22", "2019-05-23", "2019-05-24"}; //{"2019-03-05", "2019-03-06", "2019-03-07", "2019-03-08"};
+    private String[] arrConferenceDates = {"05/21/2019", "05/22/2019", "05/23/2019", "05/24/2019"}; //{"2019-03-05", "2019-03-06", "2019-03-07", "2019-03-08"};
     private int currentTodayPositionTab = -1;
 
     private String dateTodayString;
     private Calendar calendarDateToday = Calendar.getInstance();
-    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    private SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy", Locale.getDefault());
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

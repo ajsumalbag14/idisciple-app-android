@@ -2,6 +2,10 @@ package com.ph.idisciple.idiscipleapp.data.local.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -75,7 +79,14 @@ public class Workshop extends RealmObject {
     }
 
     public String getWorkshopScheduleDate() {
-        return workshopScheduleDate;
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar calendarParsedDate = Calendar.getInstance();
+            calendarParsedDate.setTime(formatter.parse(workshopScheduleDate));
+            return String.format("%1$02d/%2$s/%3$s", calendarParsedDate.get(Calendar.MONTH) + 1, calendarParsedDate.get(Calendar.DAY_OF_MONTH), calendarParsedDate.get(Calendar.YEAR));
+        } catch (ParseException ex){
+            return workshopScheduleDate;
+        }
     }
     public void setWorkshopScheduleDate(String workshopScheduleDate) {
         this.workshopScheduleDate = workshopScheduleDate;

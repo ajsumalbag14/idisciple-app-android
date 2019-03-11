@@ -38,7 +38,7 @@ public class ScheduleListFragment extends BaseFragment {
         Boolean isToday = getArguments().getBoolean("isToday", false);
         String selectedDate = getArguments().getString("selectedDate", "");
         mData = ((MainAppScreenActivity) getActivity()).mPresenter.mScheduleRepository.getContentList();
-        List<Schedule> selectedScheduleList = from(mData).where("getScheduleDate", eq(selectedDate)).all();
+        List<Schedule> selectedScheduleList = from(mData).where("getScheduleDateString", eq(selectedDate)).all();
 
         List<Profile> AttendeesList = ((MainAppScreenActivity) getActivity()).mPresenter.mAttendeesRepository.getContentList();
         Profile currentProfile = from(AttendeesList).where("getId", eq(((MainAppScreenActivity) getActivity()).mUserId)).first();
