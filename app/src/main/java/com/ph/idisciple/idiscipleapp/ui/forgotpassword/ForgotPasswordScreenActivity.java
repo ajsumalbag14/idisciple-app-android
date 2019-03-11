@@ -8,7 +8,6 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.UnderlineSpan;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,25 +31,6 @@ public class ForgotPasswordScreenActivity extends BaseActivity implements Forgot
     @BindView(R.id.tvError) TextView tvError;
     @BindView(R.id.llConfirmation) LinearLayout llConfirmation;
     @BindView(R.id.llError) LinearLayout llError;
-
-    @OnClick(R.id.bLogin)
-    public void onLoginClick(){
-
-        String emailAddress = etEmailAddress.getText().toString();
-
-        if(TextUtils.isEmpty(emailAddress)) {
-            llError.setVisibility(View.VISIBLE);
-        } else {
-            if(!Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()) {
-                llError.setVisibility(View.VISIBLE);
-            } else {
-                updateButtonIfEnabled(false);
-                showLoadingDialog();
-                mPresenter.resetPassword(emailAddress);
-            }
-        }
-
-    }
 
     @OnClick(R.id.tvBackToLogin)
     public void onBackToLoginActivity(){
