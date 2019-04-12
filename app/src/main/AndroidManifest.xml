@@ -53,6 +53,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:name=".ui.mainappscreen.communityfragment.YourProfileInfoDialogActivity" />
 
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.mainappscreen.ViewMapActivity" />
+
+
     </application>
 
 </manifest>

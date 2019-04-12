@@ -1,0 +1,58 @@
+{
+  "data":[
+    {
+      "id": 0,
+      "item_letter": "A",
+      "item_name": "--",
+      "item_description": "--"
+    },
+    {
+      "id": 1,
+      "item_letter": "A",
+      "item_name": "A+",
+      "item_description": "--"
+    },
+    {
+      "id": 2,
+      "item_letter": "A",
+      "item_name": "A-",
+      "item_description": "--"
+    },
+    {
+      "id": 3,
+      "item_letter": "A",
+      "item_name": "B+",
+      "item_description": "--"
+    },
+    {
+      "id": 4,
+      "item_letter": "A",
+      "item_name": "B-",
+      "item_description": "--"
+    },
+    {
+      "id": 5,
+      "item_letter": "A",
+      "item_name": "A/B+",
+      "item_description": "--"
+    },
+    {
+      "id": 6,
+      "item_letter": "A",
+      "item_name": "A/B-",
+      "item_description": "--"
+    },
+    {
+      "id": 7,
+      "item_letter": "A",
+      "item_name": "O+",
+      "item_description": "--"
+    },
+    {
+      "id": 8,
+      "item_letter": "A",
+      "item_name": "O-",
+      "item_description": "--"
+    }
+  ]
+}

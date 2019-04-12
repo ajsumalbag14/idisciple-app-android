@@ -71,6 +71,11 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
         return R.layout.activity_main_screen;
     }
 
+    @OnClick(R.id.ivToolbarMenuInfo)
+    public void onToolbarInfoClick() {
+        redirectToAnotherScreen(ViewMapActivity.class, null);
+    }
+
     @OnClick(R.id.ivToolbarMenuProfile)
     public void onToolbarProfileClick() {
         bundleToInclude = new Bundle();

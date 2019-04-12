@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/clItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/margin_small"
+    android:paddingEnd="@dimen/margin_normal_2"
+    android:paddingStart="@dimen/margin_normal_2"
+    android:paddingTop="@dimen/margin_small">
+
+    <TextView
+        android:id="@+id/tvLegendLetter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_map_legends_box"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:text="A"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:paddingStart="@dimen/margin_normal"
+        android:paddingEnd="@dimen/margin_normal"
+        android:paddingTop="@dimen/margin_small"
+        android:paddingBottom="@dimen/margin_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/llNames"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvLegendLetter"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldTextView
+            android:id="@+id/tvBuildingName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:text="Grover Tyner"
+            android:textColor="@color/colorText"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+            android:id="@+id/tvBuildingDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Administration Building"
+            android:textColor="@color/colorIDiscipleGray"
+            android:textSize="12sp"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@+id/tvBuildingName" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</android.support.constraint.ConstraintLayout>
