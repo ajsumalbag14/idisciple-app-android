@@ -22,19 +22,8 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent=".06" />
 
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/shape_button_white_rounded"
-        android:padding="@dimen/margin_small"
-        android:src="@drawable/ic_hamburger"
-        app:layout_constraintHeight_percent="0.07"
-        app:layout_constraintStart_toStartOf="@+id/guidelineContentLeft"
-        app:layout_constraintTop_toBottomOf="@+id/guidelineContentTop"
-        app:layout_constraintWidth_percent="0.12" />
-
     <com.jsibbold.zoomage.ZoomageView
-        android:id="@+id/myZoomageView"
+        android:id="@+id/ivZoomageView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:src="@drawable/img_pbts_map"
@@ -49,21 +38,34 @@
         app:zoomage_translatable="true"
         app:zoomage_zoomable="true" />
 
+    <ImageView
+        android:id="@+id/ivShowList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/shape_button_white_rounded"
+        android:padding="@dimen/margin_small"
+        android:src="@drawable/ic_hamburger"
+        app:layout_constraintHeight_percent="0.07"
+        app:layout_constraintStart_toStartOf="@+id/guidelineContentLeft"
+        app:layout_constraintTop_toBottomOf="@+id/guidelineContentTop"
+        app:layout_constraintWidth_percent="0.12" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@android:color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/llBottomOptions"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <LinearLayout
         android:id="@+id/llBottomOptions"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorIDiscipleGray"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
             android:layout_width="wrap_content"

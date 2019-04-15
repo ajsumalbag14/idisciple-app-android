@@ -55,7 +55,7 @@
 
         <activity
             android:screenOrientation="portrait"
-            android:name=".ui.mainappscreen.ViewMapActivity" />
+            android:name=".ui.mainappscreen.viewmap.ViewMapActivity" />
 
 
     </application>

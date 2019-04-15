@@ -3,56 +3,134 @@
     {
       "id": 0,
       "item_letter": "A",
-      "item_name": "--",
-      "item_description": "--"
+      "item_name": "Grover Tyner",
+      "item_description": "Administration Building"
     },
     {
       "id": 1,
-      "item_letter": "A",
-      "item_name": "A+",
-      "item_description": "--"
+      "item_letter": "B",
+      "item_name": "Oliver Yost",
+      "item_description": "Music Building"
     },
     {
       "id": 2,
-      "item_letter": "A",
-      "item_name": "A-",
-      "item_description": "--"
+      "item_letter": "C",
+      "item_name": "Covered Gym",
+      "item_description": ""
     },
     {
       "id": 3,
-      "item_letter": "A",
-      "item_name": "B+",
-      "item_description": "--"
+      "item_letter": "D1",
+      "item_name": "Libby A. Tyner",
+      "item_description": "Ladies Dorm"
     },
     {
       "id": 4,
-      "item_letter": "A",
-      "item_name": "B-",
-      "item_description": "--"
+      "item_letter": "D2",
+      "item_name": "Zacharias Dayot Hall",
+      "item_description": "Men's Dorm"
     },
     {
       "id": 5,
-      "item_letter": "A",
-      "item_name": "A/B+",
-      "item_description": "--"
+      "item_letter": "D3",
+      "item_name": "International Dorm",
+      "item_description": ""
     },
     {
       "id": 6,
-      "item_letter": "A",
-      "item_name": "A/B-",
-      "item_description": "--"
+      "item_letter": "E",
+      "item_name": "Vacation Cottage",
+      "item_description": ""
     },
     {
       "id": 7,
-      "item_letter": "A",
-      "item_name": "O+",
-      "item_description": "--"
+      "item_letter": "F",
+      "item_name": "Faculty Houses",
+      "item_description": "1 to 17"
     },
     {
       "id": 8,
-      "item_letter": "A",
-      "item_name": "O-",
-      "item_description": "--"
+      "item_letter": "G",
+      "item_name": "Grawley Bethesda Mission Center",
+      "item_description": ""
+    },
+    {
+      "id": 9,
+      "item_letter": "H",
+      "item_name": "Married Apartments",
+      "item_description": ""
+    },
+    {
+      "id": 10,
+      "item_letter": "I",
+      "item_name": "Guest Units",
+      "item_description": ""
+    },
+    {
+      "id": 11,
+      "item_letter": "J",
+      "item_name": "Chapel B",
+      "item_description": ""
+    },
+    {
+      "id": 12,
+      "item_letter": "K",
+      "item_name": "Tennis Court",
+      "item_description": ""
+    },
+    {
+      "id": 13,
+      "item_letter": "L",
+      "item_name": "Carpentry Shop",
+      "item_description": ""
+    },
+    {
+      "id": 14,
+      "item_letter": "M",
+      "item_name": "Amphi/Prayer Room",
+      "item_description": ""
+    },
+    {
+      "id": 15,
+      "item_letter": "N",
+      "item_name": "Canteen",
+      "item_description": ""
+    },
+    {
+      "id": 16,
+      "item_letter": "O1",
+      "item_name": "CLINIC",
+      "item_description": ""
+    },
+    {
+      "id": 17,
+      "item_letter": "O2",
+      "item_name": "AVSTM",
+      "item_description": ""
+    },
+    {
+      "id": 18,
+      "item_letter": "P",
+      "item_name": "Patio Refreshment Area",
+      "item_description": ""
+    },
+    {
+      "id": 19,
+      "item_letter": "Q",
+      "item_name": "Parking Area",
+      "item_description": ""
+    },
+    {
+      "id": 20,
+      "item_letter": "R",
+      "item_name": "Guard House",
+      "item_description": "1 & 2"
+    },
+    {
+      "id": 21,
+      "item_letter": "S",
+      "item_name": "Gate",
+      "item_description": "1 & 2"
     }
   ]
 }

@@ -23,6 +23,7 @@ import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.YourProf
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.morefragment.MoreFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.schedulefragment.ScheduleFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.speakerfragment.SpeakerFragment;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.viewmap.ViewMapActivity;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.workshopfragment.WorkshopFragment;
 
 import java.util.List;

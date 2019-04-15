@@ -5,8 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 public class JsonBuildingItemRaw {
 
     private int id;

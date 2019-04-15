@@ -4,10 +4,8 @@
     android:id="@+id/clItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/margin_small"
-    android:paddingEnd="@dimen/margin_normal_2"
-    android:paddingStart="@dimen/margin_normal_2"
-    android:paddingTop="@dimen/margin_small">
+    android:background="@android:color/white"
+    android:padding="@dimen/margin_normal">
 
     <TextView
         android:id="@+id/tvLegendLetter"
