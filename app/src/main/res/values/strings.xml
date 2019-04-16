@@ -30,6 +30,7 @@
     <string name="button_link_back_to_login"><u>Back to Log-In</u></string>
     <string name="button_link_dismiss"><u>Dismiss</u></string>
     <string name="button_link_logout"><u>Log-out</u></string>
+    <string name="button_directory_back">BACK</string>
 
     <string name="button_main_my_profile">My Profile</string>
     <string name="button_main_schedule">Schedule</string>

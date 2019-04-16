@@ -20,20 +20,20 @@
     },
     {
       "id": 3,
-      "item_letter": "D1",
-      "item_name": "Libby A. Tyner",
+      "item_letter": "D",
+      "item_name": "(D1) Libby A. Tyner",
       "item_description": "Ladies Dorm"
     },
     {
       "id": 4,
-      "item_letter": "D2",
-      "item_name": "Zacharias Dayot Hall",
+      "item_letter": "D",
+      "item_name": "(D2) Zacharias Dayot Hall",
       "item_description": "Men's Dorm"
     },
     {
       "id": 5,
-      "item_letter": "D3",
-      "item_name": "International Dorm",
+      "item_letter": "D",
+      "item_name": "(D3) International Dorm",
       "item_description": ""
     },
     {
@@ -98,36 +98,24 @@
     },
     {
       "id": 16,
-      "item_letter": "O1",
-      "item_name": "CLINIC",
-      "item_description": ""
-    },
-    {
-      "id": 17,
-      "item_letter": "O2",
-      "item_name": "AVSTM",
-      "item_description": ""
-    },
-    {
-      "id": 18,
       "item_letter": "P",
       "item_name": "Patio Refreshment Area",
       "item_description": ""
     },
     {
-      "id": 19,
+      "id": 17,
       "item_letter": "Q",
       "item_name": "Parking Area",
       "item_description": ""
     },
     {
-      "id": 20,
+      "id": 18,
       "item_letter": "R",
       "item_name": "Guard House",
       "item_description": "1 & 2"
     },
     {
-      "id": 21,
+      "id": 19,
       "item_letter": "S",
       "item_name": "Gate",
       "item_description": "1 & 2"
