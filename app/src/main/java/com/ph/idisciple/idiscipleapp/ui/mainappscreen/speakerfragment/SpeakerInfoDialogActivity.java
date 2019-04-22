@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 
@@ -39,7 +40,14 @@ public class SpeakerInfoDialogActivity extends BaseActivity {
             tvSpeakerName.setText(bundle.getString("name"));
             tvSpeakerTopic.setText(bundle.getString("topic"));
             tvSpeakerBio.setText(bundle.getString("bio"));
-            Glide.with(SpeakerInfoDialogActivity.this).load(bundle.getString("avatar")).into(ivSpeakerAvatar);
+
+            Glide.with(SpeakerInfoDialogActivity.this)
+                    .load(bundle.getString("avatar"))
+                    .apply(RequestOptions
+                            .circleCropTransform()
+                            .placeholder(getDrawableCountryRes(bundle.getString("countryId")))
+                            .error(getDrawableCountryRes(bundle.getString("countryId"))))
+                    .into(ivSpeakerAvatar);
         }
     }
 }

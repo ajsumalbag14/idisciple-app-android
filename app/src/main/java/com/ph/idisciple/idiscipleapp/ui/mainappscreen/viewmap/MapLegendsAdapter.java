@@ -1,45 +1,22 @@
 package com.ph.idisciple.idiscipleapp.ui.mainappscreen.viewmap;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.ph.idisciple.idiscipleapp.R;
-import com.ph.idisciple.idiscipleapp.data.local.model.Country;
-import com.ph.idisciple.idiscipleapp.data.local.model.FamilyGroup;
 import com.ph.idisciple.idiscipleapp.data.local.model.JsonBuildingItemRaw;
-import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
-import com.ph.idisciple.idiscipleapp.data.local.model.SavedProfileFavorites;
-import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
-import com.ph.idisciple.idiscipleapp.data.local.repository.SavedProfileFavorites.ISavedProfileFavoritesRepository;
-import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
-import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.RefreshFavoriteEvent;
-import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.ShowProfileInfoDialogActivity;
-import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.YourProfileInfoDialogActivity;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.wagnerandade.coollection.Coollection.eq;
-import static com.wagnerandade.coollection.Coollection.from;
 
 public class MapLegendsAdapter extends RecyclerView.Adapter<MapLegendsAdapter.ViewHolder> {
 

@@ -1,7 +1,8 @@
-package com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment;
+package com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.yourprofiledialog;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,7 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.KeySettings;
 import com.ph.idisciple.idiscipleapp.data.local.repository.IKeySettingsRepository;
@@ -34,6 +39,7 @@ import io.realm.internal.IOException;
 
 public class YourProfileInfoDialogActivity extends BaseActivity {
 
+    private final int REQUEST_CODE_SHOW_GALLERY = 0x1;
     @BindView(R.id.ivAvatar) ImageView ivAvatar;
     @BindView(R.id.tvDelegateNickName) TextView tvDelegateNickName;
     @BindView(R.id.tvFullName) TextView tvFullName;
@@ -44,7 +50,7 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
     @BindView(R.id.llChangeAvatar) LinearLayout llChangeAvatar;
     private KeySettingsRepository mKeySettingsRepository;
     private ProfileRepository mProfileRepository;
-    private final int REQUEST_CODE_SHOW_GALLERY = 0x1;
+    private String mUserId;
 
     @OnClick(R.id.tvDismiss)
     public void onDismissClicked() {
@@ -82,7 +88,7 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
     }
 
     @OnClick(R.id.tvFamilyGroupAssignedTo)
-    public void onFamilyGroupAssignedToClick(){
+    public void onFamilyGroupAssignedToClick() {
 
     }
 
@@ -96,7 +102,10 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
 
     @OnClick(R.id.llChangeAvatar)
     public void onChangeAvatarClicked() {
-
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_CODE_SHOW_GALLERY);
     }
 
     @Override
@@ -114,6 +123,7 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
+            mUserId = bundle.getString("id", "");
             tvDelegateNickName.setText(bundle.getString("nickname"));
             tvFullName.setText(bundle.getString("fullname"));
             tvCountryDetails.setText(bundle.getString("countryName"));
@@ -121,15 +131,30 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
 
             Glide.with(YourProfileInfoDialogActivity.this)
                     .load(bundle.getString("avatar"))
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            showAvatarImageOptions(false);
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            showAvatarImageOptions(true);
+                            ivAvatar.setImageDrawable(resource);
+                            return true;
+                        }
+                    })
                     .apply(RequestOptions
                             .circleCropTransform()
+                            .placeholder(getDrawableCountryRes(bundle.getString("countryId")))
                             .error(getDrawableCountryRes(bundle.getString("countryId"))))
                     .into(ivAvatar);
 
             String workshopName1 = bundle.getString("workshopId1Name");
             String workshopName2 = bundle.getString("workshopId2Name");
-            String workshopCombined = TextUtils.isEmpty(workshopName1) ? "none" : workshopName1 + (TextUtils.isEmpty(workshopName2) ? "" : " & " + workshopName2) ;
-            tvAttendingWorkshop.setText( workshopCombined );
+            String workshopCombined = TextUtils.isEmpty(workshopName1) ? "none" : workshopName1 + (TextUtils.isEmpty(workshopName2) ? "" : " & " + workshopName2);
+            tvAttendingWorkshop.setText(workshopCombined);
         }
     }
 
@@ -143,9 +168,11 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
                     try {
                         Bitmap bitmapPhotoSelected = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                         RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmapPhotoSelected);
-                        roundedBitmapDrawable.setCornerRadius(10f);
-                        ivAvatar.setImageDrawable(roundedBitmapDrawable);
-                        //toggleBetweenCaptureAndSelected(true);
+                        roundedBitmapDrawable.setCornerRadius(0f);
+
+                        Glide.with(YourProfileInfoDialogActivity.this)
+                                .load(roundedBitmapDrawable)
+                                .into(ivAvatar);
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (FileNotFoundException e) {
@@ -156,5 +183,10 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
                 }
                 break;
         }
+    }
+
+    private void showAvatarImageOptions(boolean isImageLoadedSuccessful){
+        cvUploadAvatar.setVisibility(isImageLoadedSuccessful ? View.GONE : View.VISIBLE);
+        llChangeAvatar.setVisibility(isImageLoadedSuccessful ? View.VISIBLE : View.GONE);
     }
 }

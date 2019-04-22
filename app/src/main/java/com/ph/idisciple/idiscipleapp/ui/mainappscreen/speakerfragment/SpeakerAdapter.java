@@ -55,6 +55,7 @@ public class SpeakerAdapter extends RecyclerView.Adapter<SpeakerAdapter.ViewHold
                 .load(itemSpeaker.getSpeakerImageUrl())
                 .apply( RequestOptions
                         .circleCropTransform()
+                        .placeholder(mActivity.getDrawableCountryRes(itemSpeaker.getSpeakerNationality()))
                         .error(mActivity.getDrawableCountryRes(itemSpeaker.getSpeakerNationality())))
                 .into(holder.ivSpeakerAvatar);
     }

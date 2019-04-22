@@ -12,6 +12,7 @@ import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.JsonBuildingItemRaw;
 import com.ph.idisciple.idiscipleapp.data.local.model.JsonBuildingRawList;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.yourprofiledialog.YourProfileInfoDialogActivity;
 import com.ph.idisciple.idiscipleapp.widgets.CustomZoomageView;
 
 import java.io.BufferedReader;
@@ -51,8 +52,12 @@ public class ViewMapActivity extends BaseActivity {
         //MotionEvent { action=ACTION_DOWN, actionButton=0, id[0]=0, x[0]=392.60742, y[0]=668.56934, toolType[0]=TOOL_TYPE_FINGER, buttonState=0, metaState=0, flags=0x0, edgeFlags=0x0, pointerCount=1, historySize=0, eventTime=74267430, downTime=74267430, deviceId=5, source=0x1002 }
     }
 
-    private LinearLayoutManager mLinearLayoutManager;
-    private MapLegendsAdapter mAdapter;
+    @OnClick(R.id.ivToolbarMenuProfile)
+    public void onToolbarProfileClick() {
+        Bundle bundleToInclude = getIntent().getExtras();
+        redirectToAnotherScreen(YourProfileInfoDialogActivity.class, bundleToInclude);
+    }
+
     private boolean isListShown = false;
 
     @Override
@@ -64,7 +69,7 @@ public class ViewMapActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mLinearLayoutManager = new LinearLayoutManager(ViewMapActivity.this);
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(ViewMapActivity.this);
         rvList.setLayoutManager(mLinearLayoutManager);
         rvList.setItemAnimator(new DefaultItemAnimator());
         rvList.setNestedScrollingEnabled(false);
@@ -75,7 +80,7 @@ public class ViewMapActivity extends BaseActivity {
         JsonBuildingRawList mJsonListBloodType = new Gson().fromJson(rdBuilding, JsonBuildingRawList.class);
         ArrayList<JsonBuildingItemRaw> mRawData = mJsonListBloodType.getList();
 
-        mAdapter = new MapLegendsAdapter(ViewMapActivity.this, mRawData);
+        MapLegendsAdapter mAdapter = new MapLegendsAdapter(ViewMapActivity.this, mRawData);
         rvList.setAdapter(mAdapter);
     }
 

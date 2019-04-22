@@ -59,6 +59,7 @@ public class SpeakerFragment extends BaseFragment {
                 bundleToInclude.putString("topic", selectedSpeaker.getSpeakerPlanaryTitle());
                 bundleToInclude.putString("bio", selectedSpeaker.getSpeakerBio());
                 bundleToInclude.putString("avatar", selectedSpeaker.getSpeakerImageUrl());
+                bundleToInclude.putString("countryId", selectedSpeaker.getSpeakerNationality());
                 mActivity.redirectToAnotherScreen(SpeakerInfoDialogActivity.class, bundleToInclude);
             }
         });

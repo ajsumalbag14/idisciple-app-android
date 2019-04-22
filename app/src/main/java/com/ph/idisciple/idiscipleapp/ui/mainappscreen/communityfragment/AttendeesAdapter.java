@@ -23,6 +23,7 @@ import com.ph.idisciple.idiscipleapp.data.local.model.SavedProfileFavorites;
 import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
 import com.ph.idisciple.idiscipleapp.data.local.repository.SavedProfileFavorites.ISavedProfileFavoritesRepository;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.yourprofiledialog.YourProfileInfoDialogActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -85,6 +86,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
                 .load(item.getUserImageUrl())
                 .apply(RequestOptions
                         .circleCropTransform()
+                        .placeholder(mActivity.getDrawableCountryRes(item.getUserCountry()))
                         .error(mActivity.getDrawableCountryRes(item.getUserCountry())))
                 .into(holder.ivAvatar);
 

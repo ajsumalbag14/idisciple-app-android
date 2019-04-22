@@ -74,7 +74,7 @@ public class ShowProfileInfoDialogActivity extends BaseActivity {
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
-
+            id = bundle.getString("id", "0");
             tvDelegateNickName.setText(bundle.getString("nickname"));
             tvFullName.setText(bundle.getString("fullname"));
             tvCountryDetails.setText(bundle.getString("countryName"));
@@ -84,13 +84,13 @@ public class ShowProfileInfoDialogActivity extends BaseActivity {
                     .load(bundle.getString("avatar"))
                     .apply(RequestOptions
                             .circleCropTransform()
+                            .placeholder(getDrawableCountryRes(bundle.getString("countryId")))
                             .error(getDrawableCountryRes(bundle.getString("countryId"))))
                     .into(ivAvatar);
 
             tvFamilyGroupLeaderTag.setVisibility(bundle.getBoolean("isFgTag", false) ? View.VISIBLE : View.GONE);
             isFavorite = bundle.getBoolean("isFavorite", false);
             setImageForFavorites(isFavorite, ivFavorite);
-            id = bundle.getString("id");
 
             String workshopName1 = bundle.getString("workshopId1Name");
             String workshopName2 = bundle.getString("workshopId2Name");
