@@ -60,7 +60,7 @@ public class MoreFragment extends BaseFragment {
         // This determines the number of tabs
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         // This determines the title for each tab

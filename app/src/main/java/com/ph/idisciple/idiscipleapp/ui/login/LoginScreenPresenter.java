@@ -35,7 +35,7 @@ public class LoginScreenPresenter implements LoginScreenContract.Presenter {
     public LoginScreenPresenter(LoginScreenActivity activity, LoginScreenContract.View view) {
         mView = view;
         mActivity = activity;
-        mUserService = RestClient.getInstance().getSetupService();
+        mUserService = RestClient.getInstance().getUserService();
         mProfileRepository = new ProfileRepository();
         mKeySettingsRepository = new KeySettingsRepository();
     }

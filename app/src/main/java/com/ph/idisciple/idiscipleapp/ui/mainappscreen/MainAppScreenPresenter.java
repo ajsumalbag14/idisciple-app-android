@@ -48,7 +48,6 @@ import retrofit2.Response;
 public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
 
     private ContentService mContentService;
-    private MainAppScreenActivity mActivity;
     private MainAppScreenContract.View mView;
     private ProfileRepository mProfileRepository;
 
@@ -59,10 +58,10 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
     public FamilyGroupRepository mFamilyGroupRepository;
     public CountryRepository mCountryRepository;
     public SavedProfileFavoritesRepository mSavedProfileFavoritesRepository;
+    private String mUserId;
 
-    public MainAppScreenPresenter(MainAppScreenActivity activity, MainAppScreenContract.View view) {
+    public MainAppScreenPresenter(MainAppScreenContract.View view) {
         mView = view;
-        mActivity = activity;
         mContentService = RestClient.getInstance().getContentService();
         mProfileRepository = new ProfileRepository();
 
@@ -80,8 +79,9 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
         mProfileRepository.getKeyItem(ProfileObject.ProfileType.USER_ID, new IProfileRepository.onGetKeyItemCallback() {
             @Override
             public void onSuccess(ProfileObject keySettingItem) {
-                mActivity.mUserId = keySettingItem.getItemValue();
-                fetchData(mActivity.mUserId);
+                mUserId = keySettingItem.getItemValue();
+                mView.setUserId(mUserId);
+                fetchData(mUserId);
             }
         });
     }

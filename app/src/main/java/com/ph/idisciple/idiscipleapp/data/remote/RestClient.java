@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RestClient {
 
     private ContentService mContentService;
-    private UserService mSetupService;
+    private UserService mUserService;
     private static RestClient mRestClient;
 
     public RestClient() {
@@ -31,7 +31,7 @@ public class RestClient {
                 .addConverterFactory(GsonConverterFactory.create()).client(httpClient.build());
 
         Retrofit retrofit = builder.build();
-        mSetupService = retrofit.create(UserService.class);
+        mUserService = retrofit.create(UserService.class);
         mContentService = retrofit.create(ContentService.class);
 
     }
@@ -47,7 +47,7 @@ public class RestClient {
     public ContentService getContentService() {
         return mContentService;
     }
-    public UserService getSetupService() {
-        return mSetupService;
+    public UserService getUserService() {
+        return mUserService;
     }
 }

@@ -1,6 +1,5 @@
 package com.ph.idisciple.idiscipleapp.ui.forgotpassword;
 
-import com.ph.idisciple.idiscipleapp.data.local.repository.impl.KeySettingsRepository;
 import com.ph.idisciple.idiscipleapp.data.remote.RestClient;
 import com.ph.idisciple.idiscipleapp.data.remote.service.UserService;
 
@@ -13,7 +12,7 @@ public class ForgotPasswordScreenPresenter implements ForgotPasswordScreenContra
     public ForgotPasswordScreenPresenter(ForgotPasswordScreenActivity activity, ForgotPasswordScreenContract.View view) {
         mView = view;
         mActivity = activity;
-        mUserService = RestClient.getInstance().getSetupService();
+        mUserService = RestClient.getInstance().getUserService();
     }
 
     @Override

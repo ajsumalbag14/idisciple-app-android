@@ -23,7 +23,7 @@ public class FirstTimeUserScreenPresenter implements FirstTimeUserScreenContract
     public FirstTimeUserScreenPresenter(FirstTimeUserScreenActivity activity, FirstTimeUserScreenContract.View view) {
         mView = view;
         mActivity = activity;
-        mUserService = RestClient.getInstance().getSetupService();
+        mUserService = RestClient.getInstance().getUserService();
         mKeySettingsRepository = new KeySettingsRepository();
     }
 

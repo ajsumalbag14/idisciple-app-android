@@ -8,6 +8,7 @@ public class MainAppScreenContract {
     interface View extends BaseView<Presenter> {
         void onFetchDataFailed(String errorMessage);
         void onFetchDataSuccess();
+        void setUserId(String userId);
     }
 
     interface Presenter extends BasePresenter {

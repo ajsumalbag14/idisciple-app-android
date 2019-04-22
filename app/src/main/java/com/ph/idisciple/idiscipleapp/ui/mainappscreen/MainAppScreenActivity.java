@@ -85,12 +85,12 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = new MainAppScreenPresenter(MainAppScreenActivity.this, this);
+        mPresenter = new MainAppScreenPresenter( this);
+        bundleToInclude = new Bundle();
         showLoadingDialog();
         mPresenter.fetchData();
         prepareColorStateList();
         prepareBottomNavigationBar();
-        prepareBundleToPassInPrepForViewOwnProfile();
     }
 
     @SuppressLint("RestrictedApi")
@@ -98,7 +98,6 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         resetBottomNavigationView();
         String name = menuItem.getTitle().toString();
-        bundleToInclude = new Bundle();
 
         int order = menuItem.getOrder();
         BottomNavigationItemView bottomNavigationItemView = bottomNavigationView.getBottomNavigationItemView(order);
@@ -233,6 +232,12 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
     @Override
     public void onFetchDataSuccess() {
         hideLoadingDialog();
+    }
+
+    @Override
+    public void setUserId(String userId) {
+        mUserId = userId;
+        prepareBundleToPassInPrepForViewOwnProfile();
     }
 
     @Override

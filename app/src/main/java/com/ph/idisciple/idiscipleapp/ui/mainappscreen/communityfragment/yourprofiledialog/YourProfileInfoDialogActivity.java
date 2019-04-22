@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.View;
@@ -37,7 +38,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.realm.internal.IOException;
 
-public class YourProfileInfoDialogActivity extends BaseActivity {
+public class YourProfileInfoDialogActivity extends BaseActivity implements YourProfileInfoDialogContract.View {
 
     private final int REQUEST_CODE_SHOW_GALLERY = 0x1;
     @BindView(R.id.ivAvatar) ImageView ivAvatar;
@@ -48,9 +49,12 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
     @BindView(R.id.tvAttendingWorkshop) TextView tvAttendingWorkshop;
     @BindView(R.id.cvUploadAvatar) CardView cvUploadAvatar;
     @BindView(R.id.llChangeAvatar) LinearLayout llChangeAvatar;
+
+    private YourProfileInfoDialogContract.Presenter mPresenter;
     private KeySettingsRepository mKeySettingsRepository;
     private ProfileRepository mProfileRepository;
     private String mUserId;
+    private AlertDialog mLogoutDialog;
 
     @OnClick(R.id.tvDismiss)
     public void onDismissClicked() {
@@ -59,30 +63,11 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
 
     @OnClick(R.id.tvLogout)
     public void onLogoutClicked() {
-        getShowMessageUtil().showConfirmMessage("Log-out", getString(R.string.dialog_confirm_logout), new View.OnClickListener() {
+        mLogoutDialog = getShowMessageUtil().showConfirmMessage("Log-out", getString(R.string.dialog_confirm_logout), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mKeySettingsRepository.saveKeyItem(KeySettings.ItemType.IS_LOGGED_IN, "false", new IKeySettingsRepository.onSaveCallback() {
-                    @Override
-                    public void onSuccess() {
-
-                    }
-                });
-
-                mKeySettingsRepository.saveKeyItem(KeySettings.ItemType.TOKEN, "", new IKeySettingsRepository.onSaveCallback() {
-                    @Override
-                    public void onSuccess() {
-
-                    }
-                });
-
-                mProfileRepository.resetStorage(new IProfileRepository.onSaveCallback() {
-                    @Override
-                    public void onSuccess() {
-                        // Go back to LoginScreen
-                        redirectToAnotherScreenAsFirstScreen(LoginScreenActivity.class);
-                    }
-                });
+                mPresenter.onLogout(mUserId);
+                mLogoutDialog.dismiss();
             }
         });
     }
@@ -118,6 +103,7 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         this.setFinishOnTouchOutside(false);
 
+        mPresenter = new YourProfileInfoDialogPresenter(this);
         mKeySettingsRepository = new KeySettingsRepository();
         mProfileRepository = new ProfileRepository();
 
@@ -188,5 +174,53 @@ public class YourProfileInfoDialogActivity extends BaseActivity {
     private void showAvatarImageOptions(boolean isImageLoadedSuccessful){
         cvUploadAvatar.setVisibility(isImageLoadedSuccessful ? View.GONE : View.VISIBLE);
         llChangeAvatar.setVisibility(isImageLoadedSuccessful ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void onLogoutFailed(String errorMessage) {
+
+    }
+
+    @Override
+    public void onLogoutSuccess() {
+        mKeySettingsRepository.saveKeyItem(KeySettings.ItemType.IS_LOGGED_IN, "false", new IKeySettingsRepository.onSaveCallback() {
+            @Override
+            public void onSuccess() {
+
+            }
+        });
+
+        mKeySettingsRepository.saveKeyItem(KeySettings.ItemType.TOKEN, "", new IKeySettingsRepository.onSaveCallback() {
+            @Override
+            public void onSuccess() {
+
+            }
+        });
+
+        mProfileRepository.resetStorage(new IProfileRepository.onSaveCallback() {
+            @Override
+            public void onSuccess() {
+                // Go back to LoginScreen
+                redirectToAnotherScreenAsFirstScreen(LoginScreenActivity.class);
+            }
+        });
+    }
+
+    @Override
+    public void showNoInternetConnection() {
+        getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_no_internet), getString(R.string.dialog_error_message_no_internet));
+        hideLoadingDialog();
+    }
+
+    @Override
+    public void showTimeoutError() {
+        getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_timeout), getString(R.string.dialog_error_message_no_internet));
+        hideLoadingDialog();
+    }
+
+    @Override
+    public void showGenericError() {
+        getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_generic), getString(R.string.dialog_error_message_generic));
+        hideLoadingDialog();
     }
 }

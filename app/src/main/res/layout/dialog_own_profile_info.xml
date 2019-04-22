@@ -61,6 +61,7 @@
                     <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@android:color/white"
                         android:paddingBottom="@dimen/margin_small"
                         android:paddingEnd="@dimen/margin_small_2"
                         android:paddingStart="@dimen/margin_small_2"
