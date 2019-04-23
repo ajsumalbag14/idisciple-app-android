@@ -14,7 +14,8 @@ import android.view.ViewGroup;
 import com.astuetz.PagerSlidingTabStrip;
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
-import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.morefragment.abouttab.MoreTabAboutFragment;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.morefragment.resourcestab.MoreTabResourcesFragment;
 
 import butterknife.BindView;
 

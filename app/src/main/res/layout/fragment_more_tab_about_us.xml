@@ -37,7 +37,7 @@
         android:id="@+id/tvAboutUsDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/more_tab_about_description"
+        android:text="more_tab_about_description"
         android:textSize="14sp"
         android:textStyle="bold"
         android:gravity="center"

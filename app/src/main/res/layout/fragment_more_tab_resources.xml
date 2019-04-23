@@ -22,7 +22,7 @@
         app:layout_constraintGuide_percent=".9" />
 
     <LinearLayout
-        android:id="@+id/llSearchName"
+        android:id="@+id/llSearchFile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="1dp"
@@ -42,7 +42,7 @@
         app:layout_constraintVertical_chainStyle="spread">
 
         <LinearLayout
-            android:id="@+id/llSearchNamePlaceholder"
+            android:id="@+id/llSearchFilePlaceholder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -55,18 +55,18 @@
                 android:src="@drawable/ic_email" />
 
             <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-                android:id="@+id/tvSearchName"
+                android:id="@+id/tvSearchFile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_normal"
                 android:background="@drawable/shape_transparent"
                 android:inputType="textCapWords"
-                android:text="@string/hint_search_name"
+                android:text="@string/hint_search_files"
                 android:textSize="16sp" />
         </LinearLayout>
 
         <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldEditText
-            android:id="@+id/etSearchName"
+            android:id="@+id/etSearchFile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_transparent"
