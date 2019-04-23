@@ -6,12 +6,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.JsonBuildingItemRaw;
 import com.ph.idisciple.idiscipleapp.data.local.model.JsonBuildingRawList;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.yourprofiledialog.YourProfileInfoDialogActivity;
 import com.ph.idisciple.idiscipleapp.widgets.CustomZoomageView;
 
@@ -28,6 +32,7 @@ public class ViewMapActivity extends BaseActivity {
 
     @BindView(R.id.rvList) RecyclerView rvList;
     @BindView(R.id.ivZoomageView) CustomZoomageView ivZoomageView;
+    @BindView(R.id.ivToolbarMenuProfile) ImageView ivToolbarMenuProfile;
 
     @OnClick(R.id.ivShowList)
     public void onShowListClick(){
@@ -54,11 +59,11 @@ public class ViewMapActivity extends BaseActivity {
 
     @OnClick(R.id.ivToolbarMenuProfile)
     public void onToolbarProfileClick() {
-        Bundle bundleToInclude = getIntent().getExtras();
         redirectToAnotherScreen(YourProfileInfoDialogActivity.class, bundleToInclude);
     }
 
     private boolean isListShown = false;
+    private Bundle bundleToInclude;
 
     @Override
     protected int getLayout() {
@@ -82,6 +87,16 @@ public class ViewMapActivity extends BaseActivity {
 
         MapLegendsAdapter mAdapter = new MapLegendsAdapter(ViewMapActivity.this, mRawData);
         rvList.setAdapter(mAdapter);
+
+        bundleToInclude = getIntent().getExtras();
+
+        Glide.with(ViewMapActivity.this)
+                .load(bundleToInclude.getString("avatar", ""))
+                .apply( RequestOptions
+                        .circleCropTransform()
+                        .placeholder(getDrawableCountryRes(bundleToInclude.getString("countryId", "0")))
+                        .error(getDrawableCountryRes(bundleToInclude.getString("countryId", "0"))))
+                .into(ivToolbarMenuProfile);
     }
 
     @Override

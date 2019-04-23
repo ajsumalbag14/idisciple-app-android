@@ -37,11 +37,11 @@
             android:filterTouchesWhenObscured="true"
             android:padding="@dimen/margin_small" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivToolbarMenuProfile"
             android:layout_width="@dimen/toolbar_menu_size"
             android:layout_height="@dimen/toolbar_menu_size"
-            android:src="@drawable/img_placeholder"
+            android:src="@drawable/img_avatar_06_philippines"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/margin_small"

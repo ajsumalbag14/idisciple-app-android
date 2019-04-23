@@ -8,8 +8,11 @@ import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.Country;
@@ -45,9 +48,12 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
             new int[]{-android.R.attr.state_enabled}, // disabled
             new int[]{-android.R.attr.state_checked} // unchecked
     };
+
     public MainAppScreenPresenter mPresenter;
     public String mUserId;
+
     @BindView(R.id.rlToolbar) RelativeLayout rlToolbar;
+    @BindView(R.id.ivToolbarMenuProfile) ImageView ivToolbarMenuProfile;
     @BindView(R.id.bottomNavigation)
     BottomNavigationViewEx bottomNavigationView;
     /* BottomNavigationViewEx Colors */
@@ -238,6 +244,17 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
     public void setUserId(String userId) {
         mUserId = userId;
         prepareBundleToPassInPrepForViewOwnProfile();
+    }
+
+    @Override
+    public void setProfileAvatar(String userAvatar, String countryId) {
+        Glide.with(MainAppScreenActivity.this)
+                .load(userAvatar)
+                .apply( RequestOptions
+                        .circleCropTransform()
+                        .placeholder(getDrawableCountryRes(countryId))
+                        .error(getDrawableCountryRes(countryId)))
+                .into(ivToolbarMenuProfile);
     }
 
     @Override

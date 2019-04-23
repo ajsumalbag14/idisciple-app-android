@@ -9,6 +9,7 @@ public class MainAppScreenContract {
         void onFetchDataFailed(String errorMessage);
         void onFetchDataSuccess();
         void setUserId(String userId);
+        void setProfileAvatar(String userAvatar, String countryId);
     }
 
     interface Presenter extends BasePresenter {

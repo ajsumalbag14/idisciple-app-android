@@ -45,6 +45,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.wagnerandade.coollection.Coollection.eq;
+import static com.wagnerandade.coollection.Coollection.from;
+
 public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
 
     private ContentService mContentService;
@@ -59,6 +62,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
     public CountryRepository mCountryRepository;
     public SavedProfileFavoritesRepository mSavedProfileFavoritesRepository;
     private String mUserId;
+    private String mUserAvatar;
 
     public MainAppScreenPresenter(MainAppScreenContract.View view) {
         mView = view;
@@ -214,6 +218,9 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     List<Profile> jsonProfile = wrapperProfile.getData();
                     mAttendeesRepository.addItemList(jsonProfile);
                     if(mSavedProfileFavoritesRepository.size() == 0) mSavedProfileFavoritesRepository.addItemList(jsonProfile);
+
+                    Profile ownProfile = from(mAttendeesRepository.getContentList()).where("getId", eq(mUserId)).first();
+                    mView.setProfileAvatar(ownProfile.getUserImageUrl(), ownProfile.getUserCountry());
                     break;
                 case "1":
                     Type typeScheduleWrapper = new TypeToken<ListWrapper<Schedule>>() {}.getType();
