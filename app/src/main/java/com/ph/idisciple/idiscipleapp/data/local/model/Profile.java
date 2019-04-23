@@ -117,14 +117,14 @@ public class Profile  extends RealmObject {
     }
 
     public String getUserWorkshop1() {
-        return userWorkshop1;
+        return userWorkshop1 == null ? "0" : userWorkshop1;
     }
     public void setUserWorkshop1(String userWorkshop1) {
         this.userWorkshop1 = userWorkshop1;
     }
 
     public String getUserWorkshop2() {
-        return userWorkshop2;
+        return userWorkshop2 == null ? "0" : userWorkshop2;
     }
     public void setUserWorkshop2(String userWorkshop2) {
         this.userWorkshop2 = userWorkshop2;

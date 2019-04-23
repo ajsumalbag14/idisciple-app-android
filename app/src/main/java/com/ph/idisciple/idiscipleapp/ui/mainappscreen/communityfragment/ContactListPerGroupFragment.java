@@ -30,7 +30,6 @@ public class ContactListPerGroupFragment extends BaseFragment{
     @BindView(R.id.rvList) RecyclerView rvList;
 
     private MainAppScreenActivity mActivity;
-    private LinearLayoutManager mLinearLayoutManager;
     private AttendeesAdapter mAdapter;
     private List<Profile> mAllContactList = null;
     private List<Profile> mFilteredContactList = null;
@@ -52,7 +51,7 @@ public class ContactListPerGroupFragment extends BaseFragment{
         if(!selectedFamilyGroupId.equals(""))
             mFilteredContactList = from(mAllContactList).where("getUserFamilyGroupId", eq(selectedFamilyGroupId)).all();
 
-        mLinearLayoutManager = new LinearLayoutManager(mActivity);
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mActivity);
         rvList.setLayoutManager(mLinearLayoutManager);
         rvList.setItemAnimator(new DefaultItemAnimator());
         rvList.setNestedScrollingEnabled(false);

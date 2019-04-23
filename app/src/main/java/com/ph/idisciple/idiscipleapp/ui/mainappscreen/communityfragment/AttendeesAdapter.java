@@ -46,7 +46,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
     private MainAppScreenActivity mActivity;
 
     // data is passed into the constructor
-    public AttendeesAdapter(Context context, List<Profile> data) {
+    AttendeesAdapter(Context context, List<Profile> data) {
         mContext = context;
         mActivity = (MainAppScreenActivity) mContext;
         this.mInflater = LayoutInflater.from(context);
@@ -57,7 +57,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
     }
 
     // data is passed into the constructor
-    public AttendeesAdapter(Context context, List<Profile> data, String familyGroupId) {
+    AttendeesAdapter(Context context, List<Profile> data, String familyGroupId) {
         mContext = context;
         mActivity = (MainAppScreenActivity) mContext;
         this.mInflater = LayoutInflater.from(context);
@@ -120,7 +120,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
 
                 }
             });
-        setImageForFavorites(profileFavorite != null ? profileFavorite.isTagAsFavorite() : false, holder.ivFavorite);
+        setImageForFavorites(profileFavorite != null && profileFavorite.isTagAsFavorite(), holder.ivFavorite);
         holder.ivFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,7 +168,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
                 bundleToInclude.putString("workshopId1", selectedAttendee.getUserWorkshop1());
                 if (selectedAttendee.getUserWorkshop1() != null) {
                     Workshop workshop = from(mWorkshopList).where("getId", eq(selectedAttendee.getUserWorkshop1())).first();
-                    bundleToInclude.putString("workshopId1Name", workshop.getWorkshopName());
+                    bundleToInclude.putString("workshopId1Name", workshop == null ? "" : workshop.getWorkshopName());
                 }
 
                 bundleToInclude.putString("workshopId2", selectedAttendee.getUserWorkshop2());
@@ -203,7 +203,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
     }
 
     // convenience method for getting data at click position
-    Profile getItem(int id) {
+    private Profile getItem(int id) {
         return mData.get(id);
     }
 
