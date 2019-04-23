@@ -13,5 +13,6 @@ public class YourProfileInfoDialogContract {
 
     interface Presenter extends BasePresenter {
         void onLogout(String userId);
+        void onUploadPhoto();
     }
 }

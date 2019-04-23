@@ -61,4 +61,9 @@ public class YourProfileInfoDialogPresenter implements YourProfileInfoDialogCont
             }
         });
     }
+
+    @Override
+    public void onUploadPhoto() {
+
+    }
 }

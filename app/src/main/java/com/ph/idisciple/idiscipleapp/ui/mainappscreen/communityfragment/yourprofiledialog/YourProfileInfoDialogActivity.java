@@ -159,6 +159,8 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
                         Glide.with(YourProfileInfoDialogActivity.this)
                                 .load(roundedBitmapDrawable)
                                 .into(ivAvatar);
+
+                        showAvatarImageOptions(true);
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (FileNotFoundException e) {
@@ -178,7 +180,7 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
 
     @Override
     public void onLogoutFailed(String errorMessage) {
-
+        getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_generic), errorMessage);
     }
 
     @Override
