@@ -33,11 +33,17 @@ public class ForgotPasswordScreenActivity extends BaseActivity implements Forgot
     @BindView(R.id.llError) LinearLayout llError;
 
     @OnClick(R.id.tvBackToLogin)
-    public void onBackToLoginActivity(){
+    public void onBackToLoginClick(){
         onBackPressed();
     }
 
+    @OnClick(R.id.bEmailResetLink)
+    public void onForgotPasswordClick(){
+        mPresenter.resetPassword(etEmailAddress.getText().toString().trim());
+    }
+
     private ForgotPasswordScreenContract.Presenter mPresenter;
+
     @Override
     protected int getLayout() {
         return R.layout.activity_forgot_password;
@@ -68,7 +74,7 @@ public class ForgotPasswordScreenActivity extends BaseActivity implements Forgot
             @Override
             public void afterTextChanged(Editable editable) {
                 updateButtonIfEnabled(checkIfAllRequiredFieldsAreNotEmpty());
-                llError.setVisibility(View.INVISIBLE);
+                llError.setVisibility(View.GONE);
             }
         });
     }
@@ -85,12 +91,14 @@ public class ForgotPasswordScreenActivity extends BaseActivity implements Forgot
     }
 
     @Override
-    public void onResetPasswordFailed() {
-
+    public void onResetPasswordFailed(String errorMessage) {
+        updateButtonIfEnabled(true);
+        tvError.setText(errorMessage);
+        llError.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void onResetPasswordSuccess(boolean isFirstTimeUser, String token) {
+    public void onResetPasswordSuccess() {
         llConfirmation.setVisibility(View.VISIBLE);
     }
 

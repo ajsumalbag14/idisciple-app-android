@@ -26,4 +26,7 @@ public interface UserService {
 
     @GET("user/logout")
     Call<BaseApi> logoutUser(@Query("user_id") String userId);
+
+    @POST("user/reset-password")
+    Call<BaseApi> resetPassword(@Query("email") String email);
 }

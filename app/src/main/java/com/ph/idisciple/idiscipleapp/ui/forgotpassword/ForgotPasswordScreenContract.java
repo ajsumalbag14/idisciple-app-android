@@ -5,8 +5,8 @@ import com.ph.idisciple.idiscipleapp.ui.BaseView;
 
 public class ForgotPasswordScreenContract {
     interface View extends BaseView<Presenter> {
-        void onResetPasswordFailed();
-        void onResetPasswordSuccess(boolean isFirstTimeUser, String token);
+        void onResetPasswordFailed(String errorMessage);
+        void onResetPasswordSuccess();
     }
 
     interface Presenter extends BasePresenter {
