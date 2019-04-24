@@ -83,10 +83,13 @@ public class Profile  extends RealmObject {
     public String getUserNickName() {
         return userNickName;
     }
+    public String getUserNickNameCapslock() {
+        // For ORDERBY query, it seems to use UNIX code in ordering
+        return userNickName.toUpperCase();
+    }
     public void setUserNickName(String userNickName) {
         this.userNickName = userNickName;
     }
-
 
     public String getUserGender() {
         return userGender;

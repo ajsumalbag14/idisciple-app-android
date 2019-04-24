@@ -9,4 +9,4 @@
         android:id="@+id/menu_workshop_option_view_outline"
         android:title="@string/menu_workshop_option_view_outline" />
 
-</menu>
+ </menu>

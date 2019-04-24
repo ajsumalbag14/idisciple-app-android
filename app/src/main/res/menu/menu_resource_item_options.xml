@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_resources_option_download_file"
+        android:title="@string/menu_resources_option_download_file" />
+
+</menu>

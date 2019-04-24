@@ -105,7 +105,8 @@ public class CommunityTabDelegatesFragment extends BaseFragment {
             public void afterTextChanged(Editable editable) {
 
                if(etSearchName.getText().toString().length() > 0){
-                   mFilteredContactList = from(mAllContactList).where("getUserFullNameCapslock", contains(etSearchName.getText().toString().toUpperCase())).orderBy("getUserFullNameCapslock", Order.ASC).all();
+                   String filterText = etSearchName.getText().toString().toUpperCase();
+                   mFilteredContactList = from(mAllContactList).where("getUserFullNameCapslock", contains(filterText)).or("getUserNickNameCapslock", contains(filterText)).orderBy("getUserFullNameCapslock", Order.ASC).all();
                    mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList);
                    rvList.setAdapter(mAdapter);
                } else {
