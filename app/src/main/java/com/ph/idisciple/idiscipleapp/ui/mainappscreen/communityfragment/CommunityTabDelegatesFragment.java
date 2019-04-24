@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,12 +58,14 @@ public class CommunityTabDelegatesFragment extends BaseFragment {
 
     @OnClick(R.id.clLayout)
     public void onOuterClick(){
-        toggleEditSearchNameAsActive(false);
+        if(TextUtils.isEmpty(etSearchName.getText().toString()))
+            toggleEditSearchNameAsActive(false);
     }
 
     @OnClick(R.id.rvList)
     public void onListOnClick(){
-        toggleEditSearchNameAsActive(false);
+        if(TextUtils.isEmpty(etSearchName.getText().toString()))
+            toggleEditSearchNameAsActive(false);
     }
 
     private MainAppScreenActivity mActivity;
@@ -133,7 +136,7 @@ public class CommunityTabDelegatesFragment extends BaseFragment {
         imm.showSoftInput(etSearchName, InputMethodManager.SHOW_FORCED);
     }
 
-    private void toggleEditSearchNameAsActive(boolean isActive){
+    public void toggleEditSearchNameAsActive(boolean isActive){
         llSearchNamePlaceholder.setVisibility(isActive ? View.GONE : View.VISIBLE);
         etSearchName.setVisibility(isActive ? View.VISIBLE : View.GONE);
         if(isActive) {
