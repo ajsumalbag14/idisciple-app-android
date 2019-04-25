@@ -12,11 +12,17 @@ import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 
+import java.util.List;
+
 import butterknife.BindView;
 
 public class MoreTabAboutFragment extends BaseFragment implements MoreTabAboutContract.View {
 
-    @BindView(R.id.tvAboutUsDescription) TextView tvAboutUsDescription;
+    @BindView(R.id.tvAboutTitleConference) TextView tvAboutTitleConference;
+    @BindView(R.id.tvAboutContentConference) TextView tvAboutContentConference;
+    @BindView(R.id.tvAboutTitleUs) TextView tvAboutTitleUs;
+    @BindView(R.id.tvAboutContentUs) TextView tvAboutContentUs;
+
     private MainAppScreenActivity mActivity;
     private MoreTabAboutContract.Presenter mPresenter;
 
@@ -36,8 +42,12 @@ public class MoreTabAboutFragment extends BaseFragment implements MoreTabAboutCo
     }
 
     @Override
-    public void onFetchAboutUsSuccess(String contentAboutUs) {
-        tvAboutUsDescription.setText(contentAboutUs);
+    public void onFetchAboutUsSuccess(List<AboutContent> aboutContentContentList) {
+        tvAboutTitleConference.setText(aboutContentContentList.get(0).getAboutTitle());
+        tvAboutContentConference.setText(aboutContentContentList.get(0).getAboutContent());
+
+        tvAboutTitleUs.setText(aboutContentContentList.get(1).getAboutTitle());
+        tvAboutContentUs.setText(aboutContentContentList.get(1).getAboutContent());
     }
 
     @Override

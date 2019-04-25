@@ -7,6 +7,21 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineContentLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".1" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guidelineContentRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".9" />
+
     <android.support.constraint.Guideline
         android:id="@+id/guidelineContentDescription"
         android:layout_width="wrap_content"
@@ -32,17 +47,63 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guidelineContentTop" />
 
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineContentRight"
+        app:layout_constraintStart_toEndOf="@+id/guidelineContentLeft"
+        app:layout_constraintTop_toBottomOf="@+id/guidelineContentDescription"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
-        android:id="@+id/tvAboutUsDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="more_tab_about_description"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guidelineContentDescription" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldTextView
+                android:id="@+id/tvAboutTitleConference"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/more_tab_about_content"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                android:id="@+id/tvAboutContentConference"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/margin_small"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/guidelineContentDescription" />
+
+
+            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldTextView
+                android:id="@+id/tvAboutTitleUs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
+                android:id="@+id/tvAboutContentUs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/margin_small"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/guidelineContentDescription" />
+
+
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
