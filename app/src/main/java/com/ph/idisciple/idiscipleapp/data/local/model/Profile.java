@@ -135,7 +135,15 @@ public class Profile  extends RealmObject {
 
 
     public String getUserImageUrl(){
-        return userImagePath + userImageName;
+        return getUserImagePath() + getUserImageName();
+    }
+
+    public String getUserImagePath(){
+        return userImagePath == null ? "" : userImagePath;
+    }
+
+    public String getUserImageName(){
+        return userImageName == null ? "" : userImageName;
     }
     public void setUserImagePath(String userImagePath){
         this.userImagePath = userImagePath;

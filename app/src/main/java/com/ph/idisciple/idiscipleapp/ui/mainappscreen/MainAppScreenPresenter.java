@@ -219,7 +219,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     mAttendeesRepository.addItemList(jsonProfile);
                     if(mSavedProfileFavoritesRepository.size() == 0) mSavedProfileFavoritesRepository.addItemList(jsonProfile);
 
-                    Profile ownProfile = from(mAttendeesRepository.getContentList()).where("getId", eq(mUserId)).first();
+                    Profile ownProfile = from(jsonProfile).where("getId", eq(mUserId)).first();
                     mView.setProfileAvatar(ownProfile.getUserImageUrl(), ownProfile.getUserCountry());
                     break;
                 case "1":
@@ -252,6 +252,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     ListWrapper<Country> wrapperCountry = jsonReturned.fromJson(result, typeCountryWrapper);
                     List<Country> jsonCountry = wrapperCountry.getData();
                     mCountryRepository.addItemList(jsonCountry);
+                    mView.prepareBundleToPassInPrepForViewOwnProfile();
                     break;
             }
             mView.onFetchDataSuccess();

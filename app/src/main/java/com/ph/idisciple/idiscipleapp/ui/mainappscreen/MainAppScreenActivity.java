@@ -243,7 +243,51 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
     @Override
     public void setUserId(String userId) {
         mUserId = userId;
-        prepareBundleToPassInPrepForViewOwnProfile();
+
+    }
+
+    @Override
+    public void prepareBundleToPassInPrepForViewOwnProfile() {
+        bundleToInclude = new Bundle();
+        List<Country> mCountryList = mPresenter.mCountryRepository.getContentList();
+        List<FamilyGroup> mFamilyGroupList = mPresenter.mFamilyGroupRepository.getContentList();
+        List<Workshop> mWorkshopList = mPresenter.mWorkshopRepository.getContentList();
+        List<Profile> AttendeesList = mPresenter.mAttendeesRepository.getContentList();
+
+        Profile currentProfile = from(AttendeesList).where("getId", eq(mUserId)).first();
+        if(currentProfile != null) {
+            bundleToInclude.putString("avatar", currentProfile.getUserImageUrl());
+            bundleToInclude.putString("fullname", currentProfile.getUserFullName());
+            bundleToInclude.putString("nickname", currentProfile.getUserNickName());
+            bundleToInclude.putString("id", currentProfile.getId());
+
+            String countryId = currentProfile.getUserCountry();
+            if (countryId != null) {
+                bundleToInclude.putString("countryId", countryId);
+                Country country = from(mCountryList).where("getId", eq(countryId)).first();
+                bundleToInclude.putString("countryName", country == null ? "" : country.getCountryName());
+            }
+            String familyGroupId = currentProfile.getUserFamilyGroupId();
+            if (familyGroupId != null) {
+                bundleToInclude.putString("familyGroupId", familyGroupId);
+                FamilyGroup familyGroup = from(mFamilyGroupList).where("getId", eq(familyGroupId)).first();
+                bundleToInclude.putString("familyGroupName", familyGroup == null ? "" : familyGroup.getFamilyGroupName());
+            }
+
+            String workshopId1 = currentProfile.getUserWorkshop1();
+            if (workshopId1 != null) {
+                bundleToInclude.putString("workshopId1", workshopId1);
+                Workshop workshop = from(mWorkshopList).where("getId", eq(workshopId1)).first();
+                bundleToInclude.putString("workshopId1Name", workshop == null ? "" : workshop.getWorkshopName());
+            }
+
+            String workshopId2 = currentProfile.getUserWorkshop2();
+            if (workshopId2 != null) {
+                bundleToInclude.putString("workshopId2", workshopId2);
+                Workshop workshop = from(mWorkshopList).where("getId", eq(workshopId2)).first();
+                bundleToInclude.putString("workshopId2Name", workshop == null ? "" : workshop.getWorkshopName());
+            }
+        }
     }
 
     @Override
@@ -275,44 +319,4 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
         hideLoadingDialog();
     }
 
-    private void prepareBundleToPassInPrepForViewOwnProfile(){
-        bundleToInclude = new Bundle();
-        List<Country> mCountryList = mPresenter.mCountryRepository.getContentList();
-        List<FamilyGroup> mFamilyGroupList = mPresenter.mFamilyGroupRepository.getContentList();
-        List<Workshop> mWorkshopList = mPresenter.mWorkshopRepository.getContentList();
-        List<Profile> AttendeesList = mPresenter.mAttendeesRepository.getContentList();
-
-        Profile currentProfile = from(AttendeesList).where("getId", eq(mUserId)).first();
-        bundleToInclude.putString("avatar", currentProfile.getUserImageUrl());
-        bundleToInclude.putString("fullname", currentProfile.getUserFullName());
-        bundleToInclude.putString("nickname", currentProfile.getUserNickName());
-        bundleToInclude.putString("id", currentProfile.getId());
-
-        String countryId = currentProfile.getUserCountry();
-        if (countryId != null) {
-            bundleToInclude.putString("countryId", countryId);
-            Country country = from(mCountryList).where("getId", eq(countryId)).first();
-            bundleToInclude.putString("countryName", country == null ? "" : country.getCountryName());
-        }
-        String familyGroupId = currentProfile.getUserFamilyGroupId();
-        if (familyGroupId != null) {
-            bundleToInclude.putString("familyGroupId", familyGroupId);
-            FamilyGroup familyGroup = from(mFamilyGroupList).where("getId", eq(familyGroupId)).first();
-            bundleToInclude.putString("familyGroupName", familyGroup == null ? "" : familyGroup.getFamilyGroupName());
-        }
-
-        String workshopId1 = currentProfile.getUserWorkshop1();
-        if (workshopId1 != null) {
-            bundleToInclude.putString("workshopId1", workshopId1);
-            Workshop workshop = from(mWorkshopList).where("getId", eq(workshopId1)).first();
-            bundleToInclude.putString("workshopId1Name", workshop == null ? "" : workshop.getWorkshopName());
-        }
-
-        String workshopId2 = currentProfile.getUserWorkshop2();
-        if (workshopId2 != null) {
-            bundleToInclude.putString("workshopId2", workshopId2);
-            Workshop workshop = from(mWorkshopList).where("getId", eq(workshopId2)).first();
-            bundleToInclude.putString("workshopId2Name", workshop == null ? "" : workshop.getWorkshopName());
-        }
-    }
 }
