@@ -34,6 +34,16 @@ public class AttendeesRepository extends BaseRepository implements IAttendeesRep
     }
 
     @Override
+    public void addItem(final Profile item) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(item);
+            }
+        });
+    }
+
+    @Override
     public int size() {
         return (int) realm.where(Profile.class).count();
     }

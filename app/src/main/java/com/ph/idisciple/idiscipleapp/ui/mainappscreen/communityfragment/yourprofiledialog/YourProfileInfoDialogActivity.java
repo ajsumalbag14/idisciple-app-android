@@ -113,7 +113,7 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
             tvDelegateNickName.setText(bundle.getString("nickname"));
             tvFullName.setText(bundle.getString("fullname"));
             tvCountryDetails.setText(bundle.getString("countryName"));
-            tvFamilyGroupAssignedTo.setText(bundle.getString("familyGroupName"));
+            tvFamilyGroupAssignedTo.setText(bundle.getString("familyGroupName", "none"));
 
             Glide.with(YourProfileInfoDialogActivity.this)
                     .load(bundle.getString("avatar"))
@@ -152,15 +152,11 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
                     Uri uri = data.getData();
 
                     try {
+                        String fileName = "img_"+mUserId;
+
                         Bitmap bitmapPhotoSelected = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmapPhotoSelected);
-                        roundedBitmapDrawable.setCornerRadius(0f);
+                        mPresenter.onUploadPhoto(getScaledBitmap(bitmapPhotoSelected), fileName, mUserId);
 
-                        Glide.with(YourProfileInfoDialogActivity.this)
-                                .load(roundedBitmapDrawable)
-                                .into(ivAvatar);
-
-                        showAvatarImageOptions(true);
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (FileNotFoundException e) {
@@ -171,6 +167,23 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
                 }
                 break;
         }
+    }
+
+    /**
+     * Description: This method scales the Bitmap image to the desired image size set
+     *
+     * @param bitmap [Bitmap]
+     */
+    private Bitmap getScaledBitmap(Bitmap bitmap) {
+
+        double y = 480;
+        double x = 480;
+
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, (int) x, (int) y, true);
+        bitmap.recycle();
+        bitmap = scaledBitmap;
+
+        return bitmap;
     }
 
     private void showAvatarImageOptions(boolean isImageLoadedSuccessful){
@@ -206,6 +219,23 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
                 redirectToAnotherScreenAsFirstScreen(LoginScreenActivity.class);
             }
         });
+    }
+
+    @Override
+    public void onUploadPhotoSuccess(Bitmap bitmap) {
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        roundedBitmapDrawable.setCornerRadius(0f);
+
+        Glide.with(YourProfileInfoDialogActivity.this)
+                .load(roundedBitmapDrawable)
+                .into(ivAvatar);
+
+        showAvatarImageOptions(true);
+    }
+
+    @Override
+    public void onUploadPhotoFailed(String errorMessage) {
+
     }
 
     @Override

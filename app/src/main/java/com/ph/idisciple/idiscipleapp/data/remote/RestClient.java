@@ -23,8 +23,8 @@ public class RestClient {
 
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging);
-        httpClient.readTimeout(60, TimeUnit.SECONDS)
-                .connectTimeout(60, TimeUnit.SECONDS);
+        httpClient.readTimeout(300, TimeUnit.SECONDS)
+                .connectTimeout(300, TimeUnit.SECONDS);
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(BuildConfig.ApiKey)

@@ -149,11 +149,6 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
 
         protected void onPreExecute() {
             super.onPreExecute();
-
-//            pd = new ProgressDialog(MainActivity.this);
-//            pd.setMessage("Please wait");
-//            pd.setCancelable(false);
-//            pd.show();
         }
 
         protected String doInBackground(String... params) {
@@ -253,9 +248,10 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     List<Country> jsonCountry = wrapperCountry.getData();
                     mCountryRepository.addItemList(jsonCountry);
                     mView.prepareBundleToPassInPrepForViewOwnProfile();
+                    mView.onFetchDataSuccess();
                     break;
             }
-            mView.onFetchDataSuccess();
+
         }
     }
 

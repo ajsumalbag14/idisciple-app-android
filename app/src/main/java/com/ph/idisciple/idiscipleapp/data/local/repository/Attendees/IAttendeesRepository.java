@@ -12,5 +12,7 @@ public interface IAttendeesRepository {
 
     void addItemList(List<Profile> itemList);
 
+    void addItem(Profile item);
+
     int size();
 }
