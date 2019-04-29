@@ -76,7 +76,7 @@ public class LoginScreenPresenter implements LoginScreenContract.Presenter {
                         mProfileRepository.saveKeyItem(ProfileObject.ProfileType.USER_ID, mUserAccess.getUserId(), new IProfileRepository.onSaveCallback() {
                             @Override
                             public void onSuccess() {
-
+                                mView.onLoginSuccess(mUserAccess.isFirstTimeUser(), mUserAccess.getToken(), mUserAccess.getUserId());
                             }
                         });
                         break;

@@ -1,6 +1,7 @@
 package com.ph.idisciple.idiscipleapp.ui.mainappscreen.morefragment.abouttab;
 
 import android.os.AsyncTask;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,6 +20,7 @@ import java.util.List;
 public class MoreTabAboutPresenter implements MoreTabAboutContract.Presenter{
 
     private MoreTabAboutContract.View mView;
+    private String errorMessage = "";
 
     public MoreTabAboutPresenter(MoreTabAboutContract.View view){
         mView = view;
@@ -26,6 +28,7 @@ public class MoreTabAboutPresenter implements MoreTabAboutContract.Presenter{
 
     @Override
     public void fetchAboutUs() {
+        errorMessage = ""; // Reset errorMessage\
         new JsonTask().execute("https://idisciple.ph/2019/apbycon/assets/about.json");
     }
 
@@ -62,10 +65,10 @@ public class MoreTabAboutPresenter implements MoreTabAboutContract.Presenter{
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
-                mView.onFetchAboutUsFailed(e.getMessage());
+                errorMessage = e.getMessage();
             } catch (IOException e) {
                 e.printStackTrace();
-                mView.onFetchAboutUsFailed(e.getMessage());
+                errorMessage = e.getMessage();
             } finally {
                 if (connection != null) {
                     connection.disconnect();
@@ -76,7 +79,7 @@ public class MoreTabAboutPresenter implements MoreTabAboutContract.Presenter{
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                    mView.onFetchAboutUsFailed(e.getMessage());
+                    errorMessage = e.getMessage();
                 }
             }
             return null;
@@ -86,18 +89,24 @@ public class MoreTabAboutPresenter implements MoreTabAboutContract.Presenter{
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            // Remove \n and make it as object not Array
-            if (result.startsWith("\uFEFF")) {
-                result = result.substring(1);
-            }
+            if(!TextUtils.isEmpty(errorMessage))
+                mView.showGenericError();
+            else {
 
-            result = result.substring(1, result.length() - 2).replace("\n","");
-            // save json items
-            Gson jsonReturned =  new Gson();
-            Type typeAboutContentWrapper = new TypeToken<ListWrapper<AboutContent>>() {}.getType();
-            ListWrapper<AboutContent> wrapperAboutContent = jsonReturned.fromJson(result, typeAboutContentWrapper);
-            List<AboutContent> jsonAboutContentDetails = wrapperAboutContent.getData();
-            mView.onFetchAboutUsSuccess(jsonAboutContentDetails);
+                // Remove \n and make it as object not Array
+                if (result.startsWith("\uFEFF")) {
+                    result = result.substring(1);
+                }
+
+                result = result.substring(1, result.length() - 2).replace("\n", "");
+                // save json items
+                Gson jsonReturned = new Gson();
+                Type typeAboutContentWrapper = new TypeToken<ListWrapper<AboutContent>>() {
+                }.getType();
+                ListWrapper<AboutContent> wrapperAboutContent = jsonReturned.fromJson(result, typeAboutContentWrapper);
+                List<AboutContent> jsonAboutContentDetails = wrapperAboutContent.getData();
+                mView.onFetchAboutUsSuccess(jsonAboutContentDetails);
+            }
         }
     }
 

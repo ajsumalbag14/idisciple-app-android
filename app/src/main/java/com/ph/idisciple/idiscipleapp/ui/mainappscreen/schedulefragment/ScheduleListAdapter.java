@@ -60,7 +60,7 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
         // Check if it's happening today
         if(isToday) {
             try {
-                SimpleDateFormat formatter = new SimpleDateFormat("hh:mma");
+                SimpleDateFormat formatter = new SimpleDateFormat("h:mm a");
                 Calendar calendarParsedStartDate = Calendar.getInstance();
                 Calendar calendarParsedEndDate = Calendar.getInstance();
 

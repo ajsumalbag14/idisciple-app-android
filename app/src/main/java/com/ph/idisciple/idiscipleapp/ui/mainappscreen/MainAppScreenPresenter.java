@@ -131,12 +131,14 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
 
             @Override
             public void onFailure(Call<Wrapper<ContentResponseWrapper>> call, Throwable t) {
-                if (t.getCause() != null && t.getCause().getMessage().contains("ENETUNREACH (Network is unreachable)"))
-                    mView.showNoInternetConnection();
-                else if ((t.getCause() != null && t.getCause().getMessage().contains("ETIMEDOUT (Connection timed out)")) || t.getMessage().contains("failed to connect"))
-                    mView.showTimeoutError();
-                else
-                    mView.showGenericError();
+                mView.prepareBundleToPassInPrepForViewOwnProfile();
+                mView.onFetchDataSuccess();
+//                if (t.getCause() != null && t.getCause().getMessage().contains("ENETUNREACH (Network is unreachable)"))
+//                    mView.showNoInternetConnection();
+//                else if ((t.getCause() != null && t.getCause().getMessage().contains("ETIMEDOUT (Connection timed out)")) || t.getMessage().contains("failed to connect"))
+//                    mView.showTimeoutError();
+//                else
+//                     mView.showGenericError();
             }
         });
     }
