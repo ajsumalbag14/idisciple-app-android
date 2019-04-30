@@ -29,6 +29,10 @@ import com.ph.idisciple.idiscipleapp.ui.mainappscreen.speakerfragment.SpeakerFra
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.viewmap.ViewMapActivity;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.workshopfragment.WorkshopFragment;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,6 +55,7 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
 
     public MainAppScreenPresenter mPresenter;
     public String mUserId;
+    public String mCountryId;
 
     @BindView(R.id.rlToolbar) RelativeLayout rlToolbar;
     @BindView(R.id.ivToolbarMenuProfile) ImageView ivToolbarMenuProfile;
@@ -97,6 +102,18 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
         mPresenter.fetchData();
         prepareColorStateList();
         prepareBottomNavigationBar();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     @SuppressLint("RestrictedApi")
@@ -246,6 +263,12 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateAvatar(RefreshAvatarEvent event){
+        prepareBundleToPassInPrepForViewOwnProfile();
+        setProfileAvatar(event.avatarImageUrl, mCountryId);
+    }
+
     @Override
     public void prepareBundleToPassInPrepForViewOwnProfile() {
         bundleToInclude = new Bundle();
@@ -261,10 +284,10 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
             bundleToInclude.putString("nickname", currentProfile.getUserNickName());
             bundleToInclude.putString("id", currentProfile.getId());
 
-            String countryId = currentProfile.getUserCountry();
-            if (countryId != null) {
-                bundleToInclude.putString("countryId", countryId);
-                Country country = from(mCountryList).where("getId", eq(countryId)).first();
+            mCountryId = currentProfile.getUserCountry();
+            if (mCountryId != null) {
+                bundleToInclude.putString("countryId", mCountryId);
+                Country country = from(mCountryList).where("getId", eq(mCountryId)).first();
                 bundleToInclude.putString("countryName", country == null ? "" : country.getCountryName());
             }
             String familyGroupId = currentProfile.getUserFamilyGroupId();

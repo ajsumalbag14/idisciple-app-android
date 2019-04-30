@@ -99,7 +99,7 @@ public class YourProfileInfoDialogPresenter implements YourProfileInfoDialogCont
                         if(wrapperResponse != null) {
                             Profile currentUpdateProfile = wrapperResponse.getData();
                             mAttendeesRepository.addItem(currentUpdateProfile);
-                            mView.onUploadPhotoSuccess(currentUpdateProfile.getUserImageUrl());
+                            mView.onUploadPhotoSuccess(mBitmap, currentUpdateProfile.getUserImageUrl());
                         }else
                             mView.showGenericError();
                         break;
@@ -108,7 +108,7 @@ public class YourProfileInfoDialogPresenter implements YourProfileInfoDialogCont
                         try {
 
                             BaseApi apiErrorResponse = gson.fromJson(response.errorBody().toString(), BaseApi.class);
-                            mView.onLogoutFailed(apiErrorResponse.getMessage());
+                            mView.onUploadPhotoFailed(apiErrorResponse.getMessage());
 
                         } catch (Exception e) {
                             e.printStackTrace();

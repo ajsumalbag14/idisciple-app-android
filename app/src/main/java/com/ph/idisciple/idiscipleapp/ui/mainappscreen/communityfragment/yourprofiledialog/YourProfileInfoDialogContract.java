@@ -12,7 +12,7 @@ public class YourProfileInfoDialogContract {
         void onLogoutFailed(String errorMessage);
         void onLogoutSuccess();
 
-        void onUploadPhotoSuccess(String imageUrl);
+        void onUploadPhotoSuccess(Bitmap bitmap, String imageUrl);
         void onUploadPhotoFailed(String errorMessage);
     }
 

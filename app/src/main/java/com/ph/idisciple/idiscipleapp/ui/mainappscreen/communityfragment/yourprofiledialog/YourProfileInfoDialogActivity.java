@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
@@ -29,6 +31,9 @@ import com.ph.idisciple.idiscipleapp.data.local.repository.impl.KeySettingsRepos
 import com.ph.idisciple.idiscipleapp.data.local.repository.impl.ProfileRepository;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 import com.ph.idisciple.idiscipleapp.ui.login.LoginScreenActivity;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.RefreshAvatarEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -218,9 +223,14 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
     }
 
     @Override
-    public void onUploadPhotoSuccess(String imageUrl) {
+    public void onUploadPhotoSuccess(Bitmap bitmap, String imageUrl) {
+
+        EventBus.getDefault().post(new RefreshAvatarEvent(imageUrl));
+
+        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        roundedBitmapDrawable.setCornerRadius(0f);
         Glide.with(YourProfileInfoDialogActivity.this)
-                .load(imageUrl)
+                .load(roundedBitmapDrawable)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -238,7 +248,6 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
                 .apply(RequestOptions
                         .centerCropTransform()
                         .placeholder(getDrawableCountryRes(mCountryId))
-                        //.signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
                         .error(getDrawableCountryRes(mCountryId)))
                 .into(ivAvatar);
 
