@@ -7,8 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
@@ -32,8 +30,6 @@ import com.ph.idisciple.idiscipleapp.data.local.repository.impl.ProfileRepositor
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 import com.ph.idisciple.idiscipleapp.ui.login.LoginScreenActivity;
 
-import java.io.FileNotFoundException;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.realm.internal.IOException;
@@ -54,6 +50,7 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
     private KeySettingsRepository mKeySettingsRepository;
     private ProfileRepository mProfileRepository;
     private String mUserId;
+    private String mCountryId;
     private AlertDialog mLogoutDialog;
 
     @OnClick(R.id.tvDismiss)
@@ -115,6 +112,8 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
             tvCountryDetails.setText(bundle.getString("countryName"));
             tvFamilyGroupAssignedTo.setText(bundle.getString("familyGroupName", "none"));
 
+            mCountryId = bundle.getString("countryId");
+
             Glide.with(YourProfileInfoDialogActivity.this)
                     .load(bundle.getString("avatar"))
                     .listener(new RequestListener<Drawable>() {
@@ -132,10 +131,11 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
                         }
                     })
                     .apply(RequestOptions
-                            .circleCropTransform()
-                            .placeholder(getDrawableCountryRes(bundle.getString("countryId")))
-                            .error(getDrawableCountryRes(bundle.getString("countryId"))))
+                            .centerCropTransform()
+                            .placeholder(getDrawableCountryRes(mCountryId))
+                            .error(getDrawableCountryRes(mCountryId)))
                     .into(ivAvatar);
+
 
             String workshopName1 = bundle.getString("workshopId1Name");
             String workshopName2 = bundle.getString("workshopId2Name");
@@ -152,16 +152,12 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
                     Uri uri = data.getData();
 
                     try {
-                        String fileName = "img_"+mUserId;
+                        String fileName = "img_" + mUserId + ".png";
 
                         Bitmap bitmapPhotoSelected = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                         mPresenter.onUploadPhoto(getScaledBitmap(bitmapPhotoSelected), fileName, mUserId);
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (java.io.IOException e) {
+                    } catch (IOException | java.io.IOException e) {
                         e.printStackTrace();
                     }
                 }
@@ -186,7 +182,7 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
         return bitmap;
     }
 
-    private void showAvatarImageOptions(boolean isImageLoadedSuccessful){
+    private void showAvatarImageOptions(boolean isImageLoadedSuccessful) {
         cvUploadAvatar.setVisibility(isImageLoadedSuccessful ? View.GONE : View.VISIBLE);
         llChangeAvatar.setVisibility(isImageLoadedSuccessful ? View.VISIBLE : View.GONE);
     }
@@ -222,12 +218,28 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
     }
 
     @Override
-    public void onUploadPhotoSuccess(Bitmap bitmap) {
-        RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        roundedBitmapDrawable.setCornerRadius(0f);
-
+    public void onUploadPhotoSuccess(String imageUrl) {
         Glide.with(YourProfileInfoDialogActivity.this)
-                .load(roundedBitmapDrawable)
+                .load(imageUrl)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        showAvatarImageOptions(false);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        showAvatarImageOptions(true);
+                        ivAvatar.setImageDrawable(resource);
+                        return true;
+                    }
+                })
+                .apply(RequestOptions
+                        .centerCropTransform()
+                        .placeholder(getDrawableCountryRes(mCountryId))
+                        //.signature(new ObjectKey(String.valueOf(System.currentTimeMillis())))
+                        .error(getDrawableCountryRes(mCountryId)))
                 .into(ivAvatar);
 
         showAvatarImageOptions(true);

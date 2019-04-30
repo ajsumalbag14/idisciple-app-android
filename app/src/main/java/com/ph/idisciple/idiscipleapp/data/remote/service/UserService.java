@@ -10,7 +10,6 @@ import com.ph.idisciple.idiscipleapp.data.remote.model.response.UserAccount;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -40,7 +39,7 @@ public interface UserService {
 
     @Multipart
     @POST("user/photo")
-    Call<Wrapper<Profile>> uploadPhoto(@Part("data") RequestBody data, @Part MultipartBody.Part imagePic);
+    Call<Wrapper<Profile>> uploadPhoto(@Part MultipartBody.Part data, @Part MultipartBody.Part imagePic);
 
 
 }

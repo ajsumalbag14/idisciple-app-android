@@ -83,7 +83,7 @@ public class ShowProfileInfoDialogActivity extends BaseActivity {
             Glide.with(ShowProfileInfoDialogActivity.this)
                     .load(bundle.getString("avatar"))
                     .apply(RequestOptions
-                            .circleCropTransform()
+                            .centerCropTransform()
                             .placeholder(getDrawableCountryRes(bundle.getString("countryId")))
                             .error(getDrawableCountryRes(bundle.getString("countryId"))))
                     .into(ivAvatar);

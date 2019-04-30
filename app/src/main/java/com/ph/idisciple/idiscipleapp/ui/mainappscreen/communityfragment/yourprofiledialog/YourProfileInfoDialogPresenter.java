@@ -1,20 +1,17 @@
 package com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.yourprofiledialog;
 
 import android.graphics.Bitmap;
-import android.util.Base64;
+import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.local.repository.Attendees.AttendeesRepository;
 import com.ph.idisciple.idiscipleapp.data.remote.RestClient;
 import com.ph.idisciple.idiscipleapp.data.remote.model.base.BaseApi;
 import com.ph.idisciple.idiscipleapp.data.remote.model.base.Wrapper;
-import com.ph.idisciple.idiscipleapp.data.remote.model.request.UploadPhotoRequest;
 import com.ph.idisciple.idiscipleapp.data.remote.service.UserService;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -30,11 +27,7 @@ public class YourProfileInfoDialogPresenter implements YourProfileInfoDialogCont
     private Bitmap mBitmap;
     private AttendeesRepository mAttendeesRepository;
 
-
-    private RequestBody bodyData;
-    private MultipartBody.Part bodyImage;
-
-    public YourProfileInfoDialogPresenter(YourProfileInfoDialogContract.View view){
+    YourProfileInfoDialogPresenter(YourProfileInfoDialogContract.View view){
         mView = view;
         mUserService = RestClient.getInstance().getUserService();
         mAttendeesRepository = new AttendeesRepository();
@@ -45,7 +38,7 @@ public class YourProfileInfoDialogPresenter implements YourProfileInfoDialogCont
         mUserService.logoutUser(userId).enqueue(new Callback<BaseApi>(){
 
             @Override
-            public void onResponse(Call<BaseApi> call, Response<BaseApi> response) {
+            public void onResponse(Call<BaseApi> call, @NonNull Response<BaseApi> response) {
                 switch (response.code()) {
                     case 200:
                     case 201:
@@ -55,10 +48,10 @@ public class YourProfileInfoDialogPresenter implements YourProfileInfoDialogCont
                         Gson gson = new Gson();
                         try {
 
-                            BaseApi apiErrorResponse = gson.fromJson(response.errorBody().string(), BaseApi.class);
+                            BaseApi apiErrorResponse = gson.fromJson(response.errorBody().toString(), BaseApi.class);
                             mView.onLogoutFailed(apiErrorResponse.getMessage());
 
-                        } catch (IOException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                             mView.showGenericError();
                         }
@@ -70,7 +63,7 @@ public class YourProfileInfoDialogPresenter implements YourProfileInfoDialogCont
             }
 
             @Override
-            public void onFailure(Call<BaseApi> call, Throwable t) {
+            public void onFailure(@NonNull Call<BaseApi> call, Throwable t) {
                 if (t.getCause() != null && t.getCause().getMessage().contains("ENETUNREACH (Network is unreachable)"))
                     mView.showNoInternetConnection();
                 else if ((t.getCause() != null && t.getCause().getMessage().contains("ETIMEDOUT (Connection timed out)")) || t.getMessage().contains("failed to connect"))
@@ -90,30 +83,23 @@ public class YourProfileInfoDialogPresenter implements YourProfileInfoDialogCont
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] imageBytes = stream.toByteArray();
 
-        bodyData = RequestBody.create(MediaType.parse("text/plain"), prepareJsonData(fileName, userId));
+        MultipartBody.Part bodyData = MultipartBody.Part.createFormData("user_id", userId);
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/png"), imageBytes);
-        bodyImage = MultipartBody.Part.createFormData("image-pic", "image.png", requestFile);
-
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
-
-        UploadPhotoRequest request = new UploadPhotoRequest();
-        request.setFileName(fileName);
-        request.setUserId(userId);
-        request.setImage(encodedImage);
+        MultipartBody.Part bodyImage = MultipartBody.Part.createFormData("file", fileName, requestFile);
 
         mUserService
-                //.uploadPhoto(request.getParams())
                 .uploadPhoto(bodyData, bodyImage)
         .enqueue(new Callback<Wrapper<Profile>>() {
             @Override
-            public void onResponse(Call<Wrapper<Profile>> call, Response<Wrapper<Profile>> response) {
+            public void onResponse(@NonNull Call<Wrapper<Profile>> call, Response<Wrapper<Profile>> response) {
                 switch (response.code()) {
                     case 200:
                     case 201:
                         Wrapper<Profile> wrapperResponse = response.body();
                         if(wrapperResponse != null) {
-                            mAttendeesRepository.addItem(wrapperResponse.getData());
-                            mView.onUploadPhotoSuccess(mBitmap);
+                            Profile currentUpdateProfile = wrapperResponse.getData();
+                            mAttendeesRepository.addItem(currentUpdateProfile);
+                            mView.onUploadPhotoSuccess(currentUpdateProfile.getUserImageUrl());
                         }else
                             mView.showGenericError();
                         break;
@@ -121,10 +107,10 @@ public class YourProfileInfoDialogPresenter implements YourProfileInfoDialogCont
                         Gson gson = new Gson();
                         try {
 
-                            BaseApi apiErrorResponse = gson.fromJson(response.errorBody().string(), BaseApi.class);
+                            BaseApi apiErrorResponse = gson.fromJson(response.errorBody().toString(), BaseApi.class);
                             mView.onLogoutFailed(apiErrorResponse.getMessage());
 
-                        } catch (IOException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                             mView.showGenericError();
                         }
@@ -136,7 +122,7 @@ public class YourProfileInfoDialogPresenter implements YourProfileInfoDialogCont
             }
 
             @Override
-            public void onFailure(Call<Wrapper<Profile>> call, Throwable t) {
+            public void onFailure(@NonNull Call<Wrapper<Profile>> call, @NonNull Throwable t) {
                 if (t.getCause() != null && t.getCause().getMessage().contains("ENETUNREACH (Network is unreachable)"))
                     mView.showNoInternetConnection();
                 else if ((t.getCause() != null && t.getCause().getMessage().contains("ETIMEDOUT (Connection timed out)")) || t.getMessage().contains("failed to connect"))
@@ -148,13 +134,4 @@ public class YourProfileInfoDialogPresenter implements YourProfileInfoDialogCont
         });
     }
 
-    private String prepareJsonData(String fileName, String userId){
-        JsonObject jsonData = new JsonObject();
-        jsonData.addProperty("user_id", userId);
-        jsonData.addProperty("filename", fileName);
-
-        Gson gson = new Gson();
-        String payload = gson.toJson(jsonData);
-        return payload;
-    }
 }
