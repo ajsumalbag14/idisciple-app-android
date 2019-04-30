@@ -37,4 +37,15 @@ public class FamilyGroupRepository extends BaseRepository implements IFamilyGrou
     public int size() {
         return (int) realm.where(FamilyGroup.class).count();
     }
+
+    @Override
+    public void resetStorage() {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<FamilyGroup> storage = realm.where(FamilyGroup.class).findAll();
+                storage.deleteAllFromRealm();
+            }
+        });
+    }
 }

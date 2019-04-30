@@ -222,6 +222,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
             Gson jsonReturned =  new Gson();
             switch (type){
                 case "0":
+                    mAttendeesRepository.resetStorage();
                     Type typeProfileWrapper = new TypeToken<ListWrapper<Profile>>() {}.getType();
                     ListWrapper<Profile> wrapperProfile = jsonReturned.fromJson(result, typeProfileWrapper);
                     List<Profile> jsonProfile = wrapperProfile.getData();
@@ -232,12 +233,14 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     mView.setProfileAvatar(ownProfile.getUserImageUrl(), ownProfile.getUserCountry());
                     break;
                 case "1":
+                    mScheduleRepository.resetStorage();
                     Type typeScheduleWrapper = new TypeToken<ListWrapper<Schedule>>() {}.getType();
                     ListWrapper<Schedule> wrapperSchedule = jsonReturned.fromJson(result, typeScheduleWrapper);
                     List<Schedule> jsonSchedule = wrapperSchedule.getData();
                     mScheduleRepository.addItemList(jsonSchedule);
                     break;
                 case "2":
+                    mSpeakerRepository.resetStorage();
                     Type typeSpeakerWrapper = new TypeToken<ListWrapper<Speaker>>() {}.getType();
                     ListWrapper<Speaker> wrapperSpeaker = jsonReturned.fromJson(result, typeSpeakerWrapper);
                     List<Speaker> jsonSpeaker = wrapperSpeaker.getData();
@@ -245,18 +248,21 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     EventBus.getDefault().post(new RefreshSpeakerListEvent());
                     break;
                 case "3":
+                    mWorkshopRepository.resetStorage();
                     Type typeWorkshopWrapper = new TypeToken<ListWrapper<Workshop>>() {}.getType();
                     ListWrapper<Workshop> wrapperWorkshop = jsonReturned.fromJson(result, typeWorkshopWrapper);
                     List<Workshop> jsonWorkshop = wrapperWorkshop.getData();
                     mWorkshopRepository.addItemList(jsonWorkshop);
                     break;
                 case "4":
+                    mFamilyGroupRepository.resetStorage();
                     Type typeFamilyGroupWrapper = new TypeToken<ListWrapper<FamilyGroup>>() {}.getType();
                     ListWrapper<FamilyGroup> wrapperFamilyGroup = jsonReturned.fromJson(result, typeFamilyGroupWrapper);
                     List<FamilyGroup> jsonFamilyGroup = wrapperFamilyGroup.getData();
                     mFamilyGroupRepository.addItemList(jsonFamilyGroup);
                     break;
                 case "5":
+                    mCountryRepository.resetStorage();
                     Type typeCountryWrapper = new TypeToken<ListWrapper<Country>>() {}.getType();
                     ListWrapper<Country> wrapperCountry = jsonReturned.fromJson(result, typeCountryWrapper);
                     List<Country> jsonCountry = wrapperCountry.getData();
@@ -265,6 +271,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
 //                    mView.onFetchDataSuccess();
                     break;
                 case "6":
+                    mResourcesRepository.resetStorage();
                     Type typeResourcesWrapper = new TypeToken<ListWrapper<Resource>>() {}.getType();
                     ListWrapper<Resource> wrapperResources = jsonReturned.fromJson(result, typeResourcesWrapper);
                     List<Resource> jsonResources = wrapperResources.getData();

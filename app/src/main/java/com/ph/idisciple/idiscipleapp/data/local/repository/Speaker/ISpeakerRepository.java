@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface ISpeakerRepository {
+
     ArrayList<Speaker> getContentList();
 
     Speaker findItemById(String id);
@@ -13,4 +14,7 @@ public interface ISpeakerRepository {
     void addItemList(List<Speaker> itemList);
 
     int size();
+
+    void resetStorage();
+
 }

@@ -37,4 +37,15 @@ public class SpeakerRepository extends BaseRepository implements ISpeakerReposit
     public int size() {
         return (int) realm.where(Speaker.class).count();
     }
+
+    @Override
+    public void resetStorage() {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<Speaker> storage = realm.where(Speaker.class).findAll();
+                storage.deleteAllFromRealm();
+            }
+        });
+    }
 }

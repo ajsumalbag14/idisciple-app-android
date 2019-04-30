@@ -37,4 +37,15 @@ public class WorkshopRepository extends BaseRepository implements IWorkshopRepos
     public int size() {
         return (int) realm.where(Workshop.class).count();
     }
+
+    @Override
+    public void resetStorage() {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<Workshop> storage = realm.where(Workshop.class).findAll();
+                storage.deleteAllFromRealm();
+            }
+        });
+    }
 }

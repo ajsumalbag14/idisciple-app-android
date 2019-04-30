@@ -37,4 +37,15 @@ public class ScheduleRepository extends BaseRepository implements IScheduleRepos
     public int size() {
         return (int) realm.where(Schedule.class).count();
     }
+
+    @Override
+    public void resetStorage() {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<Schedule> storage = realm.where(Schedule.class).findAll();
+                storage.deleteAllFromRealm();
+            }
+        });
+    }
 }

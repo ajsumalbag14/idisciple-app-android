@@ -37,4 +37,15 @@ public class CountryRepository extends BaseRepository implements ICountryReposit
     public int size() {
         return (int) realm.where(Country.class).count();
     }
+
+    @Override
+    public void resetStorage() {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<Country> storage = realm.where(Country.class).findAll();
+                storage.deleteAllFromRealm();
+            }
+        });
+    }
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface ICountryRepository {
+
     ArrayList<Country> getContentList();
 
     Country findItemById(String id);
@@ -13,4 +14,7 @@ public interface ICountryRepository {
     void addItemList(List<Country> itemList);
 
     int size();
+
+    void resetStorage();
+
 }

@@ -37,4 +37,15 @@ public class ResourcesRepository extends BaseRepository implements IResourcesRep
     public int size() {
         return (int) realm.where(Resource.class).count();
     }
+
+    @Override
+    public void resetStorage() {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<Resource> storage = realm.where(Resource.class).findAll();
+                storage.deleteAllFromRealm();
+            }
+        });
+    }
 }

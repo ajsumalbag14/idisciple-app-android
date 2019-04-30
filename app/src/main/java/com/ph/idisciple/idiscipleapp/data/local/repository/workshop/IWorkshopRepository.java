@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IWorkshopRepository {
+
     ArrayList<Workshop> getContentList();
 
     Workshop findItemById(String id);
@@ -13,4 +14,7 @@ public interface IWorkshopRepository {
     void addItemList(List<Workshop> itemList);
 
     int size();
+
+    void resetStorage();
+
 }

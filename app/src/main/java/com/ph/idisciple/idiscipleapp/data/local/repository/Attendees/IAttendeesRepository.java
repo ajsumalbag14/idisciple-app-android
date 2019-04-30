@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IAttendeesRepository {
+
     ArrayList<Profile> getContentList();
 
     Profile findItemById(String id);
@@ -15,4 +16,7 @@ public interface IAttendeesRepository {
     void addItem(Profile item);
 
     int size();
+
+    void resetStorage();
+
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IScheduleRepository {
+
     ArrayList<Schedule> getContentList();
 
     Schedule findItemById(String id);
@@ -13,4 +14,7 @@ public interface IScheduleRepository {
     void addItemList(List<Schedule> itemList);
 
     int size();
+
+    void resetStorage();
+
 }

@@ -47,4 +47,15 @@ public class AttendeesRepository extends BaseRepository implements IAttendeesRep
     public int size() {
         return (int) realm.where(Profile.class).count();
     }
+
+    @Override
+    public void resetStorage() {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<Profile> storage = realm.where(Profile.class).findAll();
+                storage.deleteAllFromRealm();
+            }
+        });
+    }
 }

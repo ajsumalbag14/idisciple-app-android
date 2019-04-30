@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IResourcesRepository {
+
     ArrayList<Resource> getContentList();
 
     Resource findItemById(String id);
@@ -13,4 +14,7 @@ public interface IResourcesRepository {
     void addItemList(List<Resource> itemList);
 
     int size();
+
+    void resetStorage();
+
 }

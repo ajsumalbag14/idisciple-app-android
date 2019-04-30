@@ -16,6 +16,8 @@ public class Resource extends RealmObject {
     private String title;
     @SerializedName("url")
     private String url;
+    @SerializedName("description")
+    private String description;
 
     public String getId() {
         return id;
@@ -43,6 +45,13 @@ public class Resource extends RealmObject {
     }
     public void setResourceUrl(String url) {
         this.url = url;
+    }
+
+    public String getResourceDescription() {
+        return description;
+    }
+    public void setResourceDescription(String description) {
+        this.description = description;
     }
 
 }
