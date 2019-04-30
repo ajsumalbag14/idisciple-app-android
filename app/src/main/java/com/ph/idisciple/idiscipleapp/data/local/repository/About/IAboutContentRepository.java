@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IAboutContentRepository {
+
     ArrayList<AboutContent> getContentList();
 
     AboutContent findItemById(String id);
@@ -13,4 +14,7 @@ public interface IAboutContentRepository {
     void addItemList(List<AboutContent> itemList);
 
     int size();
+
+    void resetStorage();
+
 }

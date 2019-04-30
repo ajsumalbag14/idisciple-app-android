@@ -121,7 +121,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                         ContentDetails contentResources = wrapper.getAssetsData().getContentResources();
                         new JsonTask().execute(contentResources.getJsonPathFile(), "6");
                         ContentDetails contentAboutContent = wrapper.getAssetsData().getContentAboutContent();
-                        new JsonTask().execute(contentResources.getJsonPathFile(), "7");
+                        new JsonTask().execute(contentAboutContent.getJsonPathFile(), "7");
                         break;
                     case 422:
                         Gson gson = new Gson();
@@ -271,6 +271,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     mResourcesRepository.addItemList(jsonResources);
                     break;
                 case "7":
+                    mAboutContentRepository.resetStorage();
                     Type typeAboutContentWrapper = new TypeToken<ListWrapper<AboutContent>>() {}.getType();
                     ListWrapper<AboutContent> wrapperAboutContent = jsonReturned.fromJson(result, typeAboutContentWrapper);
                     List<AboutContent> jsonAboutContent = wrapperAboutContent.getData();
