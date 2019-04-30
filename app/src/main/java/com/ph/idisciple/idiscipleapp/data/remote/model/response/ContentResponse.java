@@ -16,6 +16,10 @@ public class ContentResponse {
     private ContentDetails contentFamilyGroup;
     @SerializedName("countries")
     private ContentDetails contentCountry;
+    @SerializedName("resources")
+    private ContentDetails contentResources;
+    @SerializedName("about")
+    private ContentDetails contentAboutContent;
 
 
     public ContentDetails getContentSpeakers() {
@@ -58,5 +62,19 @@ public class ContentResponse {
     }
     public void setContentCountry(ContentDetails contentCountry) {
         this.contentCountry = contentCountry;
+    }
+
+    public ContentDetails getContentResources() {
+        return contentResources;
+    }
+    public void setContentResources(ContentDetails contentResources) {
+        this.contentResources = contentResources;
+    }
+
+    public ContentDetails getContentAboutContent() {
+        return contentAboutContent;
+    }
+    public void setContentAboutContent(ContentDetails contentAboutContent) {
+        this.contentAboutContent = contentAboutContent;
     }
 }

@@ -1,7 +1,6 @@
 package com.ph.idisciple.idiscipleapp.data.local.repository.Country;
 
 import com.ph.idisciple.idiscipleapp.data.local.model.Country;
-import com.ph.idisciple.idiscipleapp.data.local.model.Speaker;
 import com.ph.idisciple.idiscipleapp.data.local.repository.BaseRepository;
 
 import java.util.ArrayList;
@@ -36,6 +35,6 @@ public class CountryRepository extends BaseRepository implements ICountryReposit
 
     @Override
     public int size() {
-        return (int) realm.where(Speaker.class).count();
+        return (int) realm.where(Country.class).count();
     }
 }

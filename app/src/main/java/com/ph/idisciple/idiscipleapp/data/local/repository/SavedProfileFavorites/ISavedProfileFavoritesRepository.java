@@ -3,9 +3,13 @@ package com.ph.idisciple.idiscipleapp.data.local.repository.SavedProfileFavorite
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.local.model.SavedProfileFavorites;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ISavedProfileFavoritesRepository {
+
+    ArrayList<SavedProfileFavorites> getContentList();
+
     SavedProfileFavorites findItemById(String id);
 
     void addItemList(List<Profile> itemList);

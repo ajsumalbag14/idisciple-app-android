@@ -4,12 +4,22 @@ import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.local.model.SavedProfileFavorites;
 import com.ph.idisciple.idiscipleapp.data.local.repository.BaseRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Case;
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class SavedProfileFavoritesRepository extends BaseRepository implements ISavedProfileFavoritesRepository {
+
+    @Override
+    public ArrayList<SavedProfileFavorites> getContentList() {
+        RealmResults<SavedProfileFavorites> realmResults = realm.where(SavedProfileFavorites.class).findAll();
+        ArrayList<SavedProfileFavorites> arrayList = new ArrayList<>();
+        arrayList.addAll(realmResults);
+        return arrayList;
+    }
 
     @Override
     public SavedProfileFavorites findItemById(String id) {

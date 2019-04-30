@@ -1,21 +1,25 @@
-package com.ph.idisciple.idiscipleapp.ui.mainappscreen.morefragment.abouttab;
+package com.ph.idisciple.idiscipleapp.data.local.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class AboutContent {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class AboutContent extends RealmObject {
+
+    @PrimaryKey
     @SerializedName("about_id")
-    private int aboutOrder;
+    private int id;
     @SerializedName("title")
     private String aboutTitle;
     @SerializedName("content")
     private String aboutContent;
 
     public int getAboutOrder(){
-        return aboutOrder;
+        return id;
     }
     public void setAboutOrder(int order){
-        this.aboutOrder = order;
+        this.id = order;
     }
 
     public String getAboutTitle(){

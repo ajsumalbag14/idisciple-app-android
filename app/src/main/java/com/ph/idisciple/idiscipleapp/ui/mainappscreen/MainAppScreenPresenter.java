@@ -4,17 +4,21 @@ import android.os.AsyncTask;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.ph.idisciple.idiscipleapp.data.local.model.AboutContent;
 import com.ph.idisciple.idiscipleapp.data.local.model.Country;
 import com.ph.idisciple.idiscipleapp.data.local.model.FamilyGroup;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.local.model.ProfileObject;
+import com.ph.idisciple.idiscipleapp.data.local.model.Resource;
 import com.ph.idisciple.idiscipleapp.data.local.model.Schedule;
 import com.ph.idisciple.idiscipleapp.data.local.model.Speaker;
 import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
+import com.ph.idisciple.idiscipleapp.data.local.repository.About.AboutContentRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.Attendees.AttendeesRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.Country.CountryRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.FamilyGroups.FamilyGroupRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.IProfileRepository;
+import com.ph.idisciple.idiscipleapp.data.local.repository.Resources.ResourcesRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.SavedProfileFavorites.SavedProfileFavoritesRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.Schedule.ScheduleRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.Speaker.SpeakerRepository;
@@ -61,6 +65,8 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
     public FamilyGroupRepository mFamilyGroupRepository;
     public CountryRepository mCountryRepository;
     public SavedProfileFavoritesRepository mSavedProfileFavoritesRepository;
+    public ResourcesRepository mResourcesRepository;
+    public AboutContentRepository mAboutContentRepository;
     private String mUserId;
     private String mUserAvatar;
 
@@ -76,6 +82,8 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
         mFamilyGroupRepository = new FamilyGroupRepository();
         mCountryRepository = new CountryRepository();
         mSavedProfileFavoritesRepository = new SavedProfileFavoritesRepository();
+        mResourcesRepository = new ResourcesRepository();
+        mAboutContentRepository = new AboutContentRepository();
     }
 
     @Override
@@ -110,6 +118,10 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                         new JsonTask().execute(contentFamilyGroup.getJsonPathFile(), "4");
                         ContentDetails contentCountry = wrapper.getAssetsData().getContentCountry();
                         new JsonTask().execute(contentCountry.getJsonPathFile(), "5");
+                        ContentDetails contentResources = wrapper.getAssetsData().getContentResources();
+                        new JsonTask().execute(contentResources.getJsonPathFile(), "6");
+                        ContentDetails contentAboutContent = wrapper.getAssetsData().getContentAboutContent();
+                        new JsonTask().execute(contentResources.getJsonPathFile(), "7");
                         break;
                     case 422:
                         Gson gson = new Gson();
@@ -249,6 +261,20 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     ListWrapper<Country> wrapperCountry = jsonReturned.fromJson(result, typeCountryWrapper);
                     List<Country> jsonCountry = wrapperCountry.getData();
                     mCountryRepository.addItemList(jsonCountry);
+//                    mView.prepareBundleToPassInPrepForViewOwnProfile();
+//                    mView.onFetchDataSuccess();
+                    break;
+                case "6":
+                    Type typeResourcesWrapper = new TypeToken<ListWrapper<Resource>>() {}.getType();
+                    ListWrapper<Resource> wrapperResources = jsonReturned.fromJson(result, typeResourcesWrapper);
+                    List<Resource> jsonResources = wrapperResources.getData();
+                    mResourcesRepository.addItemList(jsonResources);
+                    break;
+                case "7":
+                    Type typeAboutContentWrapper = new TypeToken<ListWrapper<AboutContent>>() {}.getType();
+                    ListWrapper<AboutContent> wrapperAboutContent = jsonReturned.fromJson(result, typeAboutContentWrapper);
+                    List<AboutContent> jsonAboutContent = wrapperAboutContent.getData();
+                    mAboutContentRepository.addItemList(jsonAboutContent);
                     mView.prepareBundleToPassInPrepForViewOwnProfile();
                     mView.onFetchDataSuccess();
                     break;

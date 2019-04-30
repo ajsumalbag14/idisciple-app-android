@@ -1,8 +1,6 @@
 package com.ph.idisciple.idiscipleapp.data.local.repository.FamilyGroups;
 
 import com.ph.idisciple.idiscipleapp.data.local.model.FamilyGroup;
-import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
-import com.ph.idisciple.idiscipleapp.data.local.repository.Attendees.IAttendeesRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.BaseRepository;
 
 import java.util.ArrayList;

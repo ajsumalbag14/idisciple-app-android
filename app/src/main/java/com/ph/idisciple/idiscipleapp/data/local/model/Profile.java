@@ -42,18 +42,18 @@ public class Profile  extends RealmObject {
 
 
     public String getId() {
-        return id;
+        return id == null ? "0" : id;
     }
     public void setId(String id) {
         this.id = id;
     }
 
     public String getUserFullName() {
-        return userFullName;
+        return userFullName == null ? "" : userFullName;
     }
     public String getUserFullNameCapslock() {
         // For ORDERBY query, it seems to use UNIX code in ordering
-        return userFullName.toUpperCase();
+        return getUserFullName().toUpperCase();
     }
     public void setUserFullName(String userFullName) {
         this.userFullName = userFullName;
@@ -135,7 +135,7 @@ public class Profile  extends RealmObject {
 
 
     public String getUserImageUrl(){
-        return getUserImagePath() + getUserImageName();
+        return getUserImagePath();
     }
 
     public String getUserImagePath(){
