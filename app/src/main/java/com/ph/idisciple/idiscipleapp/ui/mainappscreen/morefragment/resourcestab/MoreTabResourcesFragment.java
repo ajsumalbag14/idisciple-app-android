@@ -16,12 +16,19 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.ph.idisciple.idiscipleapp.R;
+import com.ph.idisciple.idiscipleapp.data.local.model.Resource;
+import com.ph.idisciple.idiscipleapp.data.local.repository.Resources.ResourcesRepository;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 import com.wagnerandade.coollection.query.order.Order;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.wagnerandade.coollection.Coollection.contains;
+import static com.wagnerandade.coollection.Coollection.from;
 
 public class MoreTabResourcesFragment extends BaseFragment {
 
@@ -56,6 +63,11 @@ public class MoreTabResourcesFragment extends BaseFragment {
 
     private MainAppScreenActivity mActivity;
     private LinearLayoutManager mLinearLayoutManager;
+    private ResourceAdapter mAdapter;
+
+    private ResourcesRepository mResourcesRepository;
+    private List<Resource> mAllResourceList;
+    private List<Resource> mFilteredResourceList;
 
 
     @Override
@@ -65,6 +77,9 @@ public class MoreTabResourcesFragment extends BaseFragment {
         bind(rootView);
 
         mActivity = (MainAppScreenActivity) getActivity();
+        mResourcesRepository = new ResourcesRepository();
+        mAllResourceList = from(mResourcesRepository.getContentList()).orderBy("getResourceTitleCapslock", Order.ASC).all();
+        mFilteredResourceList = from(mAllResourceList).orderBy("getResourceTitleCapslock", Order.ASC).all();
 
         mLinearLayoutManager = new LinearLayoutManager(mActivity);
         rvList.setLayoutManager(mLinearLayoutManager);
@@ -72,8 +87,8 @@ public class MoreTabResourcesFragment extends BaseFragment {
         rvList.setNestedScrollingEnabled(false);
         rvList.setHasFixedSize(true);
 
-        //mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList);
-//        rvList.setAdapter(mAdapter);
+        mAdapter = new ResourceAdapter(mActivity, mFilteredResourceList);
+        rvList.setAdapter(mAdapter);
 
         etSearchFile.addTextChangedListener(new TextWatcher() {
             @Override
@@ -88,14 +103,13 @@ public class MoreTabResourcesFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-
                 if(etSearchFile.getText().toString().length() > 0){
-//                    mFilteredContactList = from(mAllContactList).where("getUserFullNameCapslock", contains(etSearchFile.getText().toString().toUpperCase())).orderBy("getUserFullNameCapslock", Order.ASC).all();
-//                    mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList);
-//                    rvList.setAdapter(mAdapter);
+                    mFilteredResourceList = from(mAllResourceList).where("getResourceTitleCapslock", contains(etSearchFile.getText().toString().toUpperCase())).orderBy("getResourceTitleCapslock", Order.ASC).all();
+                    mAdapter = new ResourceAdapter(mActivity, mFilteredResourceList);
+                    rvList.setAdapter(mAdapter);
                 } else {
-//                    mAdapter = new AttendeesAdapter(mActivity, mAllContactList);
-//                    rvList.setAdapter(mAdapter);
+                    mAdapter = new ResourceAdapter(mActivity, mAllResourceList);
+                    rvList.setAdapter(mAdapter);
                 }
             }
         });

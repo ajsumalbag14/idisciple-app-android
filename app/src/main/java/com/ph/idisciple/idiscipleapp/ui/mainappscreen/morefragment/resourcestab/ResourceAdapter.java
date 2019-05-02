@@ -13,10 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ph.idisciple.idiscipleapp.R;
-import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
-import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
+import com.ph.idisciple.idiscipleapp.data.local.model.Resource;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
-import com.ph.idisciple.idiscipleapp.ui.mainappscreen.workshopfragment.WorkshopInfoDialogActivity;
 
 import java.util.List;
 
@@ -25,36 +23,47 @@ import butterknife.ButterKnife;
 
 public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHolder> implements PopupMenu.OnMenuItemClickListener {
 
-    private List<Workshop> mData;
+    private List<Resource> mData;
     private LayoutInflater mInflater;
     private Context mContext;
     private int selectedItemPosition = -1;
-    private Profile currentProfile;
 
     // data is passed into the constructor
-    public ResourceAdapter(Context context, List<Workshop> data, Profile currentProfile) {
+    public ResourceAdapter(Context context, List<Resource> data) {
         mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
-        this.currentProfile = currentProfile;
     }
 
     // inflates the cell layout from xml when needed
     @Override
     @NonNull
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.item_workshop, parent, false);
+        View view = mInflater.inflate(R.layout.item_resource, parent, false);
         return new ViewHolder(view);
     }
 
     // binds the data to the TextView in each cell
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        Workshop itemWorkshop = getItem(position);
-        holder.tvResourceName.setText(itemWorkshop.getWorkshopName());
-        holder.tvResourceDescription.setText(itemWorkshop.getWorkshopFacilitator());
-        holder.tvResourceTypeSize.setText(itemWorkshop.getWorkshopScheduleDate() + " " + itemWorkshop.getWorkshopScheduleTime() + " / " + itemWorkshop.getWorkshopLocation());
+        final Resource itemResource = getItem(position);
+        holder.tvResourceName.setText(itemResource.getResourceTitle());
+        holder.tvResourceDescription.setText(itemResource.getResourceDescription());
+        holder.tvResourceTypeSize.setText(itemResource.getResourceType());
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundleToInclude = new Bundle();
+                bundleToInclude.putString("name", itemResource.getResourceTitle());
+                bundleToInclude.putString("type", itemResource.getResourceType());
+                bundleToInclude.putString("details", itemResource.getResourceDescription());
+                bundleToInclude.putString("url", itemResource.getResourceUrl());
+                ((BaseActivity) mContext).redirectToAnotherScreen(ViewResourceActivity.class, bundleToInclude);
+            }
+        });
+
+        holder.ivMenuOptions.setVisibility((itemResource.getResourceType().equals("video")) ? View.GONE : View.VISIBLE);
         holder.ivMenuOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,27 +84,18 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
 
         // This activity implements OnMenuItemClickListener
         popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.menu_workshop_item_options);
+        popup.inflate(R.menu.menu_resource_item_options);
         popup.show();
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
-        Workshop selectedSpeaker = getItem(selectedItemPosition);
+        Resource selectedResource = getItem(selectedItemPosition);
         Bundle bundleToInclude = new Bundle();
 
         switch (menuItem.getItemId()) {
-            case R.id.menu_workshop_option_view_desc:
-                bundleToInclude.putString("name", selectedSpeaker.getWorkshopName());
-                bundleToInclude.putString("type", "Workshop Blurb");
-                bundleToInclude.putString("details", selectedSpeaker.getWorkshopDescription());
-                ((BaseActivity) mContext).redirectToAnotherScreen(WorkshopInfoDialogActivity.class, bundleToInclude);
-                return true;
-            case R.id.menu_workshop_option_view_outline:
-                bundleToInclude.putString("name", selectedSpeaker.getWorkshopName());
-                bundleToInclude.putString("type", "Workshop Outline");
-                bundleToInclude.putString("details", selectedSpeaker.getWorkshopOutline());
-                ((BaseActivity) mContext).redirectToAnotherScreen(WorkshopInfoDialogActivity.class, bundleToInclude);
+            case R.id.menu_resources_option_download_file:
+
                 return true;
             default:
                 return false;
@@ -103,7 +103,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
     }
 
     // convenience method for getting data at click position
-    Workshop getItem(int id) {
+    Resource getItem(int id) {
         return mData.get(id);
     }
 

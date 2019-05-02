@@ -29,6 +29,10 @@ public class Resource extends RealmObject {
     public String getResourceTitle() {
         return title;
     }
+    public String getResourceTitleCapslock() {
+        // For ORDERBY query, it seems to use UNIX code in ordering
+        return getResourceTitle().toUpperCase();
+    }
     public void setResourceTitle(String title) {
         this.title = title;
     }
@@ -48,7 +52,7 @@ public class Resource extends RealmObject {
     }
 
     public String getResourceDescription() {
-        return description;
+        return description == null ? "" : description;
     }
     public void setResourceDescription(String description) {
         this.description = description;

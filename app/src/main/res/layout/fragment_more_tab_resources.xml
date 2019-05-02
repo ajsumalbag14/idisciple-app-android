@@ -84,7 +84,7 @@
         android:layout_marginTop="@dimen/margin_normal"
         android:padding="@dimen/margin_normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llSearchName" />
+        app:layout_constraintTop_toBottomOf="@+id/llSearchFile"/>
 
 
 </android.support.constraint.ConstraintLayout>

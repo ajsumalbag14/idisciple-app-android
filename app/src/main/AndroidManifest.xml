@@ -57,6 +57,9 @@
             android:screenOrientation="portrait"
             android:name=".ui.mainappscreen.viewmap.ViewMapActivity" />
 
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.mainappscreen.morefragment.resourcestab.ViewResourceActivity" />
 
     </application>
 
