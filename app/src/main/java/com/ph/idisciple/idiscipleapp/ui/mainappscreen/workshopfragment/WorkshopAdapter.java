@@ -86,20 +86,20 @@ public class WorkshopAdapter extends RecyclerView.Adapter<WorkshopAdapter.ViewHo
 
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
-        Workshop selectedSpeaker = getItem(selectedItemPosition);
+        Workshop selectedWorkshop = getItem(selectedItemPosition);
         Bundle bundleToInclude = new Bundle();
 
         switch (menuItem.getItemId()) {
             case R.id.menu_workshop_option_view_desc:
-                bundleToInclude.putString("name", selectedSpeaker.getWorkshopName());
+                bundleToInclude.putString("name", selectedWorkshop.getWorkshopName());
                 bundleToInclude.putString("type", "Workshop Blurb");
-                bundleToInclude.putString("details", selectedSpeaker.getWorkshopDescription());
+                bundleToInclude.putString("details", selectedWorkshop.getWorkshopDescription());
                 ((BaseActivity) mContext).redirectToAnotherScreen(WorkshopInfoDialogActivity.class, bundleToInclude);
                 return true;
             case R.id.menu_workshop_option_view_outline:
-                bundleToInclude.putString("name", selectedSpeaker.getWorkshopName());
+                bundleToInclude.putString("name", selectedWorkshop.getWorkshopName());
                 bundleToInclude.putString("type", "Workshop Outline");
-                bundleToInclude.putString("details", selectedSpeaker.getWorkshopOutline());
+                bundleToInclude.putString("details", selectedWorkshop.getWorkshopOutline());
                 ((BaseActivity) mContext).redirectToAnotherScreen(WorkshopInfoDialogActivity.class, bundleToInclude);
                 return true;
             default:
