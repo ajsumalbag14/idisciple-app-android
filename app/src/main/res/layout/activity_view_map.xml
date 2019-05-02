@@ -114,7 +114,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHeight_percent="0.5"
-            app:layout_constraintWidth_percent="0.08" />
+            app:layout_constraintWidth_percent="0.08"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/ivZoomInIcon"
@@ -126,7 +127,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHeight_percent="0.5"
-            app:layout_constraintWidth_percent="0.08" />
+            app:layout_constraintWidth_percent="0.08"
+            android:visibility="gone"/>
 
     </android.support.constraint.ConstraintLayout>
 
