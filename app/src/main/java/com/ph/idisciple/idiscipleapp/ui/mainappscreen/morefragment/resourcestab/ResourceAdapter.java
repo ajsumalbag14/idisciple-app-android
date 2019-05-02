@@ -1,6 +1,8 @@
 package com.ph.idisciple.idiscipleapp.ui.mainappscreen.morefragment.resourcestab;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.PopupMenu;
@@ -95,7 +97,8 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
 
         switch (menuItem.getItemId()) {
             case R.id.menu_resources_option_download_file:
-
+                Intent browserDownloadIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(selectedResource.getResourceUrl()));
+                mContext.startActivity(browserDownloadIntent);
                 return true;
             default:
                 return false;
