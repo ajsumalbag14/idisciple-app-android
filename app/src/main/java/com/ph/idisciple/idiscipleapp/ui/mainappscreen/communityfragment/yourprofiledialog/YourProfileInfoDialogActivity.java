@@ -161,6 +161,7 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
 
                         Bitmap bitmapPhotoSelected = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                         mPresenter.onUploadPhoto(getScaledBitmap(bitmapPhotoSelected), fileName, mUserId);
+                        showLoadingDialog();
 
                     } catch (IOException | java.io.IOException e) {
                         e.printStackTrace();
@@ -235,6 +236,7 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         showAvatarImageOptions(false);
+                        hideLoadingDialog();
                         return false;
                     }
 
@@ -242,6 +244,7 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                         showAvatarImageOptions(true);
                         ivAvatar.setImageDrawable(resource);
+                        hideLoadingDialog();
                         return true;
                     }
                 })
