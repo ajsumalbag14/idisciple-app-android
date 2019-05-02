@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -42,7 +43,7 @@ import static com.ph.idisciple.idiscipleapp.ui.BaseFragment.newInstance;
 import static com.wagnerandade.coollection.Coollection.eq;
 import static com.wagnerandade.coollection.Coollection.from;
 
-public class MainAppScreenActivity extends BaseActivity implements MainAppScreenContract.View, BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainAppScreenActivity extends BaseActivity implements MainAppScreenContract.View, BottomNavigationView.OnNavigationItemSelectedListener, SwipeRefreshLayout.OnRefreshListener {
 
     final int[][] states = new int[][]{
             new int[]{android.R.attr.state_enabled}, // enabled
@@ -61,6 +62,8 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
     @BindView(R.id.ivToolbarMenuProfile) ImageView ivToolbarMenuProfile;
     @BindView(R.id.bottomNavigation)
     BottomNavigationViewEx bottomNavigationView;
+
+    @BindView(R.id.srlSwipeToRefresh) SwipeRefreshLayout srlSwipeToRefresh;
     /* BottomNavigationViewEx Colors */
     int[] colorDefault;
     int[] colorSpeaker;
@@ -98,8 +101,15 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
         super.onCreate(savedInstanceState);
         mPresenter = new MainAppScreenPresenter( this);
         bundleToInclude = new Bundle();
-        showLoadingDialog();
-        mPresenter.fetchData();
+
+        // Fetch Data
+        srlSwipeToRefresh.setOnRefreshListener(this);
+        srlSwipeToRefresh.setColorScheme(R.color.colorIDiscipleBlue,
+                R.color.colorIDiscipleOrange,
+                R.color.colorIDiscipleRed,
+                R.color.colorPrimary);
+        onRefresh();
+
         prepareColorStateList();
         prepareBottomNavigationBar();
     }
@@ -248,13 +258,14 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
 
     @Override
     public void onFetchDataFailed(String errorMessage) {
+        onFetchDataSuccess();
         getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_generic), getString(R.string.dialog_error_message_generic));
-        hideLoadingDialog();
     }
 
     @Override
     public void onFetchDataSuccess() {
         hideLoadingDialog();
+        srlSwipeToRefresh.setRefreshing(false);
     }
 
     @Override
@@ -326,20 +337,25 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
 
     @Override
     public void showNoInternetConnection() {
+        onFetchDataSuccess();
         getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_no_internet), getString(R.string.dialog_error_message_no_internet));
-        hideLoadingDialog();
     }
 
     @Override
     public void showTimeoutError() {
+        onFetchDataSuccess();
         getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_timeout), getString(R.string.dialog_error_message_no_internet));
-        hideLoadingDialog();
     }
 
     @Override
     public void showGenericError() {
+        onFetchDataSuccess();
         getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_generic), getString(R.string.dialog_error_message_generic));
-        hideLoadingDialog();
     }
 
+    @Override
+    public void onRefresh() {
+        showLoadingDialog();
+        mPresenter.fetchData();
+    }
 }
