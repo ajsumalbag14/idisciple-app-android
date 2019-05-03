@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
+import com.ph.idisciple.idiscipleapp.data.local.model.Speaker;
 import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.EnableDisableSwipeRefreshLayout;
@@ -83,7 +84,8 @@ public class WorkshopFragment extends BaseFragment {
         mWorkshopList = mActivity.mPresenter.mWorkshopRepository.getContentList();
         List<Profile> AttendeesList = ((MainAppScreenActivity) getActivity()).mPresenter.mAttendeesRepository.getContentList();
         currentProfile = from(AttendeesList).where("getId", eq(((MainAppScreenActivity) getActivity()).mUserId)).first();
-        mAdapter = new WorkshopAdapter(mActivity, mWorkshopList, currentProfile);
+        List<Speaker> mSpeakerList = mActivity.mPresenter.mSpeakerRepository.getContentList();
+        mAdapter = new WorkshopAdapter(mActivity, mWorkshopList, currentProfile, mSpeakerList);
         rvList.setAdapter(mAdapter);
     }
 }

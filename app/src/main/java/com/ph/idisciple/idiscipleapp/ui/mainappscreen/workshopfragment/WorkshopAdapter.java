@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
+import com.ph.idisciple.idiscipleapp.data.local.model.Speaker;
 import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 
@@ -22,6 +23,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.wagnerandade.coollection.Coollection.eq;
+import static com.wagnerandade.coollection.Coollection.from;
+
 public class WorkshopAdapter extends RecyclerView.Adapter<WorkshopAdapter.ViewHolder> implements PopupMenu.OnMenuItemClickListener {
 
     private List<Workshop> mData;
@@ -29,13 +33,15 @@ public class WorkshopAdapter extends RecyclerView.Adapter<WorkshopAdapter.ViewHo
     private Context mContext;
     private int selectedItemPosition = -1;
     private Profile currentProfile;
+    List<Speaker> mSpeakerList;
 
     // data is passed into the constructor
-    public WorkshopAdapter(Context context, List<Workshop> data, Profile currentProfile) {
+    public WorkshopAdapter(Context context, List<Workshop> data, Profile currentProfile, List<Speaker> speakerList) {
         mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
         this.currentProfile = currentProfile;
+        this.mSpeakerList = speakerList;
     }
 
     // inflates the cell layout from xml when needed
@@ -51,8 +57,10 @@ public class WorkshopAdapter extends RecyclerView.Adapter<WorkshopAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Workshop itemWorkshop = getItem(position);
         holder.tvWorkshopName.setText(itemWorkshop.getWorkshopName());
-        holder.tvWorkshopSpeakerName.setText(itemWorkshop.getWorkshopFacilitator());
         holder.tvWorkshopDateTimeLocation.setText(itemWorkshop.getWorkshopScheduleDate() + " " + itemWorkshop.getWorkshopScheduleTime() + " / " + itemWorkshop.getWorkshopLocation());
+
+        Speaker speakerDetail = from(mSpeakerList).where("getId", eq(itemWorkshop.getWorkshopFacilitator())).first();
+        holder.tvWorkshopSpeakerName.setText(speakerDetail.getSpeakerName());
 
         holder.ivMenuOptions.setOnClickListener(new View.OnClickListener() {
             @Override
