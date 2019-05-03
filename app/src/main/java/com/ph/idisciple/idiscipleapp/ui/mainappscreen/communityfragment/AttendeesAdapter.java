@@ -19,13 +19,9 @@ import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.Country;
 import com.ph.idisciple.idiscipleapp.data.local.model.FamilyGroup;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
-import com.ph.idisciple.idiscipleapp.data.local.model.SavedProfileFavorites;
 import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
-import com.ph.idisciple.idiscipleapp.data.local.repository.SavedProfileFavorites.ISavedProfileFavoritesRepository;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.yourprofiledialog.YourProfileInfoDialogActivity;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -112,33 +108,36 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
                 holder.tvFamilyGroupLeaderTag.setVisibility(View.GONE);
         }
 
-        final SavedProfileFavorites profileFavorite = mActivity.mPresenter.mSavedProfileFavoritesRepository.findItemById(item.getId());
-        if (profileFavorite == null)
-            mActivity.mPresenter.mSavedProfileFavoritesRepository.setAsFavorite(item.getId(), false, new ISavedProfileFavoritesRepository.onSaveCallback() {
-                @Override
-                public void onSuccess(boolean isFavoriteSet) {
+        // [5/3/2019] Comment Favorite for now
+//        final SavedProfileFavorites profileFavorite = mActivity.mPresenter.mSavedProfileFavoritesRepository.findItemById(item.getId());
+//        if (profileFavorite == null)
+//            mActivity.mPresenter.mSavedProfileFavoritesRepository.setAsFavorite(item.getId(), false, new ISavedProfileFavoritesRepository.onSaveCallback() {
+//                @Override
+//                public void onSuccess(boolean isFavoriteSet) {
+//
+//                }
+//            });
 
-                }
-            });
-        setImageForFavorites(profileFavorite != null && profileFavorite.isTagAsFavorite(), holder.ivFavorite);
-        holder.ivFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Store in local DB
-                boolean isSelectedAsFavorite = false;
-                if (profileFavorite != null)
-                    isSelectedAsFavorite = !profileFavorite.isTagAsFavorite();
-
-                mActivity.mPresenter.mSavedProfileFavoritesRepository.setAsFavorite(item.getId(), isSelectedAsFavorite, new ISavedProfileFavoritesRepository.onSaveCallback() {
-                    @Override
-                    public void onSuccess(boolean isFavoriteSet) {
-                        setImageForFavorites(isFavoriteSet, holder.ivFavorite);
-                        EventBus.getDefault().post(new RefreshFavoriteEvent());
-                    }
-                });
-
-            }
-        });
+        // [5/3/2019] Comment Favorite for now
+//        setImageForFavorites(profileFavorite != null && profileFavorite.isTagAsFavorite(), holder.ivFavorite);
+//        holder.ivFavorite.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // Store in local DB
+//                boolean isSelectedAsFavorite = false;
+//                if (profileFavorite != null)
+//                    isSelectedAsFavorite = !profileFavorite.isTagAsFavorite();
+//
+//                mActivity.mPresenter.mSavedProfileFavoritesRepository.setAsFavorite(item.getId(), isSelectedAsFavorite, new ISavedProfileFavoritesRepository.onSaveCallback() {
+//                    @Override
+//                    public void onSuccess(boolean isFavoriteSet) {
+//                        setImageForFavorites(isFavoriteSet, holder.ivFavorite);
+//                        EventBus.getDefault().post(new RefreshFavoriteEvent());
+//                    }
+//                });
+//
+//            }
+//        });
 
         holder.clItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,8 +182,9 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
                     bundleToInclude.putString("id", selectedAttendee.getId());
                     bundleToInclude.putBoolean("isFgTag", holder.tvFamilyGroupLeaderTag.getVisibility() == View.VISIBLE);
 
-                    SavedProfileFavorites profileFavoriteSelected = mActivity.mPresenter.mSavedProfileFavoritesRepository.findItemById(item.getId());
-                    bundleToInclude.putBoolean("isFavorite", profileFavoriteSelected.isTagAsFavorite());
+                    // [5/3/2019] Comment Favorite for now
+//                    SavedProfileFavorites profileFavoriteSelected = mActivity.mPresenter.mSavedProfileFavoritesRepository.findItemById(item.getId());
+//                    bundleToInclude.putBoolean("isFavorite", profileFavoriteSelected.isTagAsFavorite());
                     mActivity.redirectToAnotherScreen(ShowProfileInfoDialogActivity.class, bundleToInclude);
                 }
             }
@@ -215,8 +215,10 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         @BindView(R.id.tvFamilyGroupLeaderTag) TextView tvFamilyGroupLeaderTag;
         @BindView(R.id.tvCompleteName) TextView tvCompleteName;
         @BindView(R.id.tvThatsYou) TextView tvThatsYou;
-        @BindView(R.id.ivFavorite) ImageView ivFavorite;
         @BindView(R.id.ivAvatar) ImageView ivAvatar;
+
+        // [5/3/2019] Comment Favorite for now
+//        @BindView(R.id.ivFavorite) ImageView ivFavorite;
 
         ViewHolder(View itemView) {
             super(itemView);

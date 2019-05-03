@@ -83,6 +83,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent=".9" />
 
+    <!-- [5/3/2019] Hide Favorite for now -->
     <ImageView
         android:id="@+id/ivFavorite"
         android:layout_width="@dimen/margin_normal_2"
@@ -90,6 +91,7 @@
         android:layout_marginEnd="@dimen/margin_small"
         android:src="@drawable/ic_star"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/llNames" />
+        app:layout_constraintTop_toTopOf="@+id/llNames"
+        android:visibility="gone" />
 
 </android.support.constraint.ConstraintLayout>

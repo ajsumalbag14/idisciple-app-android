@@ -14,10 +14,6 @@ import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.List;
 
 import butterknife.BindView;
@@ -66,20 +62,23 @@ public class ContactListPerGroupFragment extends BaseFragment{
     @Override
     public void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
+        // [5/3/2019] Comment Favorite for now
+//        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        EventBus.getDefault().unregister(this);
+        // [5/3/2019] Comment Favorite for now
+//        EventBus.getDefault().unregister(this);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onUpdateFavorite(RefreshFavoriteEvent event){
-        mActivity = (MainAppScreenActivity) getActivity();
-        mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList == null ? mAllContactList : mFilteredContactList, selectedFamilyGroupId);
-        rvList.setAdapter(mAdapter);
-    }
+    // [5/3/2019] Comment Favorite for now
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onUpdateFavorite(RefreshFavoriteEvent event){
+//        mActivity = (MainAppScreenActivity) getActivity();
+//        mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList == null ? mAllContactList : mFilteredContactList, selectedFamilyGroupId);
+//        rvList.setAdapter(mAdapter);
+//    }
 
 }

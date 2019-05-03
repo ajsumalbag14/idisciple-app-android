@@ -22,17 +22,12 @@ import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 import com.wagnerandade.coollection.query.order.Order;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.wagnerandade.coollection.Coollection.contains;
-import static com.wagnerandade.coollection.Coollection.eq;
 import static com.wagnerandade.coollection.Coollection.from;
 
 public class CommunityTabDelegatesFragment extends BaseFragment {
@@ -40,39 +35,38 @@ public class CommunityTabDelegatesFragment extends BaseFragment {
     @BindView(R.id.rvList) RecyclerView rvList;
     @BindView(R.id.llSearchNamePlaceholder) LinearLayout llSearchNamePlaceholder;
     @BindView(R.id.etSearchName) EditText etSearchName;
-
-    @OnClick(R.id.llSearchName)
-    public void onSearchNameClick(){
-        toggleEditSearchNameAsActive(true);
-    }
-
-    @OnClick(R.id.llSearchNamePlaceholder)
-    public void onSearchNamePlaceholderClick(){
-        toggleEditSearchNameAsActive(true);
-    }
-
-    @OnClick(R.id.tvSearchName)
-    public void onSearchNameTextClick(){
-        toggleEditSearchNameAsActive(true);
-    }
-
-    @OnClick(R.id.clLayout)
-    public void onOuterClick(){
-        if(TextUtils.isEmpty(etSearchName.getText().toString()))
-            toggleEditSearchNameAsActive(false);
-    }
-
-    @OnClick(R.id.rvList)
-    public void onListOnClick(){
-        if(TextUtils.isEmpty(etSearchName.getText().toString()))
-            toggleEditSearchNameAsActive(false);
-    }
-
     private MainAppScreenActivity mActivity;
     private List<Profile> mAllContactList;
     private List<Profile> mFilteredContactList;
     private LinearLayoutManager mLinearLayoutManager;
     private AttendeesAdapter mAdapter;
+
+    @OnClick(R.id.llSearchName)
+    public void onSearchNameClick() {
+        toggleEditSearchNameAsActive(true);
+    }
+
+    @OnClick(R.id.llSearchNamePlaceholder)
+    public void onSearchNamePlaceholderClick() {
+        toggleEditSearchNameAsActive(true);
+    }
+
+    @OnClick(R.id.tvSearchName)
+    public void onSearchNameTextClick() {
+        toggleEditSearchNameAsActive(true);
+    }
+
+    @OnClick(R.id.clLayout)
+    public void onOuterClick() {
+        if (TextUtils.isEmpty(etSearchName.getText().toString()))
+            toggleEditSearchNameAsActive(false);
+    }
+
+    @OnClick(R.id.rvList)
+    public void onListOnClick() {
+        if (TextUtils.isEmpty(etSearchName.getText().toString()))
+            toggleEditSearchNameAsActive(false);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -107,15 +101,15 @@ public class CommunityTabDelegatesFragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable editable) {
 
-               if(etSearchName.getText().toString().length() > 0){
-                   String filterText = etSearchName.getText().toString().toUpperCase();
-                   mFilteredContactList = from(mAllContactList).where("getUserFullNameCapslock", contains(filterText)).or("getUserNickNameCapslock", contains(filterText)).orderBy("getUserFullNameCapslock", Order.ASC).all();
-                   mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList);
-                   rvList.setAdapter(mAdapter);
-               } else {
-                   mAdapter = new AttendeesAdapter(mActivity, mAllContactList);
-                   rvList.setAdapter(mAdapter);
-               }
+                if (etSearchName.getText().toString().length() > 0) {
+                    String filterText = etSearchName.getText().toString().toUpperCase();
+                    mFilteredContactList = from(mAllContactList).where("getUserFullNameCapslock", contains(filterText)).or("getUserNickNameCapslock", contains(filterText)).orderBy("getUserFullNameCapslock", Order.ASC).all();
+                    mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList);
+                    rvList.setAdapter(mAdapter);
+                } else {
+                    mAdapter = new AttendeesAdapter(mActivity, mAllContactList);
+                    rvList.setAdapter(mAdapter);
+                }
             }
         });
 
@@ -123,23 +117,23 @@ public class CommunityTabDelegatesFragment extends BaseFragment {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if (!hasFocus && etSearchName.getText().toString().length() == 0)
-                        toggleEditSearchNameAsActive(false);
-                }
+                    toggleEditSearchNameAsActive(false);
+            }
         });
 
         return rootView;
     }
 
 
-    private void showKeyboard(){
+    private void showKeyboard() {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(etSearchName, InputMethodManager.SHOW_FORCED);
     }
 
-    public void toggleEditSearchNameAsActive(boolean isActive){
+    public void toggleEditSearchNameAsActive(boolean isActive) {
         llSearchNamePlaceholder.setVisibility(isActive ? View.GONE : View.VISIBLE);
         etSearchName.setVisibility(isActive ? View.VISIBLE : View.GONE);
-        if(isActive) {
+        if (isActive) {
             etSearchName.requestFocus();
             showKeyboard();
         }
@@ -148,19 +142,22 @@ public class CommunityTabDelegatesFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
+        // [5/3/2019] Comment Favorite for now
+//        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        EventBus.getDefault().unregister(this);
+        // [5/3/2019] Comment Favorite for now
+//        EventBus.getDefault().unregister(this);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onUpdateFavorite(RefreshFavoriteEvent event){
-        mActivity = (MainAppScreenActivity) getActivity();
-        mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList);
-        rvList.setAdapter(mAdapter);
-    }
+    // [5/3/2019] Comment Favorite for now
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onUpdateFavorite(RefreshFavoriteEvent event) {
+//        mActivity = (MainAppScreenActivity) getActivity();
+//        mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList);
+//        rvList.setAdapter(mAdapter);
+//    }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
@@ -48,5 +49,7 @@ public class ViewResourceActivity extends BaseActivity {
             }
 
         }
+
+        Toast.makeText(ViewResourceActivity.this, "Loading... Please wait.", Toast.LENGTH_LONG).show();
     }
 }

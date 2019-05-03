@@ -19,7 +19,6 @@ import com.ph.idisciple.idiscipleapp.data.local.repository.Country.CountryReposi
 import com.ph.idisciple.idiscipleapp.data.local.repository.FamilyGroups.FamilyGroupRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.IProfileRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.Resources.ResourcesRepository;
-import com.ph.idisciple.idiscipleapp.data.local.repository.SavedProfileFavorites.SavedProfileFavoritesRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.Schedule.ScheduleRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.Speaker.SpeakerRepository;
 import com.ph.idisciple.idiscipleapp.data.local.repository.impl.ProfileRepository;
@@ -64,11 +63,14 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
     public WorkshopRepository mWorkshopRepository;
     public FamilyGroupRepository mFamilyGroupRepository;
     public CountryRepository mCountryRepository;
-    public SavedProfileFavoritesRepository mSavedProfileFavoritesRepository;
+
     public ResourcesRepository mResourcesRepository;
     public AboutContentRepository mAboutContentRepository;
     private String mUserId;
     private String mUserAvatar;
+
+    // [5/3/2019] Comment Favorite for now
+//    public SavedProfileFavoritesRepository mSavedProfileFavoritesRepository;
 
     public MainAppScreenPresenter(MainAppScreenContract.View view) {
         mView = view;
@@ -81,9 +83,11 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
         mWorkshopRepository = new WorkshopRepository();
         mFamilyGroupRepository = new FamilyGroupRepository();
         mCountryRepository = new CountryRepository();
-        mSavedProfileFavoritesRepository = new SavedProfileFavoritesRepository();
         mResourcesRepository = new ResourcesRepository();
         mAboutContentRepository = new AboutContentRepository();
+
+        // [5/3/2019] Comment Favorite for now
+//        mSavedProfileFavoritesRepository = new SavedProfileFavoritesRepository();
     }
 
     @Override
@@ -227,7 +231,9 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     ListWrapper<Profile> wrapperProfile = jsonReturned.fromJson(result, typeProfileWrapper);
                     List<Profile> jsonProfile = wrapperProfile.getData();
                     mAttendeesRepository.addItemList(jsonProfile);
-                    if(mSavedProfileFavoritesRepository.size() == 0) mSavedProfileFavoritesRepository.addItemList(jsonProfile);
+
+                    // [5/3/2019] Comment Favorite for now
+//                    if(mSavedProfileFavoritesRepository.size() == 0) mSavedProfileFavoritesRepository.addItemList(jsonProfile);
 
                     Profile ownProfile = from(jsonProfile).where("getId", eq(mUserId)).first();
                     mView.setProfileAvatar(ownProfile.getUserImageUrl(), ownProfile.getUserCountry());

@@ -1,6 +1,5 @@
 package com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -11,11 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.ph.idisciple.idiscipleapp.R;
-import com.ph.idisciple.idiscipleapp.data.local.repository.SavedProfileFavorites.ISavedProfileFavoritesRepository;
-import com.ph.idisciple.idiscipleapp.data.local.repository.SavedProfileFavorites.SavedProfileFavoritesRepository;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -36,20 +31,21 @@ public class ShowProfileInfoDialogActivity extends BaseActivity {
         finish();
     }
 
-    @OnClick(R.id.ivFavorite)
-    public void onFavoriteToggleClick(){
-        // Store in local DB
-        final boolean isSelectedAsFavorite = !isFavorite;
-
-        mSavedProfileFavoritesRepository.setAsFavorite(id, isSelectedAsFavorite, new ISavedProfileFavoritesRepository.onSaveCallback() {
-            @Override
-            public void onSuccess(boolean isFavoriteSet) {
-                isFavorite = isSelectedAsFavorite;
-                setImageForFavorites(isFavoriteSet, ivFavorite);
-                EventBus.getDefault().post(new RefreshFavoriteEvent());
-            }
-        });
-    }
+    // [5/3/2019] Comment Favorite for now
+//    @OnClick(R.id.ivFavorite)
+//    public void onFavoriteToggleClick(){
+//        // Store in local DB
+//        final boolean isSelectedAsFavorite = !isFavorite;
+//
+//        mSavedProfileFavoritesRepository.setAsFavorite(id, isSelectedAsFavorite, new ISavedProfileFavoritesRepository.onSaveCallback() {
+//            @Override
+//            public void onSuccess(boolean isFavoriteSet) {
+//                isFavorite = isSelectedAsFavorite;
+//                setImageForFavorites(isFavoriteSet, ivFavorite);
+//                EventBus.getDefault().post(new RefreshFavoriteEvent());
+//            }
+//        });
+//    }
 
     @OnClick(R.id.tvFamilyGroupAssignedTo)
     public void onFamilyGroupAssignedToClick(){
@@ -57,8 +53,9 @@ public class ShowProfileInfoDialogActivity extends BaseActivity {
     }
 
     private String id;
-    private boolean isFavorite = false;
-    private SavedProfileFavoritesRepository mSavedProfileFavoritesRepository;
+    // [5/3/2019] Comment Favorite for now
+//    private boolean isFavorite = false;
+//    private SavedProfileFavoritesRepository mSavedProfileFavoritesRepository;
 
     @Override
     protected int getLayout() {
@@ -70,7 +67,8 @@ public class ShowProfileInfoDialogActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         this.setFinishOnTouchOutside(false);
 
-        mSavedProfileFavoritesRepository = new SavedProfileFavoritesRepository();
+        // [5/3/2019] Comment Favorite for now
+//        mSavedProfileFavoritesRepository = new SavedProfileFavoritesRepository();
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
@@ -89,8 +87,10 @@ public class ShowProfileInfoDialogActivity extends BaseActivity {
                     .into(ivAvatar);
 
             tvFamilyGroupLeaderTag.setVisibility(bundle.getBoolean("isFgTag", false) ? View.VISIBLE : View.GONE);
-            isFavorite = bundle.getBoolean("isFavorite", false);
-            setImageForFavorites(isFavorite, ivFavorite);
+
+            // [5/3/2019] Comment Favorite for now
+//            isFavorite = bundle.getBoolean("isFavorite", false);
+//            setImageForFavorites(isFavorite, ivFavorite);
 
             String workshopName1 = bundle.getString("workshopId1Name");
             String workshopName2 = bundle.getString("workshopId2Name");
@@ -99,8 +99,9 @@ public class ShowProfileInfoDialogActivity extends BaseActivity {
         }
     }
 
-    private void setImageForFavorites(boolean isSetAsFavorite, ImageView ivIsFavorite) {
-        Drawable isFavoriteDrawable = getDrawable(isSetAsFavorite ? R.drawable.ic_star_active : R.drawable.ic_star);
-        Glide.with(ShowProfileInfoDialogActivity.this).load(isFavoriteDrawable).into(ivIsFavorite);
-    }
+    // [5/3/2019] Comment Favorite for now
+//    private void setImageForFavorites(boolean isSetAsFavorite, ImageView ivIsFavorite) {
+//        Drawable isFavoriteDrawable = getDrawable(isSetAsFavorite ? R.drawable.ic_star_active : R.drawable.ic_star);
+//        Glide.with(ShowProfileInfoDialogActivity.this).load(isFavoriteDrawable).into(ivIsFavorite);
+//    }
 }

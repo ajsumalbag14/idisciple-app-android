@@ -88,6 +88,7 @@
                     app:layout_constraintBaseline_toBaselineOf="@+id/tvDelegateNickName"
                     app:layout_constraintStart_toEndOf="@id/tvDelegateNickName" />
 
+                <!-- [5/3/2019] Hide Favorite for now -->
                 <ImageView
                     android:id="@+id/ivFavorite"
                     android:layout_width="@dimen/margin_normal_2"
@@ -96,7 +97,8 @@
                     android:src="@drawable/ic_star"
                     app:layout_constraintBottom_toBottomOf="@+id/tvDelegateNickName"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tvDelegateNickName" />
+                    app:layout_constraintTop_toTopOf="@+id/tvDelegateNickName"
+                    android:visibility="gone" />
             </android.support.constraint.ConstraintLayout>
 
             <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratSemiBoldTextView
