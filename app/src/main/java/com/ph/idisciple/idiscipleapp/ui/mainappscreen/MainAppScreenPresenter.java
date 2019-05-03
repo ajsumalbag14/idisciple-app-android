@@ -32,6 +32,7 @@ import com.ph.idisciple.idiscipleapp.data.remote.model.response.ContentResponseW
 import com.ph.idisciple.idiscipleapp.data.remote.service.ContentService;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.RefreshAttendeesEvent;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.morefragment.resourcestab.RefreshResourcesEvent;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.schedulefragment.RefreshScheduleListEvent;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.speakerfragment.RefreshSpeakerListEvent;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.workshopfragment.RefreshWorkshopListEvent;
 
@@ -249,6 +250,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     ListWrapper<Schedule> wrapperSchedule = jsonReturned.fromJson(result, typeScheduleWrapper);
                     List<Schedule> jsonSchedule = wrapperSchedule.getData();
                     mScheduleRepository.addItemList(jsonSchedule);
+                    EventBus.getDefault().post(new RefreshScheduleListEvent());
                     break;
                 case "2":
                     mSpeakerRepository.resetStorage();

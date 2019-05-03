@@ -21,7 +21,7 @@ public class Workshop extends RealmObject {
     private String workshopDescription;
     @SerializedName("outline")
     private String workshopOutline;
-    @SerializedName("facilitator")
+    @SerializedName("speaker_id")
     private String workshopFacilitator;
     @SerializedName("location")
     private String workshopLocation;
