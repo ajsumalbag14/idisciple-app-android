@@ -47,9 +47,7 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         mActivity = (MainAppScreenActivity) mContext;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
-        mCountryList = mActivity.mPresenter.mCountryRepository.getContentList();
         mFamilyGroupList = mActivity.mPresenter.mFamilyGroupRepository.getContentList();
-        mWorkshopList = mActivity.mPresenter.mWorkshopRepository.getContentList();
     }
 
     // data is passed into the constructor
@@ -60,8 +58,6 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         this.mData = data;
         mFamilyGroupList = mActivity.mPresenter.mFamilyGroupRepository.getContentList();
         mFamilyGroupList = from(mFamilyGroupList).where("getId", eq(familyGroupId)).all();
-        mCountryList = mActivity.mPresenter.mCountryRepository.getContentList();
-        mWorkshopList = mActivity.mPresenter.mWorkshopRepository.getContentList();
     }
 
     // inflates the cell layout from xml when needed
@@ -142,6 +138,10 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
         holder.clItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mCountryList = mActivity.mPresenter.mCountryRepository.getContentList();
+                mFamilyGroupList = mActivity.mPresenter.mFamilyGroupRepository.getContentList();
+                mWorkshopList = mActivity.mPresenter.mWorkshopRepository.getContentList();
+
                 Profile selectedAttendee = mData.get(position);
                 Bundle bundleToInclude = new Bundle();
                 bundleToInclude.putString("fullname", selectedAttendee.getUserFullName());

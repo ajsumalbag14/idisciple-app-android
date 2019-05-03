@@ -19,8 +19,13 @@ import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.Resource;
 import com.ph.idisciple.idiscipleapp.data.local.repository.Resources.ResourcesRepository;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.EnableDisableSwipeRefreshLayout;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 import com.wagnerandade.coollection.query.order.Order;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -78,8 +83,6 @@ public class MoreTabResourcesFragment extends BaseFragment {
 
         mActivity = (MainAppScreenActivity) getActivity();
         mResourcesRepository = new ResourcesRepository();
-        mAllResourceList = from(mResourcesRepository.getContentList()).orderBy("getResourceTitleCapslock", Order.ASC).all();
-        mFilteredResourceList = from(mAllResourceList).orderBy("getResourceTitleCapslock", Order.ASC).all();
 
         mLinearLayoutManager = new LinearLayoutManager(mActivity);
         rvList.setLayoutManager(mLinearLayoutManager);
@@ -87,8 +90,18 @@ public class MoreTabResourcesFragment extends BaseFragment {
         rvList.setNestedScrollingEnabled(false);
         rvList.setHasFixedSize(true);
 
-        mAdapter = new ResourceAdapter(mActivity, mFilteredResourceList);
-        rvList.setAdapter(mAdapter);
+        rvList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                EventBus.getDefault().post(new EnableDisableSwipeRefreshLayout(mLinearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0));
+            }
+        });
+
+        onUpdateResourcesList(null);
 
         etSearchFile.addTextChangedListener(new TextWatcher() {
             @Override
@@ -137,5 +150,26 @@ public class MoreTabResourcesFragment extends BaseFragment {
             etSearchFile.requestFocus();
             showKeyboard();
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateResourcesList(RefreshResourcesEvent event){
+        mAllResourceList = from(mResourcesRepository.getContentList()).orderBy("getResourceTitleCapslock", Order.ASC).all();
+        mFilteredResourceList = from(mAllResourceList).orderBy("getResourceTitleCapslock", Order.ASC).all();
+
+        mAdapter = new ResourceAdapter(mActivity, mFilteredResourceList);
+        rvList.setAdapter(mAdapter);
     }
 }

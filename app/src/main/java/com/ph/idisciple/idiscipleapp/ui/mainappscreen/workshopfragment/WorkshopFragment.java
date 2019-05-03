@@ -13,7 +13,12 @@ import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.EnableDisableSwipeRefreshLayout;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -30,6 +35,7 @@ public class WorkshopFragment extends BaseFragment {
     private LinearLayoutManager mLinearLayoutManager;
     private WorkshopAdapter mAdapter;
     private List<Workshop> mWorkshopList;
+    private Profile currentProfile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,10 +44,6 @@ public class WorkshopFragment extends BaseFragment {
         bind(rootView);
 
         mActivity = (MainAppScreenActivity) getActivity();
-        mWorkshopList = mActivity.mPresenter.mWorkshopRepository.getContentList();
-
-        List<Profile> AttendeesList = ((MainAppScreenActivity) getActivity()).mPresenter.mAttendeesRepository.getContentList();
-        Profile currentProfile = from(AttendeesList).where("getId", eq(((MainAppScreenActivity) getActivity()).mUserId)).first();
 
         mLinearLayoutManager = new LinearLayoutManager(mActivity);
         rvList.setLayoutManager(mLinearLayoutManager);
@@ -49,9 +51,39 @@ public class WorkshopFragment extends BaseFragment {
         rvList.setNestedScrollingEnabled(false);
         rvList.setHasFixedSize(true);
 
+        rvList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                EventBus.getDefault().post(new EnableDisableSwipeRefreshLayout(mLinearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0));
+            }
+        });
+
+        onUpdateWorkshopList(null);
+        return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateWorkshopList(RefreshWorkshopListEvent event){
+        mWorkshopList = mActivity.mPresenter.mWorkshopRepository.getContentList();
+        List<Profile> AttendeesList = ((MainAppScreenActivity) getActivity()).mPresenter.mAttendeesRepository.getContentList();
+        currentProfile = from(AttendeesList).where("getId", eq(((MainAppScreenActivity) getActivity()).mUserId)).first();
         mAdapter = new WorkshopAdapter(mActivity, mWorkshopList, currentProfile);
         rvList.setAdapter(mAdapter);
-
-        return rootView;
     }
 }

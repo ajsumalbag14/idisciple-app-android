@@ -48,7 +48,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
     // binds the data to the TextView in each cell
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        final Resource itemResource = getItem(position);
+        Resource itemResource = getItem(position);
         holder.tvResourceName.setText(itemResource.getResourceTitle());
         holder.tvResourceDescription.setText(itemResource.getResourceDescription());
         holder.tvResourceTypeSize.setText(itemResource.getResourceType());
@@ -56,6 +56,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Resource itemResource = getItem(position);
                 Bundle bundleToInclude = new Bundle();
                 bundleToInclude.putString("name", itemResource.getResourceTitle());
                 bundleToInclude.putString("type", itemResource.getResourceType());

@@ -30,7 +30,10 @@ import com.ph.idisciple.idiscipleapp.data.remote.model.base.Wrapper;
 import com.ph.idisciple.idiscipleapp.data.remote.model.response.ContentDetails;
 import com.ph.idisciple.idiscipleapp.data.remote.model.response.ContentResponseWrapper;
 import com.ph.idisciple.idiscipleapp.data.remote.service.ContentService;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.RefreshAttendeesEvent;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.morefragment.resourcestab.RefreshResourcesEvent;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.speakerfragment.RefreshSpeakerListEvent;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.workshopfragment.RefreshWorkshopListEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -237,6 +240,8 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
 
                     Profile ownProfile = from(jsonProfile).where("getId", eq(mUserId)).first();
                     mView.setProfileAvatar(ownProfile.getUserImageUrl(), ownProfile.getUserCountry());
+
+                    EventBus.getDefault().post(new RefreshAttendeesEvent());
                     break;
                 case "1":
                     mScheduleRepository.resetStorage();
@@ -259,6 +264,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     ListWrapper<Workshop> wrapperWorkshop = jsonReturned.fromJson(result, typeWorkshopWrapper);
                     List<Workshop> jsonWorkshop = wrapperWorkshop.getData();
                     mWorkshopRepository.addItemList(jsonWorkshop);
+                    EventBus.getDefault().post(new RefreshWorkshopListEvent());
                     break;
                 case "4":
                     mFamilyGroupRepository.resetStorage();
@@ -268,13 +274,10 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     mFamilyGroupRepository.addItemList(jsonFamilyGroup);
                     break;
                 case "5":
-                    mCountryRepository.resetStorage();
                     Type typeCountryWrapper = new TypeToken<ListWrapper<Country>>() {}.getType();
                     ListWrapper<Country> wrapperCountry = jsonReturned.fromJson(result, typeCountryWrapper);
                     List<Country> jsonCountry = wrapperCountry.getData();
                     mCountryRepository.addItemList(jsonCountry);
-//                    mView.prepareBundleToPassInPrepForViewOwnProfile();
-//                    mView.onFetchDataSuccess();
                     break;
                 case "6":
                     mResourcesRepository.resetStorage();
@@ -282,6 +285,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     ListWrapper<Resource> wrapperResources = jsonReturned.fromJson(result, typeResourcesWrapper);
                     List<Resource> jsonResources = wrapperResources.getData();
                     mResourcesRepository.addItemList(jsonResources);
+                    EventBus.getDefault().post(new RefreshResourcesEvent());
                     break;
                 case "7":
                     mAboutContentRepository.resetStorage();

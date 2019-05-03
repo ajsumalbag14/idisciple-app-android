@@ -12,7 +12,12 @@ import android.view.ViewGroup;
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.EnableDisableSwipeRefreshLayout;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -21,12 +26,14 @@ import butterknife.BindView;
 import static com.wagnerandade.coollection.Coollection.eq;
 import static com.wagnerandade.coollection.Coollection.from;
 
-public class ContactListPerGroupFragment extends BaseFragment{
+public class ContactListPerGroupFragment extends BaseFragment {
 
     @BindView(R.id.rvList) RecyclerView rvList;
 
     private MainAppScreenActivity mActivity;
     private AttendeesAdapter mAdapter;
+    private LinearLayoutManager mLinearLayoutManager;
+
     private List<Profile> mAllContactList = null;
     private List<Profile> mFilteredContactList = null;
     private String selectedFamilyGroupId;
@@ -38,23 +45,28 @@ public class ContactListPerGroupFragment extends BaseFragment{
         bind(rootView);
 
         mActivity = (MainAppScreenActivity) getActivity();
-        mAllContactList = mActivity.mPresenter.mAttendeesRepository.getContentList();
-
         Bundle bundle = getArguments();
-        if(bundle != null)
+        if (bundle != null)
             selectedFamilyGroupId = getArguments().getString("familyGroupId");
 
-        if(!selectedFamilyGroupId.equals(""))
-            mFilteredContactList = from(mAllContactList).where("getUserFamilyGroupId", eq(selectedFamilyGroupId)).all();
-
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mActivity);
+        mLinearLayoutManager = new LinearLayoutManager(mActivity);
         rvList.setLayoutManager(mLinearLayoutManager);
         rvList.setItemAnimator(new DefaultItemAnimator());
         rvList.setNestedScrollingEnabled(false);
         rvList.setHasFixedSize(true);
 
-        mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList == null ? mAllContactList : mFilteredContactList, selectedFamilyGroupId);
-        rvList.setAdapter(mAdapter);
+        rvList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                EventBus.getDefault().post(new EnableDisableSwipeRefreshLayout(mLinearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0));
+            }
+        });
+
+        onUpdateAttendeesList(null);
 
         return rootView;
     }
@@ -62,15 +74,13 @@ public class ContactListPerGroupFragment extends BaseFragment{
     @Override
     public void onStart() {
         super.onStart();
-        // [5/3/2019] Comment Favorite for now
-//        EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        // [5/3/2019] Comment Favorite for now
-//        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 
     // [5/3/2019] Comment Favorite for now
@@ -81,4 +91,13 @@ public class ContactListPerGroupFragment extends BaseFragment{
 //        rvList.setAdapter(mAdapter);
 //    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateAttendeesList(RefreshAttendeesEvent event){
+        mAllContactList = mActivity.mPresenter.mAttendeesRepository.getContentList();
+        if (!selectedFamilyGroupId.equals(""))
+            mFilteredContactList = from(mAllContactList).where("getUserFamilyGroupId", eq(selectedFamilyGroupId)).all();
+
+        mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList == null ? mAllContactList : mFilteredContactList, selectedFamilyGroupId);
+        rvList.setAdapter(mAdapter);
+    }
 }

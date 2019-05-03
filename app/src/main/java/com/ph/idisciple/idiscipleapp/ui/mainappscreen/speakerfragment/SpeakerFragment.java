@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.Speaker;
-import com.ph.idisciple.idiscipleapp.data.local.repository.Speaker.SpeakerRepository;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.EnableDisableSwipeRefreshLayout;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -39,7 +39,6 @@ public class SpeakerFragment extends BaseFragment {
         bind(rootView);
 
         mActivity = (MainAppScreenActivity) getActivity();
-        mSpeakerList = mActivity.mPresenter.mSpeakerRepository.getContentList();
 
         mGridLayoutManager = new GridLayoutManager(mActivity, 2);
         rvList.setLayoutManager(mGridLayoutManager);
@@ -47,8 +46,18 @@ public class SpeakerFragment extends BaseFragment {
         rvList.setNestedScrollingEnabled(false);
         rvList.setHasFixedSize(true);
 
-        mAdapter = new SpeakerAdapter(mActivity, mSpeakerList);
-        rvList.setAdapter(mAdapter);
+        rvList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                EventBus.getDefault().post(new EnableDisableSwipeRefreshLayout(mGridLayoutManager.findFirstCompletelyVisibleItemPosition() == 0));
+            }
+        });
+
+        onUpdateSpeakerList(null);
 
         mAdapter.setClickListener(new SpeakerAdapter.ItemClickListener() {
             @Override

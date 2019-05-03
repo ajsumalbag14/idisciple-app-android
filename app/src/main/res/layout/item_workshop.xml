@@ -60,7 +60,7 @@
                 android:layout_below="@+id/tvWorkshopSpeakerName"
                 android:layout_marginEnd="@dimen/margin_small"
                 android:layout_toEndOf="@+id/tvWorkshopYours"
-                android:text="Date and Time / Location"
+                android:text="05/22/2019 2:30PM to 4:00PM / PBTS"
                 android:textColor="@color/colorIDiscipleGray"
                 android:textSize="12sp" />
 
@@ -68,13 +68,13 @@
                 android:id="@+id/tvWorkshopYours"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/tvWorkshopSpeakerName"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tvWorkshopDateTimeLocation"
                 android:text="@string/item_workshop_yours"
                 android:textAllCaps="true"
                 android:textColor="@color/colorIDiscipleOrange"
                 android:textSize="12sp"
-                android:visibility="gone" />
+                android:visibility="visible" />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

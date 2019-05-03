@@ -95,6 +95,11 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_CODE_SHOW_GALLERY);
     }
 
+    @OnClick(R.id.ivAvatar)
+    public void onAvatarClicked() {
+        onChangeAvatarClicked();
+    }
+
     @Override
     protected int getLayout() {
         return R.layout.dialog_own_profile_info;

@@ -280,6 +280,11 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
         setProfileAvatar(event.avatarImageUrl, mCountryId);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEnableDisableSwipeRefreshLayout(EnableDisableSwipeRefreshLayout event){
+        srlSwipeToRefresh.setEnabled(event.isEnableSwipeRefreshLayout);
+    }
+
     @Override
     public void prepareBundleToPassInPrepForViewOwnProfile() {
         bundleToInclude = new Bundle();

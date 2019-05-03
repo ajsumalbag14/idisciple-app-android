@@ -19,8 +19,13 @@ import android.widget.LinearLayout;
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.EnableDisableSwipeRefreshLayout;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 import com.wagnerandade.coollection.query.order.Order;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -75,8 +80,6 @@ public class CommunityTabDelegatesFragment extends BaseFragment {
         bind(rootView);
 
         mActivity = (MainAppScreenActivity) getActivity();
-        mAllContactList = mActivity.mPresenter.mAttendeesRepository.getContentList();
-        mFilteredContactList = from(mAllContactList).orderBy("getUserFullNameCapslock", Order.ASC).all();
 
         mLinearLayoutManager = new LinearLayoutManager(mActivity);
         rvList.setLayoutManager(mLinearLayoutManager);
@@ -84,8 +87,18 @@ public class CommunityTabDelegatesFragment extends BaseFragment {
         rvList.setNestedScrollingEnabled(false);
         rvList.setHasFixedSize(true);
 
-        mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList);
-        rvList.setAdapter(mAdapter);
+        rvList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                EventBus.getDefault().post(new EnableDisableSwipeRefreshLayout(mLinearLayoutManager.findFirstCompletelyVisibleItemPosition() == 0));
+            }
+        });
+
+        onUpdateAttendeesList(null);
 
         etSearchName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -142,15 +155,13 @@ public class CommunityTabDelegatesFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        // [5/3/2019] Comment Favorite for now
-//        EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        // [5/3/2019] Comment Favorite for now
-//        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 
     // [5/3/2019] Comment Favorite for now
@@ -160,4 +171,14 @@ public class CommunityTabDelegatesFragment extends BaseFragment {
 //        mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList);
 //        rvList.setAdapter(mAdapter);
 //    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateAttendeesList(RefreshAttendeesEvent event){
+        mAllContactList = mActivity.mPresenter.mAttendeesRepository.getContentList();
+        mFilteredContactList = from(mAllContactList).orderBy("getUserFullNameCapslock", Order.ASC).all();
+        mAdapter = new AttendeesAdapter(mActivity, mFilteredContactList);
+        rvList.setAdapter(mAdapter);
+    }
+
+
 }

@@ -168,6 +168,7 @@ public class CommunityTabGroupsFragment extends BaseFragment {
     }
 
     private void updateFamilyGroupScreen() {
+        mData = mActivity.mPresenter.mFamilyGroupRepository.getContentList();
         tvFamilyGroupName.setText(mData.get(currentItemCount - 1).getFamilyGroupName());
         viewpager.setCurrentItem(currentItemCount - 1);
     }
@@ -180,6 +181,7 @@ public class CommunityTabGroupsFragment extends BaseFragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
+            mData = mActivity.mPresenter.mFamilyGroupRepository.getContentList();
             return mData.get(position).getFamilyGroupName();
         }
 
@@ -191,6 +193,7 @@ public class CommunityTabGroupsFragment extends BaseFragment {
         @Override
         public Fragment getItem(int position) {
             Bundle bundle = new Bundle();
+            mData = mActivity.mPresenter.mFamilyGroupRepository.getContentList();
             bundle.putString("familyGroupId", mData.get(position).getId());
             return newInstance(ContactListPerGroupFragment.class, bundle);
         }
