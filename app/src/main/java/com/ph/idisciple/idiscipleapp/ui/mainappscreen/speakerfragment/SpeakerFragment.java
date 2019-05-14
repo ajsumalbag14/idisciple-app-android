@@ -59,20 +59,6 @@ public class SpeakerFragment extends BaseFragment {
 
         onUpdateSpeakerList(null);
 
-        mAdapter.setClickListener(new SpeakerAdapter.ItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Speaker selectedSpeaker = mSpeakerList.get(position);
-                Bundle bundleToInclude = new Bundle();
-                bundleToInclude.putString("name", selectedSpeaker.getSpeakerName());
-                bundleToInclude.putString("topic", selectedSpeaker.getSpeakerPlanaryTitle());
-                bundleToInclude.putString("bio", selectedSpeaker.getSpeakerBio());
-                bundleToInclude.putString("avatar", selectedSpeaker.getSpeakerImageUrl());
-                bundleToInclude.putString("countryId", selectedSpeaker.getSpeakerNationality());
-                mActivity.redirectToAnotherScreen(SpeakerInfoDialogActivity.class, bundleToInclude);
-            }
-        });
-
         return rootView;
     }
 
@@ -94,5 +80,19 @@ public class SpeakerFragment extends BaseFragment {
         mSpeakerList = mActivity.mPresenter.mSpeakerRepository.getContentList();
         mAdapter = new SpeakerAdapter(mActivity, mSpeakerList);
         rvList.setAdapter(mAdapter);
+
+        mAdapter.setClickListener(new SpeakerAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Speaker selectedSpeaker = mSpeakerList.get(position);
+                Bundle bundleToInclude = new Bundle();
+                bundleToInclude.putString("name", selectedSpeaker.getSpeakerName());
+                bundleToInclude.putString("topic", selectedSpeaker.getSpeakerPlanaryTitle());
+                bundleToInclude.putString("bio", selectedSpeaker.getSpeakerBio());
+                bundleToInclude.putString("avatar", selectedSpeaker.getSpeakerImageUrl());
+                bundleToInclude.putString("countryId", selectedSpeaker.getSpeakerNationality());
+                mActivity.redirectToAnotherScreen(SpeakerInfoDialogActivity.class, bundleToInclude);
+            }
+        });
     }
 }
