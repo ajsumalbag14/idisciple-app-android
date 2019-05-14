@@ -34,6 +34,7 @@ public class SpeakerInfoDialogActivity extends BaseActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setFinishOnTouchOutside(false);
+        tagActivityAsDialog();
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {

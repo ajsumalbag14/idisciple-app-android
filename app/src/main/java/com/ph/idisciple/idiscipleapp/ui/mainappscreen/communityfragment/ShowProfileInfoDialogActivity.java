@@ -66,6 +66,7 @@ public class ShowProfileInfoDialogActivity extends BaseActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setFinishOnTouchOutside(false);
+        tagActivityAsDialog();
 
         // [5/3/2019] Comment Favorite for now
 //        mSavedProfileFavoritesRepository = new SavedProfileFavoritesRepository();
@@ -76,7 +77,7 @@ public class ShowProfileInfoDialogActivity extends BaseActivity {
             tvDelegateNickName.setText(bundle.getString("nickname"));
             tvFullName.setText(bundle.getString("fullname"));
             tvCountryDetails.setText(bundle.getString("countryName"));
-            tvFamilyGroupAssignedTo.setText(bundle.getString("familyGroupName"));
+            tvFamilyGroupAssignedTo.setText(bundle.getString("familyGroupName", "none"));
 
             Glide.with(ShowProfileInfoDialogActivity.this)
                     .load(bundle.getString("avatar"))

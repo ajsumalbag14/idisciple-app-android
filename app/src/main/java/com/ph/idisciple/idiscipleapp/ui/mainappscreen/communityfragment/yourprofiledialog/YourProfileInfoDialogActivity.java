@@ -109,6 +109,7 @@ public class YourProfileInfoDialogActivity extends BaseActivity implements YourP
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setFinishOnTouchOutside(false);
+        tagActivityAsDialog();
 
         mPresenter = new YourProfileInfoDialogPresenter(this);
         mKeySettingsRepository = new KeySettingsRepository();

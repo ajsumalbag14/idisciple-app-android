@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.Window;
 import android.view.WindowManager;
 
 import com.ph.idisciple.idiscipleapp.R;
@@ -222,5 +223,18 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }
         return drawablePlaceholderRes;
+    }
+
+    public void tagActivityAsDialog(){
+        // Enable Android 9.0 + to show dialog for Activity
+        Window window = getWindow();
+        WindowManager.LayoutParams lp = window.getAttributes();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            lp.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY; //Android P中AlertDialog要顯示在最上層
+        } else {
+            lp.type = WindowManager.LayoutParams.TYPE_APPLICATION_ATTACHED_DIALOG;
+        }
+        window.setAttributes(lp);
+        window.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
     }
 }
