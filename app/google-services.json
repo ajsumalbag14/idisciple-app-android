@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "901056688192",
+    "firebase_url": "https://idisciplephapp.firebaseio.com",
+    "project_id": "idisciplephapp",
+    "storage_bucket": "idisciplephapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:901056688192:android:9334827e8c32f96d",
+        "android_client_info": {
+          "package_name": "com.ph.idisciple.idiscipleapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "901056688192-945mojbs4qraspl5g6r3cup3v0jvjjr6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJDbQEcro9m8sWNYKXvj_PZK04p7Hncoc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "901056688192-945mojbs4qraspl5g6r3cup3v0jvjjr6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

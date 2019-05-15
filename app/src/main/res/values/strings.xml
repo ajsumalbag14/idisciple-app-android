@@ -32,6 +32,8 @@
     <string name="button_link_logout"><u>Log-out</u></string>
     <string name="button_directory_back">BACK</string>
 
+    <string name="button_update">Update</string>
+
     <string name="button_main_my_profile">My Profile</string>
     <string name="button_main_schedule">Schedule</string>
     <string name="button_main_speakers">Speakers</string>
@@ -64,6 +66,9 @@
     <string name="dialog_error_message_timeout">Kindly check your connection and restart the app.</string>
     <string name="dialog_error_title_generic">Oops!</string>
     <string name="dialog_error_message_generic">Something went wrong.\n Please try again.</string>
+
+    <string name="dialog_force_update_title">New version available</string>
+    <string name="dialog_force_update_message">Please Update app to new version to continue.</string>
 
     <!-- Errors -->
     <string name="error_invalid_email_or_password">Invalid E-mail or Password.</string>

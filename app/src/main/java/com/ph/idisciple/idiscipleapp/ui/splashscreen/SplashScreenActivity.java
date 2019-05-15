@@ -1,11 +1,23 @@
 package com.ph.idisciple.idiscipleapp.ui.splashscreen;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.security.KeyPairGeneratorSpec;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Base64;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.KeySettings;
 import com.ph.idisciple.idiscipleapp.data.local.repository.IKeySettingsRepository;
@@ -30,7 +42,14 @@ import io.realm.RealmConfiguration;
 
 public class SplashScreenActivity extends BaseActivity {
 
+    private final String APP_VERSION = "app_version";
+    private final String APP_LINK = "app_link";
+    private final String APP_FORCE = "app_force";
+
+    // Remote Config keys
+    private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private KeyStore keyStore;
+
     private KeySettingsRepository mKeySettingsRepository;
     private boolean isLoggedIn = false;
 
@@ -42,8 +61,9 @@ public class SplashScreenActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
         mKeySettingsRepository = new KeySettingsRepository();
-        checkIfRealmIsConfigured();
+        checkIfAppIsUpToDate();
     }
 
     /* Realm Initialized */
@@ -160,11 +180,81 @@ public class SplashScreenActivity extends BaseActivity {
     }
 
     private void showLoginOptionsScreen() {
-        redirectToAnotherScreenAsFirstScreen(LoginScreenActivity.class);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                redirectToAnotherScreenAsFirstScreen(LoginScreenActivity.class);
+            }
+        }, 500); // Added delay for update
     }
 
     private void showMainScreen() {
-        redirectToAnotherScreenAsFirstScreen(MainAppScreenActivity.class);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                redirectToAnotherScreenAsFirstScreen(MainAppScreenActivity.class);
+            }
+        }, 500); // Added delay for update
+    }
+
+    public void checkIfAppIsUpToDate() {
+
+        long cacheExpiration = 0; //3600; // 1 hour in seconds.
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+
+        mFirebaseRemoteConfig.fetch(cacheExpiration)
+                .addOnCompleteListener(SplashScreenActivity.this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            mFirebaseRemoteConfig.activateFetched();
+                        }
+
+                        PackageInfo pInfo = null;
+                        try {
+                            boolean isForceUpate = mFirebaseRemoteConfig.getBoolean(APP_FORCE);
+                            String appLink = mFirebaseRemoteConfig.getString(APP_LINK);
+                            String fireBaseAppVersion = mFirebaseRemoteConfig.getString(APP_VERSION);
+
+                            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                            String appVersion = pInfo.versionName;
+
+                            if (isForceUpate) {
+                                if (!TextUtils.equals(appVersion, fireBaseAppVersion)) {
+                                    showUpdateDialog(appLink);
+                                } else {
+                                    checkIfRealmIsConfigured();
+                                }
+                            } else {
+                                checkIfRealmIsConfigured();
+                            }
+
+                        } catch (PackageManager.NameNotFoundException e) {
+                            e.printStackTrace();
+                            getShowMessageUtil().showOkMessage(getString(R.string.dialog_error_title_generic), getString(R.string.dialog_error_message_generic));
+                        }
+
+                    }
+                });
+
+    }
+
+    public void showUpdateDialog(final String appLink) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.dialog_force_update_title))
+                .setMessage(getString(R.string.dialog_force_update_message))
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.button_update),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(appLink));
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }).create();
+        dialog.show();
     }
 
 }
