@@ -16,13 +16,15 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro',
                     'proguard/proguard-butterknife-8.8.1.pro',
+                    'proguard-design-support.pro',
                     'proguard/proguard-glide.pro',
                     'proguard/proguard-google-gson.pro',
                     'proguard/proguard-google-play-services.pro',
                     'proguard/proguard-realm.pro',
                     'proguard/proguard-square-okhttp3.pro',
                     'proguard/proguard-square-okio.pro',
-                    'proguard/proguard-square-retrofit2.pro'
+                    'proguard/proguard-square-retrofit2.pro',
+                    'proguard-support-v7-appcompat.pro'
         }
     }
 
