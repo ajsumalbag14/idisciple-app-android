@@ -234,7 +234,7 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
         resetBottomNavigationView();
-        bottomNavigationView.setCurrentItem(0);
+        bottomNavigationView.setCurrentItem(2); // set Schedule as first tab
 
     }
 
