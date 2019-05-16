@@ -20,6 +20,7 @@ import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.Country;
 import com.ph.idisciple.idiscipleapp.data.local.model.FamilyGroup;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
+import com.ph.idisciple.idiscipleapp.data.local.model.Schedule;
 import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
@@ -341,6 +342,13 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
                         .placeholder(getDrawableCountryRes(countryId))
                         .error(getDrawableCountryRes(countryId)))
                 .into(ivToolbarMenuProfile);
+    }
+
+    @Override
+    public void showHappeningNowDialog(Schedule scheduleItem) {
+        HappeningSoonDialogFragment fragmentWorkshopInfoDialog = HappeningSoonDialogFragment.newInstance(scheduleItem);
+        FragmentManager fm = getSupportFragmentManager();
+        fragmentWorkshopInfoDialog.show(fm, "show_happening_now_fragment");
     }
 
     @Override

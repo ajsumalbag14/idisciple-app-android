@@ -1,6 +1,7 @@
 package com.ph.idisciple.idiscipleapp.ui.mainappscreen;
 
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -35,6 +36,7 @@ import com.ph.idisciple.idiscipleapp.ui.mainappscreen.morefragment.resourcestab.
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.schedulefragment.RefreshScheduleListEvent;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.speakerfragment.RefreshSpeakerListEvent;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.workshopfragment.RefreshWorkshopListEvent;
+import com.wagnerandade.coollection.query.order.Order;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -46,12 +48,16 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.wagnerandade.coollection.Coollection.contains;
 import static com.wagnerandade.coollection.Coollection.eq;
 import static com.wagnerandade.coollection.Coollection.from;
 
@@ -71,7 +77,6 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
     public ResourcesRepository mResourcesRepository;
     public AboutContentRepository mAboutContentRepository;
     private String mUserId;
-    private String mUserAvatar;
 
     // [5/3/2019] Comment Favorite for now
 //    public SavedProfileFavoritesRepository mSavedProfileFavoritesRepository;
@@ -251,6 +256,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     List<Schedule> jsonSchedule = wrapperSchedule.getData();
                     mScheduleRepository.addItemList(jsonSchedule);
                     EventBus.getDefault().post(new RefreshScheduleListEvent());
+                    refreshTimer();
                     break;
                 case "2":
                     mSpeakerRepository.resetStorage();
@@ -303,5 +309,51 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
         }
     }
 
+    private void refreshTimer(){
+        new CountDownTimer(60000, 1000) {
 
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+                checkIfShowHappeningSoonDialog();
+            }
+        }.start();
+    }
+
+    private void checkIfShowHappeningSoonDialog(){
+        int minuteRemainingToReminder = 15;
+
+        List<Schedule> mData = mScheduleRepository.getContentList();
+        Calendar calendarDateToday = Calendar.getInstance();
+        String dateTodayString = String.format("%1$s-%2$02d-%3$s", calendarDateToday.get(Calendar.YEAR), calendarDateToday.get(Calendar.MONTH) + 1, calendarDateToday.get(Calendar.DAY_OF_MONTH));
+
+        int nowHour = calendarDateToday.get(Calendar.HOUR_OF_DAY);
+        int nowMinute = calendarDateToday.get(Calendar.MINUTE);
+        int startHour = 0;
+        int startMinute = 0;
+
+        String nowAMPM =  nowHour > 12 ? "PM" : "AM";
+        List<Schedule> scheduleListToday = from(mData).where("getScheduleDate", eq(dateTodayString)).and("getScheduleStartTime", contains(nowAMPM)).orderBy("getId", Order.ASC).all();
+
+        for(int i = 0; i<scheduleListToday.size(); i++){
+            Schedule itemSchedule = scheduleListToday.get(i);
+            try {
+                Calendar calendarParsedStartDate = Calendar.getInstance();
+                SimpleDateFormat formatter = new SimpleDateFormat("h:mm a");
+                calendarParsedStartDate.setTime(formatter.parse(itemSchedule.getScheduleStartTime()));
+                startHour = calendarParsedStartDate.get(Calendar.HOUR_OF_DAY);
+                startMinute = calendarParsedStartDate.get(Calendar.MINUTE);
+
+                if (nowHour + 1 == startHour) {
+                    mView.showHappeningNowDialog(itemSchedule);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+        refreshTimer();
+    }
 }

@@ -59,6 +59,8 @@
     <string name="dialog_title_profile_own">YOUR PROFILE</string>
     <string name="dialog_confirm_logout">Do you want to log-out?</string>
 
+    <string name="dialog_title_happening_soon">HAPPENING SOON</string>
+
     <!-- Generic dialog error -->
     <string name="dialog_error_title_no_internet">No Internet</string>
     <string name="dialog_error_message_no_internet">This application requires an internet connection.</string>
