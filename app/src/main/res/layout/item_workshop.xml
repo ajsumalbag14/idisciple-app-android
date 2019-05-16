@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/clItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -20,6 +21,7 @@
             android:layout_height="match_parent"
             android:padding="@dimen/margin_small_2">
 
+            <!-- 20190506: Hidden ivMenuOptions for now -->
             <ImageView
                 android:id="@+id/ivMenuOptions"
                 android:layout_width="20dp"
@@ -27,11 +29,13 @@
                 android:layout_alignParentEnd="true"
                 android:paddingEnd="@dimen/margin_very_small"
                 android:paddingStart="@dimen/margin_very_small"
-                android:src="@drawable/ic_menu_three_dots" />
+                android:src="@drawable/ic_menu_three_dots"
+                android:visibility="gone"/>
 
+            <!-- 20190506: made layout_width as "match_parent" instead of "0dp" (Hidden ivMenuOptions for now) -->
             <com.ph.idisciple.idiscipleapp.widgets.fonts.CustomMontserratBoldTextView
                 android:id="@+id/tvWorkshopName"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_toStartOf="@+id/ivMenuOptions"
@@ -46,8 +50,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvWorkshopName"
-                android:maxLines="2"
                 android:layout_marginTop="@dimen/margin_small"
+                android:maxLines="2"
                 android:text="Facilitator’s Name"
                 android:textColor="@color/colorText"
                 android:textSize="12sp"

@@ -1,15 +1,13 @@
 package com.ph.idisciple.idiscipleapp.ui.mainappscreen.workshopfragment;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.PopupMenu;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ph.idisciple.idiscipleapp.R;
@@ -26,14 +24,16 @@ import butterknife.ButterKnife;
 import static com.wagnerandade.coollection.Coollection.eq;
 import static com.wagnerandade.coollection.Coollection.from;
 
-public class WorkshopAdapter extends RecyclerView.Adapter<WorkshopAdapter.ViewHolder> implements PopupMenu.OnMenuItemClickListener {
+public class WorkshopAdapter extends RecyclerView.Adapter<WorkshopAdapter.ViewHolder> {
+    //implements PopupMenu.OnMenuItemClickListener {
+    //20190506: Hidden ivMenuOptions for now (Unused for now)
 
+    List<Speaker> mSpeakerList;
     private List<Workshop> mData;
     private LayoutInflater mInflater;
     private Context mContext;
     private int selectedItemPosition = -1;
     private Profile currentProfile;
-    List<Speaker> mSpeakerList;
 
     // data is passed into the constructor
     public WorkshopAdapter(Context context, List<Workshop> data, Profile currentProfile, List<Speaker> speakerList) {
@@ -62,15 +62,26 @@ public class WorkshopAdapter extends RecyclerView.Adapter<WorkshopAdapter.ViewHo
         Speaker speakerDetail = from(mSpeakerList).where("getId", eq(itemWorkshop.getWorkshopFacilitator())).first();
         holder.tvWorkshopSpeakerName.setText(speakerDetail.getSpeakerName());
 
-        holder.ivMenuOptions.setOnClickListener(new View.OnClickListener() {
+        holder.clItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showMenu(view);
-                selectedItemPosition = position;
+                Workshop selectedWorkshop = getItem(position);
+                WorkshopInfoDialogFragment fragmentWorkshopInfoDialog = WorkshopInfoDialogFragment.newInstance(selectedWorkshop, "Workshop Description");
+                FragmentManager fm = ((BaseActivity) mContext).getSupportFragmentManager();
+                fragmentWorkshopInfoDialog.show(fm, "show_workshop_fragment");
             }
         });
 
-        if(currentProfile.getUserWorkshop1().equals(itemWorkshop.getId()) || currentProfile.getUserWorkshop1().equals(itemWorkshop.getId())){
+        //20190506: Hidden ivMenuOptions for now
+//        holder.ivMenuOptions.setOnClickListener(new View.OnClickListener() {
+////            @Override
+////            public void onClick(View view) {
+////                showMenu(view);
+////                selectedItemPosition = position;
+////            }
+////        });
+
+        if (currentProfile.getUserWorkshop1().equals(itemWorkshop.getId()) || currentProfile.getUserWorkshop1().equals(itemWorkshop.getId())) {
             holder.tvWorkshopYours.setVisibility(View.VISIBLE);
         } else
             holder.tvWorkshopYours.setVisibility(View.GONE);
@@ -83,37 +94,39 @@ public class WorkshopAdapter extends RecyclerView.Adapter<WorkshopAdapter.ViewHo
         return mData.size();
     }
 
-    public void showMenu(View v) {
-        PopupMenu popup = new PopupMenu(mContext, v);
-
-        // This activity implements OnMenuItemClickListener
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.menu_workshop_item_options);
-        popup.show();
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem menuItem) {
-        Workshop selectedWorkshop = getItem(selectedItemPosition);
-        Bundle bundleToInclude = new Bundle();
-
-        switch (menuItem.getItemId()) {
-            case R.id.menu_workshop_option_view_desc:
-                bundleToInclude.putString("name", selectedWorkshop.getWorkshopName());
-                bundleToInclude.putString("type", "Workshop Blurb");
-                bundleToInclude.putString("details", selectedWorkshop.getWorkshopDescription());
-                ((BaseActivity) mContext).redirectToAnotherScreen(WorkshopInfoDialogActivity.class, bundleToInclude);
-                return true;
-            case R.id.menu_workshop_option_view_outline:
-                bundleToInclude.putString("name", selectedWorkshop.getWorkshopName());
-                bundleToInclude.putString("type", "Workshop Outline");
-                bundleToInclude.putString("details", selectedWorkshop.getWorkshopOutline());
-                ((BaseActivity) mContext).redirectToAnotherScreen(WorkshopInfoDialogActivity.class, bundleToInclude);
-                return true;
-            default:
-                return false;
-        }
-    }
+    //20190506: Hidden ivMenuOptions for now (Unused for now)
+//    public void showMenu(View v) {
+//        PopupMenu popup = new PopupMenu(mContext, v);
+//
+//        // This activity implements OnMenuItemClickListener
+//        popup.setOnMenuItemClickListener(this);
+//        popup.inflate(R.menu.menu_workshop_item_options);
+//        popup.show();
+//    }
+//
+//
+//    @Override
+//    public boolean onMenuItemClick(MenuItem menuItem) {
+//        Workshop selectedWorkshop = getItem(selectedItemPosition);
+//        Bundle bundleToInclude = new Bundle();
+//
+//        switch (menuItem.getItemId()) {
+//            case R.id.menu_workshop_option_view_desc:
+//                bundleToInclude.putString("name", selectedWorkshop.getWorkshopName());
+//                bundleToInclude.putString("type", "Workshop Blurb");
+//                bundleToInclude.putString("details", selectedWorkshop.getWorkshopDescription());
+//                ((BaseActivity) mContext).redirectToAnotherScreen(WorkshopInfoDialogActivity.class, bundleToInclude);
+//                return true;
+//            case R.id.menu_workshop_option_view_outline:
+//                bundleToInclude.putString("name", selectedWorkshop.getWorkshopName());
+//                bundleToInclude.putString("type", "Workshop Outline");
+//                bundleToInclude.putString("details", selectedWorkshop.getWorkshopOutline());
+//                ((BaseActivity) mContext).redirectToAnotherScreen(WorkshopInfoDialogActivity.class, bundleToInclude);
+//                return true;
+//            default:
+//                return false;
+//        }
+//    }
 
     // convenience method for getting data at click position
     Workshop getItem(int id) {
@@ -123,11 +136,12 @@ public class WorkshopAdapter extends RecyclerView.Adapter<WorkshopAdapter.ViewHo
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.clItem) ConstraintLayout clItem;
         @BindView(R.id.tvWorkshopYours) TextView tvWorkshopYours;
         @BindView(R.id.tvWorkshopName) TextView tvWorkshopName;
         @BindView(R.id.tvWorkshopSpeakerName) TextView tvWorkshopSpeakerName;
         @BindView(R.id.tvWorkshopDateTimeLocation) TextView tvWorkshopDateTimeLocation;
-        @BindView(R.id.ivMenuOptions) ImageView ivMenuOptions;
+//        @BindView(R.id.ivMenuOptions) ImageView ivMenuOptions; //20190506: Hidden ivMenuOptions for now
 
         ViewHolder(View itemView) {
             super(itemView);
