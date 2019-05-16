@@ -125,6 +125,12 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        mPresenter.checkIfEventWillBeHappeningSoon();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);

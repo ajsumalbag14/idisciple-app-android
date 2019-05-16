@@ -2,6 +2,7 @@ package com.ph.idisciple.idiscipleapp.ui.mainappscreen;
 
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
+import android.os.Handler;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -77,6 +78,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
     public ResourcesRepository mResourcesRepository;
     public AboutContentRepository mAboutContentRepository;
     private String mUserId;
+    private CountDownTimer mCountDownTimer;
 
     // [5/3/2019] Comment Favorite for now
 //    public SavedProfileFavoritesRepository mSavedProfileFavoritesRepository;
@@ -256,7 +258,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     List<Schedule> jsonSchedule = wrapperSchedule.getData();
                     mScheduleRepository.addItemList(jsonSchedule);
                     EventBus.getDefault().post(new RefreshScheduleListEvent());
-                    refreshTimer();
+                    checkIfNeedDelay();
                     break;
                 case "2":
                     mSpeakerRepository.resetStorage();
@@ -309,21 +311,39 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
         }
     }
 
+    private void checkIfNeedDelay(){
+        mCountDownTimer.cancel();
+        Calendar calendar = Calendar.getInstance();
+        int minute = calendar.get(Calendar.MINUTE);
+        int remainder = 10 - minute % 10;
+        int delay = remainder * 60 * 1000; // by minutes
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                checkIfEventWillBeHappeningSoon();
+            }
+        }, delay); // Added delay for update
+    }
+
     private void refreshTimer(){
-        new CountDownTimer(60000, 1000) {
+        // interval every 10 mins (60000)
+        mCountDownTimer = new CountDownTimer(60000, 1000) {
 
             public void onTick(long millisUntilFinished) {
 
             }
 
             public void onFinish() {
-                checkIfShowHappeningSoonDialog();
+                checkIfEventWillBeHappeningSoon();
             }
-        }.start();
+        };
+        mCountDownTimer.start();
     }
 
-    private void checkIfShowHappeningSoonDialog(){
-        int minuteRemainingToReminder = 15;
+    @Override
+    public void checkIfEventWillBeHappeningSoon(){
+        int minuteRemainingToReminder = 20;
 
         List<Schedule> mData = mScheduleRepository.getContentList();
         Calendar calendarDateToday = Calendar.getInstance();
@@ -334,8 +354,8 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
         int startHour = 0;
         int startMinute = 0;
 
-        String nowAMPM =  nowHour > 12 ? "PM" : "AM";
-        List<Schedule> scheduleListToday = from(mData).where("getScheduleDate", eq(dateTodayString)).and("getScheduleStartTime", contains(nowAMPM)).orderBy("getId", Order.ASC).all();
+        String nowAmPm =  nowHour > 12 ? "PM" : "AM";
+        List<Schedule> scheduleListToday = from(mData).where("getScheduleDate", eq(dateTodayString)).and("getScheduleStartTime", contains(nowAmPm)).orderBy("getId", Order.ASC).all();
 
         for(int i = 0; i<scheduleListToday.size(); i++){
             Schedule itemSchedule = scheduleListToday.get(i);
@@ -346,9 +366,21 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                 startHour = calendarParsedStartDate.get(Calendar.HOUR_OF_DAY);
                 startMinute = calendarParsedStartDate.get(Calendar.MINUTE);
 
-                if (nowHour + 1 == startHour) {
-                    mView.showHappeningNowDialog(itemSchedule);
+                if(nowHour + 1 == startHour){
+                    if(startMinute == 0) { //:00
+                        if(60 - minuteRemainingToReminder ==  nowMinute)
+                            mView.showHappeningNowDialog(itemSchedule);
+                    } else if(startMinute < minuteRemainingToReminder) {
+                        if(nowMinute == 60 - (minuteRemainingToReminder - startMinute))
+                            mView.showHappeningNowDialog(itemSchedule);
+                    }
+                } else if(nowHour == startHour){
+                    if(startMinute == nowMinute)
+                        mView.showHappeningNowDialog(itemSchedule);
+                    else
+                        break;
                 }
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }

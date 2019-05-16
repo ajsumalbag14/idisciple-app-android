@@ -74,7 +74,7 @@ public class ShowProfileDialogFragment extends DialogFragment {
             tvDelegateNickName.setText(bundle.getString("nickname"));
             tvFullName.setText(bundle.getString("fullname"));
             tvCountryDetails.setText(bundle.getString("countryName"));
-            tvFamilyGroupAssignedTo.setText(bundle.getString("familyGroupName", "none"));
+            tvFamilyGroupAssignedTo.setText(bundle.getString("familyGroupName", "no family group yet"));
 
             Glide.with(getActivity())
                     .load(bundle.getString("avatar"))
@@ -92,7 +92,7 @@ public class ShowProfileDialogFragment extends DialogFragment {
 
             String workshopName1 = bundle.getString("workshopId1Name");
             String workshopName2 = bundle.getString("workshopId2Name");
-            String workshopCombined = TextUtils.isEmpty(workshopName1) ? "none" : workshopName1 + (TextUtils.isEmpty(workshopName2) ? "" : " & " + workshopName2);
+            String workshopCombined = TextUtils.isEmpty(workshopName1) ? "no workshop" : workshopName1 + (TextUtils.isEmpty(workshopName2) ? "" : " & " + workshopName2);
             tvAttendingWorkshop.setText(workshopCombined);
         }
     }
