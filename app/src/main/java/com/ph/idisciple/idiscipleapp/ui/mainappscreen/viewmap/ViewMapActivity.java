@@ -1,6 +1,7 @@
 package com.ph.idisciple.idiscipleapp.ui.mainappscreen.viewmap;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +15,7 @@ import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.data.local.model.JsonBuildingItemRaw;
 import com.ph.idisciple.idiscipleapp.data.local.model.JsonBuildingRawList;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
-import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.yourprofiledialog.YourProfileInfoDialogActivity;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.yourprofiledialog.YourProfileDialogFragment;
 import com.ph.idisciple.idiscipleapp.widgets.CustomZoomageView;
 
 import java.io.BufferedReader;
@@ -57,7 +58,9 @@ public class ViewMapActivity extends BaseActivity {
 
     @OnClick(R.id.ivToolbarMenuProfile)
     public void onToolbarProfileClick() {
-        redirectToAnotherScreen(YourProfileInfoDialogActivity.class, bundleToInclude);
+        YourProfileDialogFragment fragmentYourProfileDialog = YourProfileDialogFragment.newInstance(bundleToInclude);
+        FragmentManager fm = getSupportFragmentManager();
+        fragmentYourProfileDialog.show(fm, "show_your_profile_fragment");
     }
 
     private boolean isListShown = false;

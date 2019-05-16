@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.bottomnavigation.LabelVisibilityMode;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -23,7 +24,7 @@ import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
 import com.ph.idisciple.idiscipleapp.ui.BaseActivity;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.CommunityFragment;
-import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.yourprofiledialog.YourProfileInfoDialogActivity;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.yourprofiledialog.YourProfileDialogFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.morefragment.MoreFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.schedulefragment.ScheduleFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.speakerfragment.SpeakerFragment;
@@ -93,7 +94,9 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
 
     @OnClick(R.id.ivToolbarMenuProfile)
     public void onToolbarProfileClick() {
-        redirectToAnotherScreen(YourProfileInfoDialogActivity.class, bundleToInclude);
+        YourProfileDialogFragment fragmentYourProfileDialog = YourProfileDialogFragment.newInstance(bundleToInclude);
+        FragmentManager fm = getSupportFragmentManager();
+        fragmentYourProfileDialog.show(fm, "show_your_profile_fragment");
     }
 
     @Override

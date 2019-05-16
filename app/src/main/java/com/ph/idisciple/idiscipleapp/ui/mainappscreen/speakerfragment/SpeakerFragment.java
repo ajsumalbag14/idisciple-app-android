@@ -2,6 +2,7 @@ package com.ph.idisciple.idiscipleapp.ui.mainappscreen.speakerfragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -85,13 +86,9 @@ public class SpeakerFragment extends BaseFragment {
             @Override
             public void onItemClick(View view, int position) {
                 Speaker selectedSpeaker = mSpeakerList.get(position);
-                Bundle bundleToInclude = new Bundle();
-                bundleToInclude.putString("name", selectedSpeaker.getSpeakerName());
-                bundleToInclude.putString("topic", selectedSpeaker.getSpeakerPlanaryTitle());
-                bundleToInclude.putString("bio", selectedSpeaker.getSpeakerBio());
-                bundleToInclude.putString("avatar", selectedSpeaker.getSpeakerImageUrl());
-                bundleToInclude.putString("countryId", selectedSpeaker.getSpeakerNationality());
-                mActivity.redirectToAnotherScreen(SpeakerInfoDialogActivity.class, bundleToInclude);
+                SpeakerInfoDialogFragment fragmentSpeakerInfoDialog = SpeakerInfoDialogFragment.newInstance(selectedSpeaker);
+                FragmentManager fm = mActivity.getSupportFragmentManager();
+                fragmentSpeakerInfoDialog.show(fm, "show_speaker_fragment");
             }
         });
     }

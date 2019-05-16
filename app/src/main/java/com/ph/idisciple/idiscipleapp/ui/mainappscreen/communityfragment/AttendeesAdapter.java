@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +22,7 @@ import com.ph.idisciple.idiscipleapp.data.local.model.FamilyGroup;
 import com.ph.idisciple.idiscipleapp.data.local.model.Profile;
 import com.ph.idisciple.idiscipleapp.data.local.model.Workshop;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
-import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.yourprofiledialog.YourProfileInfoDialogActivity;
+import com.ph.idisciple.idiscipleapp.ui.mainappscreen.communityfragment.yourprofiledialog.YourProfileDialogFragment;
 
 import java.util.List;
 
@@ -176,16 +177,21 @@ public class AttendeesAdapter extends RecyclerView.Adapter<AttendeesAdapter.View
                     bundleToInclude.putString("workshopId2Name", workshop == null ? "" : workshop.getWorkshopName());
                 }
 
-                if (holder.tvThatsYou.getVisibility() == View.VISIBLE)
-                    mActivity.redirectToAnotherScreen(YourProfileInfoDialogActivity.class, bundleToInclude);
-                else {
+                if (holder.tvThatsYou.getVisibility() == View.VISIBLE) {
+                    YourProfileDialogFragment fragmentYourProfileDialog = YourProfileDialogFragment.newInstance(bundleToInclude);
+                    FragmentManager fm = mActivity.getSupportFragmentManager();
+                    fragmentYourProfileDialog.show(fm, "show_your_profile_fragment");
+                } else {
                     bundleToInclude.putString("id", selectedAttendee.getId());
                     bundleToInclude.putBoolean("isFgTag", holder.tvFamilyGroupLeaderTag.getVisibility() == View.VISIBLE);
 
                     // [5/3/2019] Comment Favorite for now
 //                    SavedProfileFavorites profileFavoriteSelected = mActivity.mPresenter.mSavedProfileFavoritesRepository.findItemById(item.getId());
 //                    bundleToInclude.putBoolean("isFavorite", profileFavoriteSelected.isTagAsFavorite());
-                    mActivity.redirectToAnotherScreen(ShowProfileInfoDialogActivity.class, bundleToInclude);
+
+                    ShowProfileDialogFragment fragmentShowProfileDialog = ShowProfileDialogFragment.newInstance(bundleToInclude);
+                    FragmentManager fm = mActivity.getSupportFragmentManager();
+                    fragmentShowProfileDialog.show(fm, "show_profile_fragment");
                 }
             }
         });

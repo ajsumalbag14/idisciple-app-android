@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ph.idisciple.idiscipleapp">
 
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
     <application
         android:name=".app.IDiscipleApp"
         android:allowBackup="false"
@@ -37,23 +35,6 @@
         <activity
             android:name=".ui.firsttimeuser.FirstTimeUserScreenActivity"
             android:screenOrientation="portrait" />
-
-        <!-- Custom Dialogs -->
-        <activity
-            android:theme="@style/AppTheme.NoActionBar"
-            android:name=".ui.mainappscreen.speakerfragment.SpeakerInfoDialogActivity" />
-
-        <activity
-            android:theme="@style/AppTheme.NoActionBar"
-            android:name=".ui.mainappscreen.workshopfragment.WorkshopInfoDialogActivity" />
-
-        <activity
-            android:theme="@style/AppTheme.NoActionBar"
-            android:name=".ui.mainappscreen.communityfragment.ShowProfileInfoDialogActivity" />
-
-        <activity
-            android:theme="@style/AppTheme.NoActionBar"
-            android:name=".ui.mainappscreen.communityfragment.yourprofiledialog.YourProfileInfoDialogActivity" />
 
         <activity
             android:screenOrientation="portrait"

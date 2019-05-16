@@ -60,6 +60,5 @@ public class WorkshopInfoDialogFragment extends DialogFragment {
             tvWorkshopType.setText(bundle.getString("type"));
             tvWorkshopDetails.setText(bundle.getString("details"));
         }
-//        getDialog().setTitle(title);
     }
 }
