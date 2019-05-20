@@ -17,6 +17,6 @@ public class MainAppScreenContract {
 
     interface Presenter extends BasePresenter {
         void fetchData();
-        void checkIfEventWillBeHappeningSoon();
+        void checkIfEventWillBeHappeningSoon(boolean isOnResume);
     }
 }

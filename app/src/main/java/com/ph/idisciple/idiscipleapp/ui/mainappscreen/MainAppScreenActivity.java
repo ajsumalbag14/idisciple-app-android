@@ -9,6 +9,7 @@ import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -127,7 +128,7 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
     @Override
     public void onResume(){
         super.onResume();
-        mPresenter.checkIfEventWillBeHappeningSoon();
+        mPresenter.checkIfEventWillBeHappeningSoon(true);
     }
 
     @Override
@@ -352,9 +353,14 @@ public class MainAppScreenActivity extends BaseActivity implements MainAppScreen
 
     @Override
     public void showHappeningNowDialog(Schedule scheduleItem) {
-        HappeningSoonDialogFragment fragmentWorkshopInfoDialog = HappeningSoonDialogFragment.newInstance(scheduleItem);
-        FragmentManager fm = getSupportFragmentManager();
-        fragmentWorkshopInfoDialog.show(fm, "show_happening_now_fragment");
+        try {
+            Log.d("Reminder", "showHappeningNowDialog");
+            HappeningSoonDialogFragment fragmentWorkshopInfoDialog = HappeningSoonDialogFragment.newInstance(scheduleItem);
+            FragmentManager fm = getSupportFragmentManager();
+            fragmentWorkshopInfoDialog.show(fm, "show_happening_now_fragment");
+        } catch (Exception e){
+
+        }
     }
 
     @Override

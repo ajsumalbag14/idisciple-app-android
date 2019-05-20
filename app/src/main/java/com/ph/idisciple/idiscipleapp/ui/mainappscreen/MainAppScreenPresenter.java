@@ -3,6 +3,7 @@ package com.ph.idisciple.idiscipleapp.ui.mainappscreen;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -64,19 +65,17 @@ import static com.wagnerandade.coollection.Coollection.from;
 
 public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
 
-    private ContentService mContentService;
-    private MainAppScreenContract.View mView;
-    private ProfileRepository mProfileRepository;
-
     public AttendeesRepository mAttendeesRepository;
     public ScheduleRepository mScheduleRepository;
     public SpeakerRepository mSpeakerRepository;
     public WorkshopRepository mWorkshopRepository;
     public FamilyGroupRepository mFamilyGroupRepository;
     public CountryRepository mCountryRepository;
-
     public ResourcesRepository mResourcesRepository;
     public AboutContentRepository mAboutContentRepository;
+    private ContentService mContentService;
+    private MainAppScreenContract.View mView;
+    private ProfileRepository mProfileRepository;
     private String mUserId;
     private CountDownTimer mCountDownTimer;
 
@@ -102,7 +101,7 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
     }
 
     @Override
-    public void fetchData(){
+    public void fetchData() {
         mProfileRepository.getKeyItem(ProfileObject.ProfileType.USER_ID, new IProfileRepository.onGetKeyItemCallback() {
             @Override
             public void onSuccess(ProfileObject keySettingItem) {
@@ -170,6 +169,110 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
         });
     }
 
+    private void checkIfNeedDelay() {
+        if(mCountDownTimer != null)
+            mCountDownTimer.cancel();
+
+        Log.d("Reminder", "checkIfNeedDelay()");
+        Calendar calendar = Calendar.getInstance();
+        int minute = calendar.get(Calendar.MINUTE);
+        int remainder = 10 - minute % 10;
+        remainder = remainder == 10 ? 0 : remainder;
+        int delay = remainder * 60 * 1000; // by minutes
+
+        Log.d("Reminder", "delay=" + delay);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("Reminder", "checkIfEventWillBeHappeningSoon(false)");
+                checkIfEventWillBeHappeningSoon(false);
+            }
+        }, delay); // Added delay for update
+    }
+
+    private void refreshTimer() {
+        // interval every 10 mins (60000)
+        mCountDownTimer = new CountDownTimer(300000, 300000) {
+
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+                Log.d("Reminder", "refreshTimer() = checkIfEventWillBeHappeningSoon(false)");
+                checkIfEventWillBeHappeningSoon(false);
+            }
+        };
+        mCountDownTimer.start();
+    }
+
+    @Override
+    public void checkIfEventWillBeHappeningSoon(boolean isOnResume) {
+        int minuteRemainingToReminder = 20;
+
+        List<Schedule> mData = mScheduleRepository.getContentList();
+        Calendar calendarDateToday = Calendar.getInstance();
+        String dateTodayString = String.format("%1$s-%2$02d-%3$s", calendarDateToday.get(Calendar.YEAR), calendarDateToday.get(Calendar.MONTH) + 1, calendarDateToday.get(Calendar.DAY_OF_MONTH));
+
+        int nowHour = calendarDateToday.get(Calendar.HOUR_OF_DAY);
+        int nowMinute = calendarDateToday.get(Calendar.MINUTE);
+        int startHour = 0;
+        int startMinute = 0;
+
+        String nowAmPm = nowHour >= 12 ? "PM" : "AM";
+        List<Schedule> scheduleListToday = from(mData).where("getScheduleDate", eq(dateTodayString)).and("getScheduleStartTime", contains(nowAmPm)).orderBy("getId", Order.ASC).all();
+
+        for (int i = 0; i < scheduleListToday.size(); i++) {
+            Schedule itemSchedule = scheduleListToday.get(i);
+            try {
+                Calendar calendarParsedStartDate = Calendar.getInstance();
+                SimpleDateFormat formatter = new SimpleDateFormat("h:mm a");
+                calendarParsedStartDate.setTime(formatter.parse(itemSchedule.getScheduleStartTime()));
+                startHour = calendarParsedStartDate.get(Calendar.HOUR_OF_DAY);
+                startMinute = calendarParsedStartDate.get(Calendar.MINUTE);
+
+                if (nowHour + 1 == startHour) {
+                    if (startMinute == 0) { //:00
+                        if (!isOnResume && 60 - minuteRemainingToReminder == nowMinute) {
+                            mView.showHappeningNowDialog(itemSchedule);
+                            break;
+                        } else if (isOnResume && nowMinute >= 60 - minuteRemainingToReminder) {
+                            mView.showHappeningNowDialog(itemSchedule);
+                            break;
+                        }
+                    } else if (startMinute < minuteRemainingToReminder) {
+                        if (!isOnResume && nowMinute == 60 - (minuteRemainingToReminder - startMinute)) {
+                            mView.showHappeningNowDialog(itemSchedule);
+                            break;
+                        } else if (isOnResume && nowMinute >= 60 - (minuteRemainingToReminder - startMinute)) {
+                            mView.showHappeningNowDialog(itemSchedule);
+                            break;
+                        }
+                    }
+                } else if (nowHour == startHour) {
+                    if (!isOnResume && startMinute - minuteRemainingToReminder == nowMinute) {
+                        mView.showHappeningNowDialog(itemSchedule);
+                        break;
+                    } else if  (isOnResume && nowMinute >= startMinute - minuteRemainingToReminder ) {
+                        mView.showHappeningNowDialog(itemSchedule);
+                        break;
+                    } else if (startMinute == nowMinute) {
+                        mView.showHappeningNowDialog(itemSchedule);
+                        break;
+                    }
+                }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+        if(isOnResume)
+            checkIfNeedDelay();
+        else
+            refreshTimer();
+    }
+
     /**
      * Get Json File from path_file, and save locally fetched data
      */
@@ -232,13 +335,14 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                 result = result.substring(1);
             }
 
-            result = result.substring(1, result.length() - 2).replace("\n","");
+            result = result.substring(1, result.length() - 2).replace("\n", "");
             // save json items
-            Gson jsonReturned =  new Gson();
-            switch (type){
+            Gson jsonReturned = new Gson();
+            switch (type) {
                 case "0":
                     mAttendeesRepository.resetStorage();
-                    Type typeProfileWrapper = new TypeToken<ListWrapper<Profile>>() {}.getType();
+                    Type typeProfileWrapper = new TypeToken<ListWrapper<Profile>>() {
+                    }.getType();
                     ListWrapper<Profile> wrapperProfile = jsonReturned.fromJson(result, typeProfileWrapper);
                     List<Profile> jsonProfile = wrapperProfile.getData();
                     mAttendeesRepository.addItemList(jsonProfile);
@@ -253,7 +357,8 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     break;
                 case "1":
                     mScheduleRepository.resetStorage();
-                    Type typeScheduleWrapper = new TypeToken<ListWrapper<Schedule>>() {}.getType();
+                    Type typeScheduleWrapper = new TypeToken<ListWrapper<Schedule>>() {
+                    }.getType();
                     ListWrapper<Schedule> wrapperSchedule = jsonReturned.fromJson(result, typeScheduleWrapper);
                     List<Schedule> jsonSchedule = wrapperSchedule.getData();
                     mScheduleRepository.addItemList(jsonSchedule);
@@ -262,7 +367,8 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     break;
                 case "2":
                     mSpeakerRepository.resetStorage();
-                    Type typeSpeakerWrapper = new TypeToken<ListWrapper<Speaker>>() {}.getType();
+                    Type typeSpeakerWrapper = new TypeToken<ListWrapper<Speaker>>() {
+                    }.getType();
                     ListWrapper<Speaker> wrapperSpeaker = jsonReturned.fromJson(result, typeSpeakerWrapper);
                     List<Speaker> jsonSpeaker = wrapperSpeaker.getData();
                     mSpeakerRepository.addItemList(jsonSpeaker);
@@ -270,7 +376,8 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     break;
                 case "3":
                     mWorkshopRepository.resetStorage();
-                    Type typeWorkshopWrapper = new TypeToken<ListWrapper<Workshop>>() {}.getType();
+                    Type typeWorkshopWrapper = new TypeToken<ListWrapper<Workshop>>() {
+                    }.getType();
                     ListWrapper<Workshop> wrapperWorkshop = jsonReturned.fromJson(result, typeWorkshopWrapper);
                     List<Workshop> jsonWorkshop = wrapperWorkshop.getData();
                     mWorkshopRepository.addItemList(jsonWorkshop);
@@ -278,20 +385,23 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     break;
                 case "4":
                     mFamilyGroupRepository.resetStorage();
-                    Type typeFamilyGroupWrapper = new TypeToken<ListWrapper<FamilyGroup>>() {}.getType();
+                    Type typeFamilyGroupWrapper = new TypeToken<ListWrapper<FamilyGroup>>() {
+                    }.getType();
                     ListWrapper<FamilyGroup> wrapperFamilyGroup = jsonReturned.fromJson(result, typeFamilyGroupWrapper);
                     List<FamilyGroup> jsonFamilyGroup = wrapperFamilyGroup.getData();
                     mFamilyGroupRepository.addItemList(jsonFamilyGroup);
                     break;
                 case "5":
-                    Type typeCountryWrapper = new TypeToken<ListWrapper<Country>>() {}.getType();
+                    Type typeCountryWrapper = new TypeToken<ListWrapper<Country>>() {
+                    }.getType();
                     ListWrapper<Country> wrapperCountry = jsonReturned.fromJson(result, typeCountryWrapper);
                     List<Country> jsonCountry = wrapperCountry.getData();
                     mCountryRepository.addItemList(jsonCountry);
                     break;
                 case "6":
                     mResourcesRepository.resetStorage();
-                    Type typeResourcesWrapper = new TypeToken<ListWrapper<Resource>>() {}.getType();
+                    Type typeResourcesWrapper = new TypeToken<ListWrapper<Resource>>() {
+                    }.getType();
                     ListWrapper<Resource> wrapperResources = jsonReturned.fromJson(result, typeResourcesWrapper);
                     List<Resource> jsonResources = wrapperResources.getData();
                     mResourcesRepository.addItemList(jsonResources);
@@ -299,7 +409,8 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     break;
                 case "7":
                     mAboutContentRepository.resetStorage();
-                    Type typeAboutContentWrapper = new TypeToken<ListWrapper<AboutContent>>() {}.getType();
+                    Type typeAboutContentWrapper = new TypeToken<ListWrapper<AboutContent>>() {
+                    }.getType();
                     ListWrapper<AboutContent> wrapperAboutContent = jsonReturned.fromJson(result, typeAboutContentWrapper);
                     List<AboutContent> jsonAboutContent = wrapperAboutContent.getData();
                     mAboutContentRepository.addItemList(jsonAboutContent);
@@ -309,83 +420,5 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
             }
 
         }
-    }
-
-    private void checkIfNeedDelay(){
-        mCountDownTimer.cancel();
-        Calendar calendar = Calendar.getInstance();
-        int minute = calendar.get(Calendar.MINUTE);
-        int remainder = 10 - minute % 10;
-        int delay = remainder * 60 * 1000; // by minutes
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                checkIfEventWillBeHappeningSoon();
-            }
-        }, delay); // Added delay for update
-    }
-
-    private void refreshTimer(){
-        // interval every 10 mins (60000)
-        mCountDownTimer = new CountDownTimer(60000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-
-            }
-
-            public void onFinish() {
-                checkIfEventWillBeHappeningSoon();
-            }
-        };
-        mCountDownTimer.start();
-    }
-
-    @Override
-    public void checkIfEventWillBeHappeningSoon(){
-        int minuteRemainingToReminder = 20;
-
-        List<Schedule> mData = mScheduleRepository.getContentList();
-        Calendar calendarDateToday = Calendar.getInstance();
-        String dateTodayString = String.format("%1$s-%2$02d-%3$s", calendarDateToday.get(Calendar.YEAR), calendarDateToday.get(Calendar.MONTH) + 1, calendarDateToday.get(Calendar.DAY_OF_MONTH));
-
-        int nowHour = calendarDateToday.get(Calendar.HOUR_OF_DAY);
-        int nowMinute = calendarDateToday.get(Calendar.MINUTE);
-        int startHour = 0;
-        int startMinute = 0;
-
-        String nowAmPm =  nowHour > 12 ? "PM" : "AM";
-        List<Schedule> scheduleListToday = from(mData).where("getScheduleDate", eq(dateTodayString)).and("getScheduleStartTime", contains(nowAmPm)).orderBy("getId", Order.ASC).all();
-
-        for(int i = 0; i<scheduleListToday.size(); i++){
-            Schedule itemSchedule = scheduleListToday.get(i);
-            try {
-                Calendar calendarParsedStartDate = Calendar.getInstance();
-                SimpleDateFormat formatter = new SimpleDateFormat("h:mm a");
-                calendarParsedStartDate.setTime(formatter.parse(itemSchedule.getScheduleStartTime()));
-                startHour = calendarParsedStartDate.get(Calendar.HOUR_OF_DAY);
-                startMinute = calendarParsedStartDate.get(Calendar.MINUTE);
-
-                if(nowHour + 1 == startHour){
-                    if(startMinute == 0) { //:00
-                        if(60 - minuteRemainingToReminder ==  nowMinute)
-                            mView.showHappeningNowDialog(itemSchedule);
-                    } else if(startMinute < minuteRemainingToReminder) {
-                        if(nowMinute == 60 - (minuteRemainingToReminder - startMinute))
-                            mView.showHappeningNowDialog(itemSchedule);
-                    }
-                } else if(nowHour == startHour){
-                    if(startMinute == nowMinute)
-                        mView.showHappeningNowDialog(itemSchedule);
-                    else
-                        break;
-                }
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-        }
-        refreshTimer();
     }
 }

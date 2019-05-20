@@ -45,56 +45,60 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Schedule itemSchedule = getItem(position);
-        String scheduleTime = itemSchedule.getScheduleStartTime() + " - " + itemSchedule.getScheduleEndTime();
-        holder.tvScheduleTime.setText(scheduleTime);
-        holder.tvEventName.setText(itemSchedule.getScheduleName());
-        holder.tvEventVenue.setText(itemSchedule.getScheduleVenue());
+        try {
+            Schedule itemSchedule = getItem(position);
+            String scheduleTime = itemSchedule.getScheduleStartTime() + " - " + itemSchedule.getScheduleEndTime();
+            holder.tvScheduleTime.setText(scheduleTime);
+            holder.tvEventName.setText(itemSchedule.getScheduleName());
+            holder.tvEventVenue.setText(itemSchedule.getScheduleVenue());
 
-        if(!itemSchedule.getWorkshopId().equals("0") && (currentProfile.getUserWorkshop1().equals(itemSchedule.getWorkshopId()) || currentProfile.getUserWorkshop1().equals(itemSchedule.getWorkshopId()))){
-            holder.tvWorkshopYours.setVisibility(View.VISIBLE);
-        } else
-            holder.tvWorkshopYours.setVisibility(View.GONE);
+            if (!itemSchedule.getWorkshopId().equals("0") && (currentProfile.getUserWorkshop1().equals(itemSchedule.getWorkshopId()) || currentProfile.getUserWorkshop1().equals(itemSchedule.getWorkshopId()))) {
+                holder.tvWorkshopYours.setVisibility(View.VISIBLE);
+            } else
+                holder.tvWorkshopYours.setVisibility(View.GONE);
 
 
-        // Check if it's happening today
-        if(isToday) {
-            try {
-                SimpleDateFormat formatter = new SimpleDateFormat("h:mm a");
-                Calendar calendarParsedStartDate = Calendar.getInstance();
-                Calendar calendarParsedEndDate = Calendar.getInstance();
+            // Check if it's happening today
+            if (isToday) {
+                try {
+                    SimpleDateFormat formatter = new SimpleDateFormat("h:mm a");
+                    Calendar calendarParsedStartDate = Calendar.getInstance();
+                    Calendar calendarParsedEndDate = Calendar.getInstance();
 
-                calendarParsedStartDate.setTime(formatter.parse(itemSchedule.getScheduleStartTime()));
-                calendarParsedEndDate.setTime(formatter.parse(itemSchedule.getScheduleEndTime()));
+                    calendarParsedStartDate.setTime(formatter.parse(itemSchedule.getScheduleStartTime()));
+                    calendarParsedEndDate.setTime(formatter.parse(itemSchedule.getScheduleEndTime()));
 
-                Calendar calendarDateNow = Calendar.getInstance();
-                int nowHour = calendarDateNow.get(Calendar.HOUR_OF_DAY);
-                int nowMinute = calendarDateNow.get(Calendar.MINUTE);
-                int startHour = calendarParsedStartDate.get(Calendar.HOUR_OF_DAY);
-                int endHour = calendarParsedEndDate.get(Calendar.HOUR_OF_DAY);
+                    Calendar calendarDateNow = Calendar.getInstance();
+                    int nowHour = calendarDateNow.get(Calendar.HOUR_OF_DAY);
+                    int nowMinute = calendarDateNow.get(Calendar.MINUTE);
+                    int startHour = calendarParsedStartDate.get(Calendar.HOUR_OF_DAY);
+                    int endHour = calendarParsedEndDate.get(Calendar.HOUR_OF_DAY);
 
-                // Check if middle of duration
-                if (nowHour >= startHour && nowHour <= endHour) {
-                    // Same Hour
-                    if (nowHour == startHour) {
-                        holder.tvEventHappening.setVisibility((nowMinute >= calendarParsedStartDate.get(Calendar.MINUTE))
-                                ? View.VISIBLE
-                                : View.GONE);
-                    } else if (nowHour == endHour) {
-                        holder.tvEventHappening.setVisibility((nowMinute <= calendarParsedEndDate.get(Calendar.MINUTE))
-                                ? View.VISIBLE
-                                : View.GONE);
+                    // Check if middle of duration
+                    if (nowHour >= startHour && nowHour <= endHour) {
+                        // Same Hour
+                        if (nowHour == startHour) {
+                            holder.tvEventHappening.setVisibility((nowMinute >= calendarParsedStartDate.get(Calendar.MINUTE))
+                                    ? View.VISIBLE
+                                    : View.GONE);
+                        } else if (nowHour == endHour) {
+                            holder.tvEventHappening.setVisibility((nowMinute <= calendarParsedEndDate.get(Calendar.MINUTE))
+                                    ? View.VISIBLE
+                                    : View.GONE);
+                        } else
+                            holder.tvEventHappening.setVisibility(View.VISIBLE);
                     } else
-                        holder.tvEventHappening.setVisibility(View.VISIBLE);
-                } else
-                    holder.tvEventHappening.setVisibility(View.GONE);
+                        holder.tvEventHappening.setVisibility(View.GONE);
 
 
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        } else
-            holder.tvEventHappening.setVisibility(View.GONE);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else
+                holder.tvEventHappening.setVisibility(View.GONE);
+        } catch (Exception ex){
+
+        }
     }
 
     @Override
