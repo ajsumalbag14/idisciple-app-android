@@ -72,6 +72,13 @@ public class ScheduleListFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        onUpdateScheduleList(null);
+    }
+
+
+    @Override
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);

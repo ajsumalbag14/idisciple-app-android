@@ -35,7 +35,7 @@
             android:layout_toStartOf="@+id/ivToolbarMenuProfile"
             android:layout_marginEnd="@dimen/margin_small"
             android:filterTouchesWhenObscured="true"
-            android:padding="@dimen/margin_small" />
+            android:padding="@dimen/margin_very_small" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivToolbarMenuProfile"

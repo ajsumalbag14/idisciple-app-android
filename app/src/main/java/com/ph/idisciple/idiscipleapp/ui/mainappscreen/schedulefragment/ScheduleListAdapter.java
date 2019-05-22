@@ -78,9 +78,14 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
                     if (nowHour >= startHour && nowHour <= endHour) {
                         // Same Hour
                         if (nowHour == startHour) {
-                            holder.tvEventHappening.setVisibility((nowMinute >= calendarParsedStartDate.get(Calendar.MINUTE))
-                                    ? View.VISIBLE
-                                    : View.GONE);
+                            if(nowHour == endHour){
+                                holder.tvEventHappening.setVisibility((nowMinute >= calendarParsedStartDate.get(Calendar.MINUTE)) && (nowMinute <= calendarParsedEndDate.get(Calendar.MINUTE))
+                                        ? View.VISIBLE
+                                        : View.GONE);
+                            } else
+                                holder.tvEventHappening.setVisibility((nowMinute >= calendarParsedStartDate.get(Calendar.MINUTE))
+                                        ? View.VISIBLE
+                                        : View.GONE);
                         } else if (nowHour == endHour) {
                             holder.tvEventHappening.setVisibility((nowMinute <= calendarParsedEndDate.get(Calendar.MINUTE))
                                     ? View.VISIBLE
