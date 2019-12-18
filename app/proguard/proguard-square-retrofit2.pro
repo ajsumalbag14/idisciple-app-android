@@ -4,9 +4,6 @@
 -dontwarn retrofit2.**
 -keep class retrofit2.** { *; }
 
-# add your JSON classes here
--keep class com.yondu.spinviaapp.http.model.** { *; }
-
 # Platform calls Class.forName on types which do not exist on Android to determine platform.
 -dontnote retrofit2.Platform
 # Platform used when running on Java 8 VMs. Will not be used at runtime.

@@ -52,6 +52,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -78,6 +79,8 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
     private ProfileRepository mProfileRepository;
     private String mUserId;
     private CountDownTimer mCountDownTimer;
+
+    public List<String> mScheduleDateList = null;
 
     // [5/3/2019] Comment Favorite for now
 //    public SavedProfileFavoritesRepository mSavedProfileFavoritesRepository;
@@ -361,6 +364,13 @@ public class MainAppScreenPresenter implements MainAppScreenContract.Presenter {
                     }.getType();
                     ListWrapper<Schedule> wrapperSchedule = jsonReturned.fromJson(result, typeScheduleWrapper);
                     List<Schedule> jsonSchedule = wrapperSchedule.getData();
+
+                    mScheduleDateList = new ArrayList<>();
+                    for (Schedule s: jsonSchedule) {
+                        if(!mScheduleDateList.contains(s.getScheduleDateString()))
+                            mScheduleDateList.add(s.getScheduleDateString());
+                    }
+
                     mScheduleRepository.addItemList(jsonSchedule);
                     EventBus.getDefault().post(new RefreshScheduleListEvent());
                     checkIfNeedDelay();

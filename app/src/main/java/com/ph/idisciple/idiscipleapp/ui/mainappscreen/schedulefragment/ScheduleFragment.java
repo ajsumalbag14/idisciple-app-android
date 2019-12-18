@@ -17,9 +17,15 @@ import com.ph.idisciple.idiscipleapp.R;
 import com.ph.idisciple.idiscipleapp.ui.BaseFragment;
 import com.ph.idisciple.idiscipleapp.ui.mainappscreen.MainAppScreenActivity;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -30,7 +36,7 @@ public class ScheduleFragment extends BaseFragment {
     @BindView(R.id.viewpager) ViewPager viewpager;
 
     private MainAppScreenActivity mActivity;
-    private String[] arrConferenceDates = {"05/21/2019", "05/22/2019", "05/23/2019", "05/24/2019"}; //{"2019-03-05", "2019-03-06", "2019-03-07", "2019-03-08"};
+    private List<String> arrConferenceDates = new ArrayList<>();
     private int currentTodayPositionTab = -1;
 
     private String dateTodayString;
@@ -43,8 +49,42 @@ public class ScheduleFragment extends BaseFragment {
         rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_schedule, container, false);
         bind(rootView);
 
+        showRefreshList();
         dateTodayString = formatter.format(Calendar.getInstance().getTime());
         mActivity = (MainAppScreenActivity) getActivity();
+
+        return rootView;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        showRefreshList();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUpdateScheduleList(RefreshScheduleListEvent event){
+        showRefreshList();
+    }
+
+    private void showRefreshList(){
+        if(mActivity == null || mActivity.mPresenter == null) return;
+        if(mActivity.mPresenter.mScheduleDateList != null) {
+            arrConferenceDates = new ArrayList<>();
+            arrConferenceDates.addAll(mActivity.mPresenter.mScheduleDateList);
+        }
 
         viewpager.setAdapter(new SchedulePagerAdapter(getChildFragmentManager()));
         tabStrip.setViewPager(viewpager);
@@ -55,8 +95,6 @@ public class ScheduleFragment extends BaseFragment {
             TextView tab = (TextView)tabsContainer.getChildAt(i);
             tab.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
         }
-
-        return rootView;
     }
 
     public class SchedulePagerAdapter extends FragmentPagerAdapter {
@@ -67,7 +105,7 @@ public class ScheduleFragment extends BaseFragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            String selectedDate = arrConferenceDates[position];
+            String selectedDate = arrConferenceDates.get(position);
             Calendar calendarDateParsed = Calendar.getInstance();
 
             try {
@@ -103,17 +141,16 @@ public class ScheduleFragment extends BaseFragment {
 
         @Override
         public int getCount() {
-            return arrConferenceDates.length;
+            return arrConferenceDates.size();
         }
 
         @Override
         public Fragment getItem(int position) {
-            String selectedDate = arrConferenceDates[position];
+            String selectedDate = arrConferenceDates.get(position);
             Bundle bundle = new Bundle();
             bundle.putString("selectedDate", selectedDate);
             bundle.putBoolean("isToday", currentTodayPositionTab == position);
             return newInstance(ScheduleListFragment.class, bundle);
         }
     }
-
 }

@@ -38,7 +38,9 @@ public class MoreTabAboutFragment extends BaseFragment {
         tvAboutTitleConference.setText(aboutContentContentList.get(0).getAboutTitle());
         tvAboutContentConference.setText(aboutContentContentList.get(0).getAboutContent());
 
-        tvAboutTitleUs.setText(aboutContentContentList.get(1).getAboutTitle());
-        tvAboutContentUs.setText(aboutContentContentList.get(1).getAboutContent());
+        if(aboutContentContentList.size() > 1) {
+            tvAboutTitleUs.setText(aboutContentContentList.get(1).getAboutTitle());
+            tvAboutContentUs.setText(aboutContentContentList.get(1).getAboutContent());
+        }
     }
 }
