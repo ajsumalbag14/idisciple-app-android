@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.security.KeyPairGeneratorSpec;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.pm.PackageInfoCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -42,9 +43,9 @@ import io.realm.RealmConfiguration;
 
 public class SplashScreenActivity extends BaseActivity {
 
-    private final String APP_VERSION = "app_version";
-    private final String APP_LINK = "app_link";
     private final String APP_FORCE = "app_force";
+    private final String APP_LINK = "app_link";
+    private final String APP_VERSION_CODE = "app_version_code";
 
     // Remote Config keys
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
@@ -214,13 +215,12 @@ public class SplashScreenActivity extends BaseActivity {
                         try {
                             boolean isForceUpate = mFirebaseRemoteConfig.getBoolean(APP_FORCE);
                             String appLink = mFirebaseRemoteConfig.getString(APP_LINK);
-                            String fireBaseAppVersion = mFirebaseRemoteConfig.getString(APP_VERSION);
 
-                            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-                            String appVersion = pInfo.versionName;
+                            long publishedVersion = mFirebaseRemoteConfig.getLong(APP_VERSION_CODE);
+                            long appVersionCode = PackageInfoCompat.getLongVersionCode(getPackageManager().getPackageInfo(getPackageName(), 0));
 
                             if (isForceUpate) {
-                                if (!TextUtils.equals(appVersion, fireBaseAppVersion)) {
+                                if (publishedVersion > appVersionCode) {
                                     showUpdateDialog(appLink);
                                 } else {
                                     checkIfRealmIsConfigured();
